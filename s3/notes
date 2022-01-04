@@ -1,0 +1,3 @@
+s3:{carrier}-openIDL-stagging: files ready for validation
+s3:{carrier}-openIDL-outbound: files ready for openidl
+s3:{carrier}-openIDL-error: files that failed validation
