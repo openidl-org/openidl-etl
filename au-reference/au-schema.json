@@ -2,6 +2,12 @@
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
     "properties": {
+        "ID": {
+            "type": "string"
+        },
+        "EtlID": {
+            "type": "string"
+        },
         "LineOfInsurance": {
             "type": "string",
             "enum": [
