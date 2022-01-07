@@ -1,5 +1,7 @@
 {
     "$schema": "./au-schema.json",
+    "ID":"GUID",
+    "EtlID":"LoadId",
     "LineOfInsurance": "CA",
     "AccountingDate": {
         "Month": "String",
