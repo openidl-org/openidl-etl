@@ -1,0 +1,21 @@
+{
+    "month": {
+        "code": 1,
+        "name": "January"
+    },
+    "make": {
+        "name": "honda",
+        "makeCode": 1
+    },
+    "model": {
+        "name": "civic",
+        "modelCode":1,
+        "trim": "sport",
+        "abs": "True",
+        "vehicleClassCode": 3
+    },
+    "vehicleClass": {
+        "name": "sport-sedan",
+        "classCode": 3
+    }
+}

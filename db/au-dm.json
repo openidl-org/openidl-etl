@@ -1,0 +1,16 @@
+{
+    "policy": "9857ewtsdgfse4eg",
+    "address": {
+        "stateCode": 23,
+        "zip": 28655
+    },
+    "age": {
+        "year": 1982,
+        "monthCode": 2
+    },
+    "vehicle": {
+        "makeCode": 1,
+        "modelCode": 1,
+        "abs": "TRUE"
+    }
+}
