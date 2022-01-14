@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "LineOfInsurance": "Ref", 
     "AccountingDate": {
         "Month": "String",
@@ -109,3 +110,452 @@
 
 
 }
+=======
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "ID": {
+            "type": "string"
+        },
+        "EtlID": {
+            "type": "string"
+        },
+        "LineOfInsurance": {
+            "type": "string",
+            "enum": [
+                "CA"
+            ]
+        },
+        "AccountingDate": {
+            "type": "object",
+            "properties": {
+                "Month": {
+                    "type": "string"
+                },
+                "Year": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "Month",
+                "Year"
+            ]
+        },
+        "CompanyCode": {
+            "type": "string"
+        },
+        "StateCode": {
+            "type": "string",
+            "enum": [
+                "CA",
+                "AL",
+                "NY"
+            ]
+        },
+        "Territory": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2
+        },
+        "OptionalZipCodeIndicator": {
+            "type": "string"
+        },
+        "TransactionCode": {
+            "type": "string"
+        },
+        "PremiumLossAmounts": {
+            "type": "object",
+            "properties": {
+                "Premium": {
+                    "type": "string"
+                },
+                "Loss": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "Premium",
+                "Loss"
+            ]
+        },
+        "Program": {
+            "type": "string"
+        },
+        "Coverage": {
+            "type": "string"
+        },
+        "Subline": {
+            "type": "string"
+        },
+        "OperateAge": {
+            "type": "string"
+        },
+        "SexMaterialStatus": {
+            "type": "string"
+        },
+        "VehicleUse": {
+            "type": "string"
+        },
+        "VehicleProformance": {
+            "type": "string"
+        },
+        "PrivatePassengerDriversTraining": {
+            "type": "string"
+        },
+        "CommercialAutomobileClassification": {
+            "type": "string"
+        },
+        "LiabilityLimitsAmount": {
+            "type": "string"
+        },
+        "LiabilityLimitsAmountNJ": {
+            "type": "string"
+        },
+        "LiabilityLimitsAmountPA": {
+            "type": "string"
+        },
+        "DeductibleAmount": {
+            "type": "string"
+        },
+        "VehicleClassBodyStyle": {
+            "type": "string"
+        },
+        "VehicleClassBodySize": {
+            "type": "string"
+        },
+        "ModelYear": {
+            "type": "string"
+        },
+        "UnisuredUnderinsuredMotorist": {
+            "type": "string"
+        },
+        "Exposure": {
+            "type": "string"
+        },
+        "ClaimCount": {
+            "type": "string"
+        },
+        "MonthsCovered": {
+            "type": "string"
+        },
+        "CasueOfLoss": {
+            "type": "string"
+        },
+        "TerrorismIndicator": {
+            "type": "string"
+        },
+        "SinlgeMultiCar": {
+            "type": "string"
+        },
+        "AccidentDate": {
+            "type": "object",
+            "properties": {
+                "Month": {
+                    "type": "string"
+                },
+                "Year": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "Month",
+                "Year"
+            ]
+        },
+        "PackageCode": {
+            "type": "string"
+        },
+        "PoolAffiliation": {
+            "type": "string"
+        },
+        "OccurenceOrPolicyIdentification": {
+            "type": "object",
+            "properties": {
+                "PolicyNumber": {
+                    "type": "string"
+                },
+                "ClaimNumber": {
+                    "type": "string"
+                },
+                "ClaimIdentifier": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "PolicyNumber",
+                "ClaimNumber",
+                "ClaimIdentifier"
+            ]
+        },
+        "NCProgramEnhancemntIndicator": {
+            "type": "string"
+        },
+        "ZipCode": {
+            "type": "string"
+        },
+        "ZipeCodeSuffix(Optional)": {
+            "type": "string"
+        },
+        "UM/UIMStackingIndicator": {
+            "type": "string"
+        },
+        "SymbolCode": {
+            "type": "string"
+        },
+        "PassiveRestraintDiscountCode": {
+            "type": "string"
+        },
+        "Anti-LockBrakesDiscountCode": {
+            "type": "string"
+        },
+        "Anti-TheftDeviceDiscountCode": {
+            "type": "string"
+        },
+        "DefensiveDriverDiscountCode": {
+            "type": "string"
+        },
+        "PIPLimitsDeductibleCode": {
+            "type": "string"
+        },
+        "NewJerseyPIPLimit": {
+            "type": "string"
+        },
+        "NewJerseyDeductible": {
+            "type": "string"
+        },
+        "RatingTerminalZoneCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(PrivatePassengerNon-FleetOnly)RateClassCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(PrivatePassengerNon-FleetOnly)PenaltyPoints/PercentOfSurchargeCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(PrivatePassengerMotorcycles,MotorScooters,Etc.LiabilityRecords)Class": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(PrivatePassengerMotorcycles,MotorScooters,Etc.LiabilityRecords)MiscellaneousSurchargeCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(PrivatePassengerMotorcycles,MotorScooters,Etc.PhysicalDamageRecords)Class": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(ExcessIndemnityPolicies(PrivatePassenger-NewYorkOnly(31)))": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(CommercialTrucks,Trucktractors,AndTrailersLiabilityRecords)TypeOfVehicle/BusinessUse/RadiusOfOperations": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(CommercialTrucks,Trucktractors,AndTrailersLiabilityRecords)SecondaryClassificationCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(CommercialTrucks,Trucktractors,AndTrailersPhysicalDamageRecords)Class": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(CommercialTrucks,Trucktractors,AndTrailersPhysicalDamageRecords)CommercialSurchargeCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(PublicsLiabilityRecords)Classification": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(PublicsLiabilityRecords)SeatingCapacityCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(PublicsLiabilityRecords)CommeericialSurchargeCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(PublicsPhysicalDamageRecords)Classification": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(PublicsPhysicalDamageRecords)CommercialSurchargeCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(GaragesLiability)Class": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(GaragesLiability)CommercialSurchargeCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(PrivatePassengerTypes)Class": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(PrivatePassengerTypes)CommercialSurchargeCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(TransportationOfMigrantWorkers)Class": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(TransportationOfMigrantWorkers)CommercialSurchargeCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(Non-OwnedAutomobiles)Class": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(Non-OwnedAutomobiles)CommercialSurchargeCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(CompositeRatingPlan)Class": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(CompositeRatingPlan)CommercialSurchargeCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(ExcessIndemnityPolicies:OtherThanPrivatePassengerNon-Fleet-NewYorkOnly)Class": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(ExcessIndemnityPolicies:OtherThanPrivatePassengerNon-Fleet-NewYorkOnly)CommercialSurchargeCode": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(AllOtherClassifications)Class": {
+            "type": "string"
+        },
+        "ClassificationCodesAssignedRisks(AllOtherClassification)CommercialSurchargeCode": {
+            "type": "string"
+        },
+        "ExperienceRatingModificationFactor": {
+            "type": "string"
+        },
+        "LimitedCode-LossTransactionCode": {
+            "type": "string"
+        },
+        "ExceptionCodeA(TortLimitation)(Kentucky)": {
+            "type": "string"
+        },
+        "ExceptionCodeA(Intrastate/InterstateCode)(Michigan)": {
+            "type": "string"
+        },
+        "ExceptionCodeA(Threshold/TortLimitation)(NewJersey)": {
+            "type": "string"
+        },
+        "ExceptionCodeA(AccidentPreventionCredit)(NewYork)": {
+            "type": "string"
+        },
+        "ExceptionCodeA(TortLimitation)(Pennesylvania)": {
+            "type": "string"
+        },
+        "ExceptionCodeA(S.C.ReinsuranceFacility(S.C.R.F))(SouthCarolina)": {
+            "type": "string"
+        },
+        "ExceptionCodeB(Multi-CarRisks)(NewJersey)": {
+            "type": "string"
+        },
+        "ExceptionCodeB(PrimaryNo-FaultHealthPlan)(NewYork)": {
+            "type": "string"
+        },
+        "ExceptionCodeB(55&Overdiscount)(Pennsylvania)": {
+            "type": "string"
+        },
+        "ExceptionCodeC(EngineSize)(NewJersey)": {
+            "type": "string"
+        },
+        "ExceptionCodeC(CombinedFirstPartyBenefits(IndivisablePremiumPolicies))": {
+            "type": "string"
+        },
+        "ExceptionCodeD(NewYorkTaxicabs&PublicLivery)(NewYork)": {
+            "type": "string"
+        },
+        "CompanyUse": {
+            "type": "string"
+        },
+        "VehicleIdentification": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "LineOfInsurance",
+        "AccountingDate",
+        "CompanyCode",
+        "StateCode",
+        "Territory",
+        "OptinalZipCodeIndicator",
+        "TransactionCode",
+        "PremiumLossAmounts",
+        "Program",
+        "Coverage",
+        "Subline",
+        "OperateAge",
+        "SexMaterialStatus",
+        "VehicleUse",
+        "VehicleProformance",
+        "PrivatePassengerDriversTraining",
+        "CommercialAutomobileClassification",
+        "LiabilityLimitsAmount",
+        "LiabilityLimitsAmountNJ",
+        "LiabilityLimitsAmountPA",
+        "DeductibleAmount",
+        "VehicleClassBodyStyle",
+        "VehicleClassBodySize",
+        "ModelYear",
+        "UnisuredUnderinsuredMotorist",
+        "Exposure",
+        "ClaimCount",
+        "MonthsCovered",
+        "CasueOfLoss",
+        "TerrorismIndicator",
+        "SinlgeMultiCar",
+        "AccidentDate",
+        "PackageCode",
+        "PoolAffiliation",
+        "OccurenceOrPolicyIdentification",
+        "NCProgramEnhancemntIndicator",
+        "ZipCode",
+        "ZipeCodeSuffix(Optional)",
+        "UM/UIMStackingIndicator",
+        "SymbolCode",
+        "PassiveRestraintDiscountCode",
+        "Anti-LockBrakesDiscountCode",
+        "Anti-TheftDeviceDiscountCode",
+        "DefensiveDriverDiscountCode",
+        "PIPLimitsDeductibleCode",
+        "NewJerseyPIPLimit",
+        "NewJerseyDeductible",
+        "RatingTerminalZoneCode",
+        "ClassificationCodesAssignedRisks(PrivatePassengerNon-FleetOnly)RateClassCode",
+        "ClassificationCodesAssignedRisks(PrivatePassengerNon-FleetOnly)PenaltyPoints/PercentOfSurchargeCode",
+        "ClassificationCodesAssignedRisks(PrivatePassengerMotorcycles,MotorScooters,Etc.LiabilityRecords)Class",
+        "ClassificationCodesAssignedRisks(PrivatePassengerMotorcycles,MotorScooters,Etc.LiabilityRecords)MiscellaneousSurchargeCode",
+        "ClassificationCodesAssignedRisks(PrivatePassengerMotorcycles,MotorScooters,Etc.PhysicalDamageRecords)Class",
+        "ClassificationCodesAssignedRisks(ExcessIndemnityPolicies(PrivatePassenger-NewYorkOnly(31)))",
+        "ClassificationCodesAssignedRisks(CommercialTrucks,Trucktractors,AndTrailersLiabilityRecords)TypeOfVehicle/BusinessUse/RadiusOfOperations",
+        "ClassificationCodesAssignedRisks(CommercialTrucks,Trucktractors,AndTrailersLiabilityRecords)SecondaryClassificationCode",
+        "ClassificationCodesAssignedRisks(CommercialTrucks,Trucktractors,AndTrailersPhysicalDamageRecords)Class",
+        "ClassificationCodesAssignedRisks(CommercialTrucks,Trucktractors,AndTrailersPhysicalDamageRecords)CommercialSurchargeCode",
+        "ClassificationCodesAssignedRisks(PublicsLiabilityRecords)Classification",
+        "ClassificationCodesAssignedRisks(PublicsLiabilityRecords)SeatingCapacityCode",
+        "ClassificationCodesAssignedRisks(PublicsLiabilityRecords)CommeericialSurchargeCode",
+        "ClassificationCodesAssignedRisks(PublicsPhysicalDamageRecords)Classification",
+        "ClassificationCodesAssignedRisks(PublicsPhysicalDamageRecords)CommercialSurchargeCode",
+        "ClassificationCodesAssignedRisks(GaragesLiability)Class",
+        "ClassificationCodesAssignedRisks(GaragesLiability)CommercialSurchargeCode",
+        "ClassificationCodesAssignedRisks(PrivatePassengerTypes)Class",
+        "ClassificationCodesAssignedRisks(PrivatePassengerTypes)CommercialSurchargeCode",
+        "ClassificationCodesAssignedRisks(TransportationOfMigrantWorkers)Class",
+        "ClassificationCodesAssignedRisks(TransportationOfMigrantWorkers)CommercialSurchargeCode",
+        "ClassificationCodesAssignedRisks(Non-OwnedAutomobiles)Class",
+        "ClassificationCodesAssignedRisks(Non-OwnedAutomobiles)CommercialSurchargeCode",
+        "ClassificationCodesAssignedRisks(CompositeRatingPlan)Class",
+        "ClassificationCodesAssignedRisks(CompositeRatingPlan)CommercialSurchargeCode",
+        "ClassificationCodesAssignedRisks(ExcessIndemnityPolicies:OtherThanPrivatePassengerNon-Fleet-NewYorkOnly)Class",
+        "ClassificationCodesAssignedRisks(ExcessIndemnityPolicies:OtherThanPrivatePassengerNon-Fleet-NewYorkOnly)CommercialSurchargeCode",
+        "ClassificationCodesAssignedRisks(AllOtherClassifications)Class",
+        "ClassificationCodesAssignedRisks(AllOtherClassification)CommercialSurchargeCode",
+        "ExperienceRatingModificationFactor",
+        "LimitedCode-LossTransactionCode",
+        "ExceptionCodeA(TortLimitation)(Kentucky)",
+        "ExceptionCodeA(Intrastate/InterstateCode)(Michigan)",
+        "ExceptionCodeA(Threshold/TortLimitation)(NewJersey)",
+        "ExceptionCodeA(AccidentPreventionCredit)(NewYork)",
+        "ExceptionCodeA(TortLimitation)(Pennesylvania)",
+        "ExceptionCodeA(S.C.ReinsuranceFacility(S.C.R.F))(SouthCarolina)",
+        "ExceptionCodeB(Multi-CarRisks)(NewJersey)",
+        "ExceptionCodeB(PrimaryNo-FaultHealthPlan)(NewYork)",
+        "ExceptionCodeB(55&Overdiscount)(Pennsylvania)",
+        "ExceptionCodeC(EngineSize)(NewJersey)",
+        "ExceptionCodeC(CombinedFirstPartyBenefits(IndivisablePremiumPolicies))",
+        "ExceptionCodeD(NewYorkTaxicabs&PublicLivery)(NewYork)",
+        "CompanyUse",
+        "VehicleIdentification"
+    ]
+}
+>>>>>>> 26b99c85259da1c76105a620fed0d1c36d196723
