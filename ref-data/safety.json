@@ -1,0 +1,48 @@
+[
+    {
+        "code": 1,
+        "name": "anti lock brakes",
+        "abv": "ABS"
+    },
+    {
+        "code": 2,
+        "name": "seat belt alarms",
+    },
+    {
+        "code": 3,
+        "name": "Traction Control System",
+        "abv": "TCS",
+        "generation": [
+            {
+                "code:": 0,
+                "name": "original",
+                "mode": [
+                    {
+                        "disable": true,
+                        "variable-condition": false
+                    }
+                ]
+            },
+            {
+                "code:": 1,
+                "name": "2nd gen",
+                "mode": [
+                    {
+                        "disable": true,
+                        "variable-condition": true
+                    }
+                ]
+            }
+        ],
+        "code": 4,
+        "name": "all 3 point seat belt"
+    },
+    {
+        "code": 5,
+        "name": "Forward Airbags"
+    },
+    {
+        "code": 6,
+        "name": "Side Airbags"
+    }
+]
