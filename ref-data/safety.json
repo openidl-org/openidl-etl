@@ -33,7 +33,9 @@
                     }
                 ]
             }
-        ],
+        ]
+    },
+    {
         "code": 4,
         "name": "all 3 point seat belt"
     },
