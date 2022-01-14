@@ -2,10 +2,10 @@
     {
         "name": "civic",
         "code": 1,
+        "makeCode": 1,
         "generaton": [
             {
-                "name": "18",
-                "code": 3,
+                "name": "fk8",
                 "year": 2018,
                 "duration": 2,
                 "trim": [
@@ -13,7 +13,7 @@
                         "code": "1",
                         "name": "sport",
                         "gross": 1800,
-                        "bodyStyle": "fk8",
+                        "bodyStyle": "hatch",
                         "horsepower": 180,
                         "vehicleClassCode": 3,
                         "safetyFeature": {
@@ -28,6 +28,49 @@
                         "name": "R",
                         "gross": 1900,
                         "horsepower": 250,
+                        "bodyStyle": "sport hatch",
+                        "vehicleClassCode": 3,
+                        "safetyFeature": {
+                            "ABS": true,
+                            "TSC": true,
+                            "Radar": true,
+                            "telemetrics": false
+                        }
+                    }
+                ]
+            }
+        ]
+    },{
+        "name": "tacoma",
+        "code": 2,
+        "makeCode": 3,
+        "generaton": [
+            {
+                "name": "18",
+                "code": 3,
+                "year": 2018,
+                "duration": 2,
+                "trim": [
+                    {
+                        "code": "1",
+                        "name": "sport",
+                        "gross": 28800,
+                        "horsepower": 180,
+                        "transmission": "6mt",
+                        "vehicleClassCode": 3,
+                        "safetyFeature": {
+                            "ABS": true,
+                            "TSC": false,
+                            "Radar": false,
+                            "telemetrics": true
+                        }
+                    },
+                    {
+                        "code": "2",
+                        "name": "R",
+                        "gross": 1900,
+                        "horsepower": 250,
+                        "transmission": "CVT",
                         "vehicleClassCode": 3,
                         "safetyFeature": {
                             "ABS": true,
