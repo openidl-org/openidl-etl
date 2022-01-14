@@ -1,0 +1,27 @@
+[
+    {
+        "name": "sedan",
+        "code": 1
+    },
+    {
+        "name": "coup",
+        "code": 2
+    },
+    {
+        "name": "sport-wagon",
+        "code": 3
+    },
+    {
+        "name": "truck",
+        "code": 4
+    },
+    {
+        "name": "motorcycle",
+        "code": 5
+    },
+    {
+        "name": "offroad-motorcycle",
+        "code": 6
+    }
+
+]

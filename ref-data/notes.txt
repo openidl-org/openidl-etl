@@ -1,3 +1,5 @@
+big question do we transition from 'code' to 'id' 
+
 postgres db will be used for logging. 
 
 tables:

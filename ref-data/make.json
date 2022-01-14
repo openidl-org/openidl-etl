@@ -6,5 +6,9 @@
     {
         "name": "Acura",
         "code": 2
+    },
+    {
+        "name": "Toyota",
+        "code": 3
     }
 ]

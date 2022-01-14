@@ -1,0 +1,29 @@
+[
+    {
+        "name": "civic",
+        "code": 1,
+        "trim": "sport",
+        "abs": "TRUE",
+        "vehicleClassCode": 3,
+        "year": 2018,
+        "makeCode": 1 
+    },
+    {
+        "name": "tacoma",
+        "code": 2,
+        "trim": "offroad",
+        "abs": "True",
+        "vehicleClassCode": 4,
+        "year": 2022,
+        "makeCode": 3 
+    },
+    {
+        "name": "crf300l",
+        "code": 3,
+        "trim": "ABS",
+        "abs": "True",
+        "vehicleClassCode": 6,
+        "year": 2022,
+        "makeCode": 1 
+    }
+]
