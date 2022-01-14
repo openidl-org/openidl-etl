@@ -5,7 +5,8 @@
     },
     {
         "name": "Acura",
-        "code": 2
+        "code": 2,
+        "parentCompanyCode":1
     },
     {
         "name": "Toyota",
