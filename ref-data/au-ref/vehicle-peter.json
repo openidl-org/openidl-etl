@@ -1,0 +1,24 @@
+{
+    "lobCode": 56,
+    "policy": {
+        "policyid": "895794764ghfh89",
+        "dob": {
+            "year": 1985,
+            "monthCode": 1
+        }
+    },
+    "vehicles": [
+        {
+            "makeCode": 1,
+            "modelCode": 1,
+            "generationCode": 1,
+            "trimCode": 1
+        },
+        {
+            "makeCode": 3,
+            "modelCode": 12,
+            "generationCode": 3,
+            "trimCode": 2
+        }
+    ]
+}
