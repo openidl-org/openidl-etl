@@ -1,3 +1,5 @@
+// we have issues here with car models changing over time,
+//we also have issues with trim changins. 
 [
     {
         "name": "civic",
@@ -6,7 +8,8 @@
         "abs": "TRUE",
         "vehicleClassCode": 3,
         "year": 2018,
-        "makeCode": 1 
+        "makeCode": 1,
+        "generation":13 
     },
     {
         "name": "tacoma",
@@ -15,7 +18,8 @@
         "abs": "True",
         "vehicleClassCode": 4,
         "year": 2022,
-        "makeCode": 3 
+        "makeCode": 3,
+        "generation": 3 
     },
     {
         "name": "crf300l",
@@ -24,6 +28,7 @@
         "abs": "True",
         "vehicleClassCode": 6,
         "year": 2022,
-        "makeCode": 1 
-    }
+        "makeCode": 1,
+        "generation": 1
+        }
 ]
