@@ -1,7 +1,0 @@
-make, model, month, vehicle class,
-
-
-we need an api that gives us a list of all objects
-we need a way to query for a list of items in that list.
-
-the idea is that we need reference data for the data loads

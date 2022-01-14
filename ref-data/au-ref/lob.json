@@ -1,0 +1,12 @@
+[
+    {
+        "code": 56,
+        "name": "Personal Auto",
+        "abv": "AU"
+    },
+    {
+        "code": 9999,
+        "name": "Home Owners By Peril",
+        "abv": "HOBP"
+    }
+]
