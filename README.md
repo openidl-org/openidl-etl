@@ -2,11 +2,6 @@
 
 Holds ETL code for openidl
 
-# Startup
-
--   put credentials for idm into the secrets
--   setup the config file
-
 # setup aws recources
 
 ## setup queues
