@@ -1,0 +1,7 @@
+node_modules
+config.json
+config.properties
+success-processor.zip
+failure-processor.zip
+target/**
+.DS_Store

@@ -1,0 +1,3 @@
+{
+    "stagingQueueUrl": "https://sqs.us-east-1.amazonaws.com/<account number>/openidl-<org name>-etl-staging-queue"
+}

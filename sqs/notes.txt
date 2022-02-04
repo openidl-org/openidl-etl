@@ -1,3 +1,0 @@
-ValidationQueue: File Meta Data ready for file validation.
-LoadQueue: Validated file meta data ready for load.
-SupportQueue: Failed validation file metadata. 

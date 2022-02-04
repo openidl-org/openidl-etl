@@ -1,2 +1,0 @@
-lambda: openIDL-validation
-lambda: openIDL-loadOutbound
