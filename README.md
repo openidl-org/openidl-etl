@@ -2,6 +2,8 @@
 
 Holds ETL code for openidl
 
+![Architecture](/architecture.png)
+
 # setup aws recources
 
 ## setup queues
