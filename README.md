@@ -4,6 +4,10 @@ Holds ETL code for openidl
 
 ![Architecture](/architecture.png)
 
+# Backlog
+
+[The backlog can be found here](backlog.md)
+
 # setup aws recources
 
 ## setup queues
