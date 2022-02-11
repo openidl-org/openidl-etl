@@ -168,9 +168,22 @@ run `npm install`
 -   configure
     -   copy the template config file and update the url
 -   change into the openidl-etl-tester directory
+-   create sample records
+    -   use `openidl-tester/test/samplemessages.json` as a template
 -   configure aws
     -   `export AWS_PROFILE=<profile entry>`
     -   `export AWS_REGION=<region>`
 -   send test data
     -   run `node sqs-sendmessages.js`
 -   check the logs of the respective components
+-   view the results in MongoDB
+
+    -   setup port forward
+        `aws --profile uat-role eks update-kubeconfig --region us-east-1 --name caru-dev-app-cluster`
+        `kubectl port-forward -n database svc/{{ org }}-mongodb-headless 28017:27017`
+    -   open mongo compass and enter the connection
+        `mongodb://{{ mongo user from secrets manager }}:{{ mongo user token from secrets manager }}@localhost:{{ port forward from above }}/openidl-offchain-db?authSource=openidl-offchain-db`
+
+-   view the records added
+-   check the lambda logs to see activity in the processors
+-   check the s3 bucket for new objects there
