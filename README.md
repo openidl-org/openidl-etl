@@ -13,17 +13,17 @@ Holds ETL code for openidl
 ## setup queues
 
 -   Create staging SQS Queue in AWS
-    -   Name: 'openidl-<org>-etl-staging-queue'
+    -   Name: 'openidl-{{ org }}-etl-staging-queue'
     -   Type: `Standard`
     -   Visibility timeout: `2 minute`
     -   Message retention period: `2 minutes`
 -   Create failure SQS Queue in AWS
-    -   Name: 'openidl-<org>-etl-failure-queue'
+    -   Name: 'openidl-{{ org }}-etl-failure-queue'
     -   Type: `Standard`
     -   Visibility timeout: `2 minute`
     -   Message retention period: `2 minutes`
 -   Create success SQS Queue in AWS
-    -   Name: 'openidl-<org>-etl-success-queue'
+    -   Name: 'openidl-{{ org }}-etl-success-queue'
     -   Type: `Standard`
     -   Visibility timeout: `2 minute`
     -   Message retention period: `2 minutes`
@@ -45,7 +45,7 @@ FAILURE_QUEUE_URL = "https://sqs.<region>.amazonaws.com/<account number>/<queue 
 
 -   Create staging processor lambda
     -   Create from scratch
-    -   name: openidl-<org name>-etl-staging-processor
+    -   name: openidl-{{ org }}-etl-staging-processor
     -   Runtime: `Java 11 (Corretto)`
     -   Upload fat jar (see openidl-etl-staging-processor/README.md for details about building)
         -   `openidl-etl-staging-processor/target/openidl-etl-staging-processor-0.0.1.jar`
