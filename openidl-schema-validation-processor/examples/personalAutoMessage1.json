@@ -1,0 +1,7 @@
+{
+  "$schema": "../schemas/personalAutoPolicyMessage.json",
+  "Policy": {
+    "AnnualStatementLine": "18",
+    "PolicyEffectiveDate": "2022-01-01x"
+  }
+}
