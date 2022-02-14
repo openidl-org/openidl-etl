@@ -4,3 +4,4 @@
 -   rules selector
 -   mapping to full record
 -   performance tuning
+-   add json schema validation
