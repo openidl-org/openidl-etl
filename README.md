@@ -8,10 +8,20 @@ Holds ETL code for openidl
 
 [The backlog can be found here](backlog.md)
 
+# Developing
+
+-   to use a new schema use jsonschema2pojo.org to convert from the jsonschema into pojos.
+-   put the pojos into the openidl-etl-staging-processor src/java directory
+
 # setup aws recources
 
 ## setup queues
 
+-   Create input SQS Queue in AWS
+    -   Name: 'openidl-{{ org }}-etl-input-queue'
+    -   Type: `Standard`
+    -   Visibility timeout: `2 minute`
+    -   Message retention period: `2 minutes`
 -   Create staging SQS Queue in AWS
     -   Name: 'openidl-{{ org }}-etl-staging-queue'
     -   Type: `Standard`
@@ -27,6 +37,41 @@ Holds ETL code for openidl
     -   Type: `Standard`
     -   Visibility timeout: `2 minute`
     -   Message retention period: `2 minutes`
+
+## setup input processor
+
+-   change into the openidl-etl-input-processor directory
+
+run `npm install`
+
+-   configure the success processor
+
+    -   create a file in config directory called config.json from the config-template.json provided
+
+-   build
+
+    -   go back to top folder
+    -   `make build_input_processor`
+
+-   Create input processor lambda
+    -   Create from scratch
+    -   Runtime: `Node.js 14`
+    -   Upload fat zip file (see openidl-etl-input-processor/README.md for details about building)
+        -   `openidl-etl-input-processor/function.zip`
+    -   Handler
+        `index.js`
+    -   Edit configuration
+        -   Memory: `128 MB`
+        -   Timeout: `2 min`
+    -   Edit the Execution Role for the lambda to have access to SQS queue
+        -   Go to lambda `Configuration` tab
+        -   Go to lambda `Permission` section
+        -   Click on Execution role to go to IAM section of AWS
+        -   Click attach policies
+            -   `AmazonSQSFullAccess`
+            -   Please note full access is only for demo purposes only. Limit the scope of the permission to that queue only
+    -   Attach trigger to lambda
+        -   Add a trigger and select the SQS success queue
 
 ## setup staging processor
 

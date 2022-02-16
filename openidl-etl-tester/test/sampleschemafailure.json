@@ -1,0 +1,551 @@
+[
+    {
+        "errors": [
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"ID\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "ID",
+                "stack": "instance is not allowed to have the additional property \"ID\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"EtlID\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "EtlID",
+                "stack": "instance is not allowed to have the additional property \"EtlID\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"LineOfInsurance\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "LineOfInsurance",
+                "stack": "instance is not allowed to have the additional property \"LineOfInsurance\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"StateCode\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "StateCode",
+                "stack": "instance is not allowed to have the additional property \"StateCode\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"AccountingDate\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "AccountingDate",
+                "stack": "instance is not allowed to have the additional property \"AccountingDate\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"CompanyCode\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "CompanyCode",
+                "stack": "instance is not allowed to have the additional property \"CompanyCode\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"Territory\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "Territory",
+                "stack": "instance is not allowed to have the additional property \"Territory\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"OptionalZipCodeIndicator\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "OptionalZipCodeIndicator",
+                "stack": "instance is not allowed to have the additional property \"OptionalZipCodeIndicator\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"TransactionCode\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "TransactionCode",
+                "stack": "instance is not allowed to have the additional property \"TransactionCode\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"PremiumLossAmounts\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "PremiumLossAmounts",
+                "stack": "instance is not allowed to have the additional property \"PremiumLossAmounts\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"Program\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "Program",
+                "stack": "instance is not allowed to have the additional property \"Program\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"Subline\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "Subline",
+                "stack": "instance is not allowed to have the additional property \"Subline\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"OperateAge\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "OperateAge",
+                "stack": "instance is not allowed to have the additional property \"OperateAge\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"SexMaterialStatus\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "SexMaterialStatus",
+                "stack": "instance is not allowed to have the additional property \"SexMaterialStatus\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"VehicleUse\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "VehicleUse",
+                "stack": "instance is not allowed to have the additional property \"VehicleUse\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"VehicleProformance\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "VehicleProformance",
+                "stack": "instance is not allowed to have the additional property \"VehicleProformance\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"PrivatePassengerDriversTraining\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "PrivatePassengerDriversTraining",
+                "stack": "instance is not allowed to have the additional property \"PrivatePassengerDriversTraining\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"CommercialAutomobileClassification\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "CommercialAutomobileClassification",
+                "stack": "instance is not allowed to have the additional property \"CommercialAutomobileClassification\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"LiabilityLimitsAmount\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "LiabilityLimitsAmount",
+                "stack": "instance is not allowed to have the additional property \"LiabilityLimitsAmount\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"LiabilityLimitsAmountNJ\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "LiabilityLimitsAmountNJ",
+                "stack": "instance is not allowed to have the additional property \"LiabilityLimitsAmountNJ\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"LiabilityLimitsAmountPA\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "LiabilityLimitsAmountPA",
+                "stack": "instance is not allowed to have the additional property \"LiabilityLimitsAmountPA\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"DeductibleAmount\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "DeductibleAmount",
+                "stack": "instance is not allowed to have the additional property \"DeductibleAmount\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"VehicleClassBodyStyle\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "VehicleClassBodyStyle",
+                "stack": "instance is not allowed to have the additional property \"VehicleClassBodyStyle\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"VehicleClassBodySize\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "VehicleClassBodySize",
+                "stack": "instance is not allowed to have the additional property \"VehicleClassBodySize\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"ModelYear\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "ModelYear",
+                "stack": "instance is not allowed to have the additional property \"ModelYear\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"UnisuredUnderinsuredMotorist\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "UnisuredUnderinsuredMotorist",
+                "stack": "instance is not allowed to have the additional property \"UnisuredUnderinsuredMotorist\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"Exposure\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "Exposure",
+                "stack": "instance is not allowed to have the additional property \"Exposure\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"ClaimCount\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "ClaimCount",
+                "stack": "instance is not allowed to have the additional property \"ClaimCount\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"MonthsCovered\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "MonthsCovered",
+                "stack": "instance is not allowed to have the additional property \"MonthsCovered\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"CasueOfLoss\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "CasueOfLoss",
+                "stack": "instance is not allowed to have the additional property \"CasueOfLoss\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"TerrorismIndicator\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "TerrorismIndicator",
+                "stack": "instance is not allowed to have the additional property \"TerrorismIndicator\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"SinlgeMultiCar\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "SinlgeMultiCar",
+                "stack": "instance is not allowed to have the additional property \"SinlgeMultiCar\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"AccidentDate\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "AccidentDate",
+                "stack": "instance is not allowed to have the additional property \"AccidentDate\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"PackageCode\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "PackageCode",
+                "stack": "instance is not allowed to have the additional property \"PackageCode\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"PoolAffiliation\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "PoolAffiliation",
+                "stack": "instance is not allowed to have the additional property \"PoolAffiliation\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"OccurenceOrPolicyIdentification\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "OccurenceOrPolicyIdentification",
+                "stack": "instance is not allowed to have the additional property \"OccurenceOrPolicyIdentification\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"NCProgramEnhancemntIndicator\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "NCProgramEnhancemntIndicator",
+                "stack": "instance is not allowed to have the additional property \"NCProgramEnhancemntIndicator\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"ZipCode\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "ZipCode",
+                "stack": "instance is not allowed to have the additional property \"ZipCode\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"ZipeCodeSuffix(Optional)\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "ZipeCodeSuffix(Optional)",
+                "stack": "instance is not allowed to have the additional property \"ZipeCodeSuffix(Optional)\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"UM/UIMStackingIndicator\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "UM/UIMStackingIndicator",
+                "stack": "instance is not allowed to have the additional property \"UM/UIMStackingIndicator\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"SymbolCode\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "SymbolCode",
+                "stack": "instance is not allowed to have the additional property \"SymbolCode\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"PassiveRestraintDiscountCode\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "PassiveRestraintDiscountCode",
+                "stack": "instance is not allowed to have the additional property \"PassiveRestraintDiscountCode\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"Anti-LockBrakesDiscountCode\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "Anti-LockBrakesDiscountCode",
+                "stack": "instance is not allowed to have the additional property \"Anti-LockBrakesDiscountCode\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"Anti-TheftDeviceDiscountCode\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "Anti-TheftDeviceDiscountCode",
+                "stack": "instance is not allowed to have the additional property \"Anti-TheftDeviceDiscountCode\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"DefensiveDriverDiscountCode\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "DefensiveDriverDiscountCode",
+                "stack": "instance is not allowed to have the additional property \"DefensiveDriverDiscountCode\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"PIPLimitsDeductibleCode\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "PIPLimitsDeductibleCode",
+                "stack": "instance is not allowed to have the additional property \"PIPLimitsDeductibleCode\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"NewJerseyPIPLimit\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "NewJerseyPIPLimit",
+                "stack": "instance is not allowed to have the additional property \"NewJerseyPIPLimit\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"NewJerseyDeductible\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "NewJerseyDeductible",
+                "stack": "instance is not allowed to have the additional property \"NewJerseyDeductible\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"RatingTerminalZoneCode\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "RatingTerminalZoneCode",
+                "stack": "instance is not allowed to have the additional property \"RatingTerminalZoneCode\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"ExperienceRatingModificationFactor\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "ExperienceRatingModificationFactor",
+                "stack": "instance is not allowed to have the additional property \"ExperienceRatingModificationFactor\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"LimitedCode-LossTransactionCode\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "LimitedCode-LossTransactionCode",
+                "stack": "instance is not allowed to have the additional property \"LimitedCode-LossTransactionCode\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"CompanyUse\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "CompanyUse",
+                "stack": "instance is not allowed to have the additional property \"CompanyUse\""
+            },
+            {
+                "path": [],
+                "message": "is not allowed to have the additional property \"VehicleIdentification\"",
+                "schema": "PersonalAutoPolicyMessage",
+                "name": "additionalProperties",
+                "argument": "VehicleIdentification",
+                "stack": "instance is not allowed to have the additional property \"VehicleIdentification\""
+            },
+            {
+                "path": [
+                    "Coverage"
+                ],
+                "message": "is not of a type(s) object",
+                "schema": {
+                    "type": "object",
+                    "description": "coverage level elements",
+                    "properties": {
+                        "CoverageType": {
+                            "type": "string",
+                            "description": "",
+                            "enum": [
+                                "BI",
+                                "PD",
+                                "CSL",
+                                "Comprehensive",
+                                "Collision",
+                                "UM BI",
+                                "UM PD",
+                                "UM CSL",
+                                "Med Pay/Med Expense"
+                            ]
+                        },
+                        "EachPersonLimit": {
+                            "type": "number",
+                            "description": ""
+                        },
+                        "AllPersonsLimit": {
+                            "type": "number",
+                            "description": ""
+                        },
+                        "Limit": {
+                            "type": "number",
+                            "description": ""
+                        },
+                        "Deductible": {
+                            "type": "number",
+                            "description": ""
+                        },
+                        "Premium": {
+                            "type": "number",
+                            "description": ""
+                        }
+                    }
+                },
+                "name": "type",
+                "argument": [
+                    "object"
+                ],
+                "stack": "instance.Coverage is not of a type(s) object"
+            }
+        ],
+        "instance": {
+            "ID": "Guid-1",
+            "EtlID": "loadId123",
+            "LineOfInsurance": "56",
+            "Coverage": "4",
+            "StateCode": "36",
+            "AccountingDate": {
+                "Month": "String",
+                "Year": 2020
+            },
+            "CompanyCode": "1234",
+            "Territory": "01",
+            "OptionalZipCodeIndicator": "String",
+            "TransactionCode": "Ref",
+            "PremiumLossAmounts": {
+                "Premium": "Number",
+                "Loss": "Number"
+            },
+            "Program": "3",
+            "Subline": "1",
+            "OperateAge": "INT",
+            "SexMaterialStatus": "Ref",
+            "VehicleUse": "Ref",
+            "VehicleProformance": "Ref",
+            "PrivatePassengerDriversTraining": "Ref",
+            "CommercialAutomobileClassification": "Ref",
+            "LiabilityLimitsAmount": "Ref",
+            "LiabilityLimitsAmountNJ": "Ref",
+            "LiabilityLimitsAmountPA": "Ref",
+            "DeductibleAmount": "Ref",
+            "VehicleClassBodyStyle": "Ref",
+            "VehicleClassBodySize": "Ref",
+            "ModelYear": "INT",
+            "UnisuredUnderinsuredMotorist": "Ref",
+            "Exposure": "Ref",
+            "ClaimCount": "?INT?",
+            "MonthsCovered": "Ref",
+            "CasueOfLoss": "Ref",
+            "TerrorismIndicator": "Ref",
+            "SinlgeMultiCar": "Ref",
+            "AccidentDate": {
+                "Month": "String",
+                "Year": "INT"
+            },
+            "PackageCode": "Ref",
+            "PoolAffiliation": "Ref",
+            "OccurenceOrPolicyIdentification": {
+                "PolicyNumber": "Ref",
+                "ClaimNumber": "Ref",
+                "ClaimIdentifier": "Ref"
+            },
+            "NCProgramEnhancemntIndicator": "Ref",
+            "ZipCode": "?String?",
+            "ZipeCodeSuffix(Optional)": "?String",
+            "UM/UIMStackingIndicator": "Ref",
+            "SymbolCode": "Ref",
+            "PassiveRestraintDiscountCode": "Ref",
+            "Anti-LockBrakesDiscountCode": "Ref",
+            "Anti-TheftDeviceDiscountCode": "Ref",
+            "DefensiveDriverDiscountCode": "Ref",
+            "PIPLimitsDeductibleCode": "Ref",
+            "NewJerseyPIPLimit": "Ref",
+            "NewJerseyDeductible": "Ref",
+            "RatingTerminalZoneCode": "Ref",
+            "ExperienceRatingModificationFactor": "Ref",
+            "LimitedCode-LossTransactionCode": "Ref",
+            "CompanyUse": "Ref",
+            "VehicleIdentification": "Ref"
+        }
+    }
+]

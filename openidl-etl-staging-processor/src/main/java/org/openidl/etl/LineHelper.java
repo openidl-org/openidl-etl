@@ -22,4 +22,8 @@ public interface LineHelper {
 	public String getRuleFilePath();
 	
 
+	/**
+	 * Create a map from the input record
+	 */
+	public Map<String,String> mapFromOpenidlRecord(String record);
 }

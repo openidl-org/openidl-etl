@@ -5,3 +5,5 @@ success-processor.zip
 failure-processor.zip
 target/**
 .DS_Store
+openidl-etl-input-processor/input-processor.zip
+openidl-etl-staging-processor/Example-sources.zip

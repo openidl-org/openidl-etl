@@ -1,5 +1,16 @@
 [
     {
+        "Policy": {
+            "RecordLOB": "Auto",
+            "InsurerNAIC": "??",
+            "AnnualStatementLine": "19.1",
+            "Subline": "Personal",
+            "PolicyNumber": "12345678",
+            "EffectiveDate": "2022-01-01",
+            "PolicyExpirationDate": "2023-01-01"
+        }
+    },
+    {
         "ID": "Guid-1",
         "EtlID": "loadId123",
         "LineOfInsurance": "56",

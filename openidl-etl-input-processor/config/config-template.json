@@ -1,0 +1,5 @@
+{
+    "validQueueUrl": "https://sqs.us-east-1.amazonaws.com/<account number>/openidl-<org name>-etl-staging-queue",
+    "invalidQueueUrl": "https://sqs.us-east-1.amazonaws.com/<account number>/openidl-<org name>-etl-failure-queue",
+    "region": "region"
+}

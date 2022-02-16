@@ -1,5 +1,5 @@
 {
-  "name": "openidl-schema-validation-processor",
+  "name": "openidl-etl-input-processor",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.51.0",
+    "aws-sdk": "^2.1073.0",
     "jsonschema": "^1.4.0"
   }
 }

@@ -1,3 +1,6 @@
+build_input_processor:
+	cd openidl-etl-input-processor; zip -r input-processor.zip . -x "input-processor.zip"; cd ..
+
 build_staging_processor:
 	cd openidl-etl-staging-processor; mvn package; cd ..
 

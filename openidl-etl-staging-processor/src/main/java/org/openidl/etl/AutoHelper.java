@@ -3,12 +3,17 @@ package org.openidl.etl;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import org.openidl.etl.model.OpenidlAutoPolicyRecord;
+
 /**
  * Specifically made for the Auto line
  * @author findlayc
  *
  */
 public class AutoHelper implements LineHelper{
+
+	private static Gson gson = new Gson();
 
 	@Override
 	public Map<String, DataFactProperty> getFields(){
@@ -57,6 +62,21 @@ public class AutoHelper implements LineHelper{
 		fields.put("exceptionCodeD", new DataFactProperty("exceptionCodeD", "exceptionCodeD", 10, "STRING", "STRING", ""));
 	
 		return fields;
+	}
+
+	public Map<String,String> mapFromOpenidlRecord(String record) {
+
+		OpenidlAutoPolicyRecord openidlAutoPolicyRecord = gson.fromJson(record, OpenidlAutoPolicyRecord.class);
+
+		//transform the data from the SQS message to format expected to run the rule
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("LOB", openidlAutoPolicyRecord.getPolicy().getRecordLOB());
+		data.put("state", openidlAutoPolicyRecord.getPolicy().getPolicyState());
+		data.put("coverageCode", openidlAutoPolicyRecord.getCoverage() == null ? null : (openidlAutoPolicyRecord.getCoverage().getCoverageType() == null ? null : openidlAutoPolicyRecord.getCoverage().getCoverageType().value()));
+		data.put("programCode", openidlAutoPolicyRecord.getPolicy().getAnnualStatementLine());
+		data.put("sublineCode", openidlAutoPolicyRecord.getPolicy() == null ? null : (openidlAutoPolicyRecord.getPolicy().getSubline() == null ?  null : openidlAutoPolicyRecord.getPolicy().getSubline().value()));
+
+		return data;
 	}
 
 	@Override
