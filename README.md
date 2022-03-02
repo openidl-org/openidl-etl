@@ -2,15 +2,22 @@
 
 Holds ETL code for openidl
 
-![Architecture](/architecture.png)
+![Architecture](/images/architecture.png)
 
 # Backlog
 
 [The backlog can be found here](backlog.md)
 
+# Input schema
+
+-   can be found in openidl-etl-input-processor/schemas
+
 # Developing
 
 -   to use a new schema use jsonschema2pojo.org to convert from the jsonschema into pojos.
+
+![json 2 pojo](/images/jsonschema2pojo.png)
+
 -   put the pojos into the openidl-etl-staging-processor src/java directory
 
 # setup aws recources
