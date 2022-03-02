@@ -11,7 +11,7 @@ function buildPayload(records) {
         "sourceId": config.sourceId,
         "batchId": config.batchId,
         "chunkId": config.chunkId,
-        "carrierId": config.carrierId,
+        "carrierId": records[0].Policy.CompanyID,
         "policyNo": "91111111",
         "errFlg": false,
         "errrLst": [],

@@ -5,73 +5,364 @@
   "title": "Personal Auto Policy Message",
   "additionalProperties": false,
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
+    "system": {
+      "type": "object",
+      "description": "Manages the information about the processing of the message",
+      "properties": {
+        "schemaValidation": {
+          "type": "object",
+          "properties": {
+            "validated": {
+              "type": "string",
+              "enum": [
+                "Yes",
+                "No"
+              ]
+            },
+            "valid": {
+              "type": "string",
+              "enum": [
+                "Yes",
+                "No"
+              ]
+            },
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "argument": {
+                    "type": "string"
+                  },
+                  "level": {
+                    "type": "string",
+                    "enum": [
+                      "Error",
+                      "Warning",
+                      "Info"
+                    ]
+                  },
+                  "code": {
+                    "type": "string",
+                    "pattern": "^\\d{4}$"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "schema": {
+                    "type": "string"
+                  },
+                  "stack": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ruleValidation": {
+          "type": "object",
+          "properties": {
+            "validated": {
+              "type": "string",
+              "enum": [
+                "Yes",
+                "No"
+              ]
+            },
+            "valid": {
+              "type": "string",
+              "enum": [
+                "Yes",
+                "No"
+              ]
+            },
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "argument": {
+                    "type": "string"
+                  },
+                  "level": {
+                    "type": "string",
+                    "enum": [
+                      "Error",
+                      "Warning",
+                      "Info"
+                    ]
+                  },
+                  "code": {
+                    "type": "string",
+                    "pattern": "^\\d{4}$"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "schema": {
+                    "type": "string"
+                  },
+                  "stack": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "log": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "string",
+                "enum": [
+                  "Error",
+                  "Warning",
+                  "Info"
+                ]
+              },
+              "code": {
+                "type": "string",
+                "pattern": "^\\d{4}$"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "RecordLOB": {
+      "type": "string",
+      "description": "A code identifying the broader line of insurance the transaction is to be reported as.",
+      "enum": [
+        "Auto"
+      ]
+    },
+    "RecordType": {
+      "type": "string",
+      "description": "A code identifying the type of transaction being reported.",
+      "enum": [
+        "Policy",
+        "Claim"
+      ]
+    },
     "Policy": {
       "type": "object",
       "description": "policy level elements",
+      "additionalProperties": false,
       "properties": {
-        "RecordLOB": {
+        "CompanyID": {
           "type": "string",
-          "description": ""
-        },
-        "InsurerNAIC": {
-          "type": "string",
-          "description": ""
+          "description": "A unique 4-digit code assigned by the Statistical Bureaus to identify each insurance company."
         },
         "AnnualStatementLine": {
           "type": "string",
-          "description": ""
+          "description": "A code identifying the line of insurance the transaction was written under."
+        },
+        "PolicyCategory": {
+          "type": "string",
+          "description": "A code identifying whether the record is Personal or Commercial.",
+          "enum": [
+            "Personal",
+            "Commercial"
+          ]
         },
         "Subline": {
           "type": "string",
-          "description": "",
-          "enum": ["Personal", "Commercial"]
+          "description": "A code identifying the coverage."
         },
-        "PolicyNumber": {
+        "PolicyIdentifier": {
           "type": "string",
-          "description": ""
+          "description": "A unique combination of letters and numbers that identifies an insured's insurance policy.  This is the foreign key for connecting the claim and policy records."
         },
         "PolicyEffectiveDate": {
           "type": "string",
           "format": "date",
-          "description": "Effective Date of the Policy"
+          "description": "The date the policy became effective."
         },
-        "PolicyExpirationDate": {
+        "TransactionType": {
+          "type": "string",
+          "description": "A code identifying whether the record is a New Business, Change, Renewal, Cancellation, etc.",
+          "enum": [
+            "NL",
+            "CHG",
+            "RENL",
+            "CANC",
+            "REIN"
+          ]
+        },
+        "TransactionEffectiveDate": {
           "type": "string",
           "format": "date",
-          "description": "Effective Date of the Policy"
+          "description": "Date the change becomes effective.  Not the booking date."
         },
-        "VoluntaryResidual": {
+        "TransactionExpirationDate": {
           "type": "string",
-          "description": "",
-          "enum": ["Voluntary", "Residual"]
+          "format": "date",
+          "description": "Date the change ends."
         },
-        "PolicyAddress1": {
+        "Market": {
           "type": "string",
-          "description": ""
+          "description": "Market in which the policy is being written through."
         },
-        "PolicyAddress2": {
+        "AccountingDate": {
           "type": "string",
-          "description": ""
+          "format": "date",
+          "description": "The date the transaction was financially booked."
         },
-        "PolicyState": {
+        "Program": {
           "type": "string",
-          "description": ""
+          "description": "A code that indicates whether the basic rules and forms used in writing the policy are using certain Bureau's rules or form or if they are independent."
         },
-        "PolicyZip5": {
+        "MultiCarDiscountCode": {
           "type": "string",
-          "description": "",
-          "pattern": "^\\d{5}$"
+          "description": "A code that indicates whether there is a multi-car discount or just a single rated car.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
         },
-        "PolicyZip4": {
+        "PackageCode": {
           "type": "string",
-          "description": "",
-          "pattern": "^\\d{4}$"
+          "description": "A code identifying whether the policy is standalone or part of a package.",
+          "enum": [
+            "Standalone",
+            "Package"
+          ]
         },
-        "CreditScored": {
+        "PoolAffiliation": {
           "type": "string",
-          "description": "",
-          "enum": ["Yes", "No"]
+          "description": "Identifies business written in a pool such as an assigned risk facility or joint underwriting association, and business not written in a pool.",
+          "enum": [
+            "Assigned Risk",
+            "JUA",
+            "None"
+          ]
+        },
+        "NCProgramEnhancementIndicator": {
+          "type": "string",
+          "description": "Based on North Carolina Session 2015 House Bill 288, premiums and losses resulting from program enhancements must not comingle with basic data. This code indicates the use of enhanced endorsements.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "NCReinsuranceFacility": {
+          "type": "string",
+          "description": "A code that distinguishes between business written under the NC Reinsurance Facility and that which is not.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "SCReinsuranceFacility": {
+          "type": "string",
+          "description": "A code that distinguishes between business written under the SC Reinsurance Facility and that which is not.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "MultiCarRisks": {
+          "type": "string",
+          "description": "A field that indicates whether the multi-car risk is subject to the PIP Premium Discount and whether the Principal Auto is not Discounted. ",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        }
+      }
+    },
+    "Driver": {
+      "type": "object",
+      "description": "driver level elements",
+      "additionalProperties": false,
+      "properties": {
+        "Gender": {
+          "type": "string",
+          "description": "Gender of highest rated operator of each insured vehicle. ",
+          "enum": [
+            "Male",
+            "Female",
+            "Not Disclosed"
+          ]
+        },
+        "DriverAge": {
+          "type": "number",
+          "description": "Driver's age when policy was written."
+        },
+        "MaritalStatus": {
+          "type": "string",
+          "description": "Indicates whether driver is single or married.",
+          "enum": [
+            "Married",
+            "Single",
+            "Divorced"
+          ]
+        },
+        "SafeDrivingDefensiveDriverDiscount": {
+          "type": "string",
+          "description": "Discount for the practice of using driving strategies that minimize risk and help avoid accidents, as by predicting hazards on the road ",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "GoodStudentDiscount": {
+          "type": "string",
+          "description": "Discount for student getting good grades in school.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "NumberOfPenaltyPoints": {
+          "type": "number",
+          "description": "Number of motoring conviction codes, fixed penalty notices, endorsements against the driver.  "
+        },
+        "DriversTrainingDiscount": {
+          "type": "string",
+          "description": "Discount for Driver taking Driving School lessons.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "55AndOverDiscount": {
+          "type": "string",
+          "description": "Discount for 55 & over years olds for successful completion of the PA certified training course.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "AccidentPreventionCredit": {
+          "type": "string",
+          "description": "Indicates whether the vehicle has an accident prevention credit.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
         }
       }
     },
@@ -79,120 +370,89 @@
       "type": "object",
       "description": "vehicle level elements",
       "properties": {
-        "PrimaryDriverGender": {
+        "BodyStyle": {
           "type": "string",
-          "description": "",
-          "enum": ["Male", "Female"]
+          "description": "The shape and model of a vehicle."
         },
-        "LicenseNumber": {
+        "BodySize": {
           "type": "string",
-          "description": ""
+          "description": "Type of Vehicle"
         },
-        "LicenseState": {
+        "EngineSizeMotorcycle": {
           "type": "string",
-          "description": ""
-        },
-        "AgeLicenseFirstIssued": {
-          "type": "number",
-          "description": ""
-        },
-        "DriverBirthdate": {
-          "type": "string",
-          "format": "date",
-          "description": ""
-        },
-        "PrimaryDriverAge": {
-          "type": "number",
-          "description": ""
-        },
-        "PrimaryDriverGoodStudentDiscount": {
-          "type": "string",
-          "description": "",
-          "enum": ["Yes", "No"]
+          "description": "Size of Engine in Motorcycles or Motor Scooters"
         },
         "VIN": {
-          "type": "number",
-          "description": ""
-        },
-        "GarageZip5": {
           "type": "string",
-          "description": "",
+          "description": "Unique combination of numbers and letters that identify each vehicle."
+        },
+        "GarageState": {
+          "type": "string",
+          "description": "State where the vehicle is principally garaged."
+        },
+        "GarageZIP5": {
+          "type": "string",
+          "description": "First 5 digits of Zip Code of where the vehicle is principally garaged.",
           "pattern": "^\\d{5}$"
         },
-        "GarageZip4": {
+        "GarageZIP4": {
           "type": "string",
-          "description": "",
+          "description": "Last 4 digits of Zip Code of where the vehicle is principally garaged.",
           "pattern": "^\\d{4}$"
         },
-        "Make": {
+        "VehicleYear": {
           "type": "string",
-          "description": ""
+          "description": "Model Year",
+          "pattern": "^\\d{4}$"
         },
-        "Model": {
+        "VehicleUse": {
           "type": "string",
-          "description": ""
+          "description": "Primary use of the vehicle.",
+          "enum": [
+            "Personal",
+            "Work",
+            "Delivery"
+          ]
         },
-        "Trim": {
+        "VechicleSymbol": {
           "type": "string",
-          "description": ""
+          "description": "Abstraction of the vehicle rating symbols.  Not company rating symbols."
         },
-        "Symbol": {
+        "VechiclePerformance": {
           "type": "string",
-          "description": ""
-        },
-        "Year": {
-          "type": "string",
-          "description": ""
-        },
-        "Use": {
-          "type": "string",
-          "description": "",
-          "enum": ["Peronal", "Work", "Delivery"]
+          "description": "Vehicle Performance characteristic"
         },
         "PerCommuteMiles": {
           "type": "number",
-          "description": ""
+          "description": "Number of miles driven per commute."
         },
-        "AnnualMiles": {
-          "type": "string",
-          "description": ""
+        "AnnualVehicleMiles": {
+          "type": "number",
+          "description": "Number of miles driven annually."
         },
-        "AntilockBrakes": {
+        "AntilockBrakesDiscount": {
           "type": "string",
-          "description": "",
-          "enum": ["Yes", "No"]
-        },
-        "SafetyRestraintDevice": {
-          "type": "string",
-          "description": ""
-        },
-        "Customizations": {
-          "type": "string",
-          "description": ""
-        },
-        "FuelType": {
-          "type": "string",
-          "description": "",
+          "description": "Code indicating whether Anti-Lock Brakes discount was applied to the vehicle.",
           "enum": [
-            "Gas",
-            "e85",
-            "LNG",
-            "Diesel",
-            "Electric",
-            "Hybrid",
-            "Hydrogen",
-            "Experimental"
+            "Yes",
+            "No"
           ]
         },
-        "Telematics": {
+        "SafetyRestraintDiscount": {
           "type": "string",
-          "description": "",
-          "enum": ["Yes", "No"]
+          "description": "Code indicating whether Safety Restraint discount was applied to the vehicle.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
         },
-        "AntitheftDevice": {
+        "AntiTheftDeviceDiscount": {
           "type": "string",
-          "description": "",
-          "enum": ["Full", "Partial"]
+          "description": "Code indicating whether Anti-Theft Device discount was applied to the vehicle.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
         }
       }
     },
@@ -200,40 +460,61 @@
       "type": "object",
       "description": "coverage level elements",
       "properties": {
-        "CoverageType": {
+        "CoverageCode": {
           "type": "string",
-          "description": "",
-          "enum": [
-            "BI",
-            "PD",
-            "CSL",
-            "Comprehensive",
-            "Collision",
-            "UM BI",
-            "UM PD",
-            "UM CSL",
-            "Med Pay/Med Expense"
-          ]
+          "description": "Code representing the coverage of the vehicle the premium on the record applies to."
         },
-        "EachPersonLimit": {
+        "PerPersonLimit": {
           "type": "number",
-          "description": ""
+          "description": "Per Person Limit for the Coverage"
         },
-        "AllPersonsLimit": {
+        "PerAccidentLimit": {
           "type": "number",
-          "description": ""
+          "description": "Per Accident Limit for the Coverage"
         },
-        "Limit": {
+        "PhysicalDamageLimit": {
           "type": "number",
-          "description": ""
+          "description": "Physical Damage Limit for the Coverage"
         },
-        "Deductible": {
-          "type": "number",
-          "description": ""
+        "CombinedSingleLimit": {
+          "type": "string",
+          "description": "Combined Single Limit for the Coverage"
         },
         "Premium": {
           "type": "number",
-          "description": ""
+          "description": "Transactional Premium applicable to the coverage"
+        },
+        "Deductible": {
+          "type": "number",
+          "description": "Deductible for the Coverage"
+        },
+        "UMUIMStackingIndicator": {
+          "type": "string",
+          "description": "Indicates whether UM/UIM Limits are stacked (per vehicle) or non-stacked (per policy)",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "MedicalExpensesDeductibleAmount": {
+          "type": "number",
+          "description": "Deductible amount applicable to Medical Expenses."
+        },
+        "NJThresholdTortLimitation": {
+          "type": "string",
+          "description": "Code indicating whether the insured has a Threshold and Tort Limitation on the policy.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "PrimaryNoFaultHealthPlan": {
+          "type": "string",
+          "description": "Determines what type of no-fault health plan the driver has."
+        },
+        "CombinedFirstPartyBenefits": {
+          "type": "string",
+          "description": "Code describing the combination of Medical Benefits Limit, Loss of Income $, Accidental Death $, Funeral Expense $"
         }
       }
     }

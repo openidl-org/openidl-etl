@@ -170,7 +170,7 @@ public class AWSSQSProcessor implements RequestHandler<SQSEvent, Void> {
 		SQSMessage message = new SQSMessage();
 		
 		String sampleBody = "{\r\n"
-				+ "  \"$schema\": \"./au-schema.json\",\r\n"
+				+ "  \"_id\": \"ID0000001\",\r\n"
 				+ "  \"Policy\": {\r\n"
 				+ "  \"PolicyNumber\": \"polno123\"\r\n"
 				+ "  }\r\n"

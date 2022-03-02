@@ -1,0 +1,74 @@
+{
+  "system": {
+    "ruleValidation": {
+      "valid": "Yes",
+      "validated": "Yes"
+    }
+  },
+  "RecordLOB": "Auto",
+  "RecordType": "Policy",
+  "Policy": {
+    "CompanyID": "12345",
+    "AnnualStatementLine": "19.1",
+    "PolicyCategory": "Personal",
+    "Subline": "PD",
+    "PolicyIdentifier": "12345678",
+    "PolicyEffectiveDate": "2022-01-01",
+    "TransactionType": "CHG",
+    "TransactionEffectiveDate": "2022-03-01",
+    "TransactionExpirationDate": "2023-01-01",
+    "Market": "??",
+    "AccountingDate": "2022-03-01",
+    "Program": "??",
+    "MultiCarDiscountCode": "Yes",
+    "PackageCode": "Standalone",
+    "PoolAffiliation": "None",
+    "NCProgramEnhancementIndicator": "No",
+    "NCReinsuranceFacility": "No",
+    "SCReinsuranceFacility": "No",
+    "MultiCarRisks": "No"
+  },
+  "Driver": {
+    "Gender": "Female",
+    "DriverAge": 50,
+    "MaritalStatus": "Married",
+    "SafeDrivingDefensiveDriverDiscount": "Yes",
+    "GoodStudentDiscount": "Yes",
+    "NumberOfPenaltyPoints": 0,
+    "DriversTrainingDiscount": "Yes",
+    "55AndOverDiscount": "No",
+    "AccidentPreventionCredit": "Yes"
+  },
+  "Vehicle": {
+    "BodyStyle": "??",
+    "BodySize": "??",
+    "EngineSizeMotorcycle": "??",
+    "VIN": "ABCDEFG12345678",
+    "GarageState": "NJ",
+    "GarageZIP5": "02002",
+    "GarageZIP4": "0000",
+    "VehicleYear": "2010",
+    "VehicleUse": "Personal",
+    "VechicleSymbol": "??",
+    "VechiclePerformance": "??",
+    "PerCommuteMiles": 20,
+    "AnnualVehicleMiles": 10000,
+    "AntilockBrakesDiscount": "Yes",
+    "SafetyRestraintDiscount": "Yes",
+    "AntiTheftDeviceDiscount": "No"
+  },
+  "Coverage": {
+    "CoverageCode": "??",
+    "PerPersonLimit": 100000,
+    "PerAccidentLimit": 300000,
+    "PhysicalDamageLimit": 100000,
+    "CombinedSingleLimit": "??",
+    "Premium": 100,
+    "Deductible": 2500,
+    "UMUIMStackingIndicator": "No",
+    "MedicalExpensesDeductibleAmount": 2000,
+    "NJThresholdTortLimitation": "No",
+    "PrimaryNoFaultHealthPlan": "??",
+    "CombinedFirstPartyBenefits": "??"
+  }
+}
