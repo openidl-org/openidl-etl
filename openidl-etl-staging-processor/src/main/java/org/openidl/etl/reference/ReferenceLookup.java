@@ -1,21 +1,65 @@
 package org.openidl.etl.reference;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-
-import org.apache.commons.io.IOUtils;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class ReferenceLookup {
     
+    private static Properties stateCodes;
+    private static Properties lobCodes;
+    private static Properties sublineCodes;
+
+    static {
+        try (InputStream input = ReferenceLookup.class.getClassLoader().getResourceAsStream("states.properties")) {
+
+            stateCodes = new Properties();
+
+            if (input == null) {
+                System.out.println("Unable to load state properties.");
+            }
+            stateCodes.load(input);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        try (InputStream input = ReferenceLookup.class.getClassLoader().getResourceAsStream("lobs.properties")) {
+
+            lobCodes = new Properties();
+
+            if (input == null) {
+                System.out.println("Unable to load lob properties.");
+            }
+            lobCodes.load(input);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        try (InputStream input = ReferenceLookup.class.getClassLoader().getResourceAsStream("sublines.properties")) {
+
+            sublineCodes = new Properties();
+
+            if (input == null) {
+                System.out.println("Unable to load lob properties.");
+            }
+            sublineCodes.load(input);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public String lookupLOBCode(String lob) {
-        return "";
+        return lobCodes.getProperty(lob);
     }
 
     public String lookupStateCode(String stateAbbreviation) {
-        return "";
+        return stateCodes.getProperty(stateAbbreviation);
     }
 
-    private static String readFileFromResources(String fileName) throws IOException {
-        return IOUtils.resourceToString(fileName, StandardCharsets.UTF_8);
+    public String lookupSubline(String subline) {
+        return sublineCodes.getProperty(subline);
     }
 }

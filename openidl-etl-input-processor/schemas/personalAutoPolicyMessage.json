@@ -14,9 +14,11 @@
       "properties": {
         "schemaValidation": {
           "type": "object",
+          "description": "This object holds the information obout schema validation.",
           "properties": {
             "validated": {
               "type": "string",
+              "description": "Set to Yes if this record has already had schema validation.",
               "enum": [
                 "Yes",
                 "No"
@@ -24,6 +26,7 @@
             },
             "valid": {
               "type": "string",
+              "description": "Set to Yes if this record is valid for the schema.",
               "enum": [
                 "Yes",
                 "No"
@@ -31,6 +34,7 @@
             },
             "errors": {
               "type": "array",
+              "description": "Collect all the errors from the schema validator here.",
               "items": {
                 "type": "object",
                 "properties": {
@@ -71,9 +75,11 @@
         },
         "ruleValidation": {
           "type": "object",
+          "description": "This object holds the informatioin about the rule validation.",
           "properties": {
             "validated": {
               "type": "string",
+              "description": "Set to Yes if this record has been validated against the rules.",
               "enum": [
                 "Yes",
                 "No"
@@ -81,6 +87,7 @@
             },
             "valid": {
               "type": "string",
+              "description": "Set to Yes if this record is valid based on the rules.",
               "enum": [
                 "Yes",
                 "No"

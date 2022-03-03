@@ -3,7 +3,7 @@ package org.openidl.etl.model;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,379 +12,300 @@ import com.google.gson.annotations.SerializedName;
  * vehicle level elements
  * 
  */
-
+@Generated("jsonschema2pojo")
 public class Vehicle {
 
     /**
+     * The shape and model of a vehicle.
      * 
      */
-    @SerializedName("PrimaryDriverGender")
+    @SerializedName("BodyStyle")
     @Expose
-    private Vehicle.PrimaryDriverGender primaryDriverGender;
+    private String bodyStyle;
     /**
+     * Type of Vehicle
      * 
      */
-    @SerializedName("LicenseNumber")
+    @SerializedName("BodySize")
     @Expose
-    private String licenseNumber;
+    private String bodySize;
     /**
+     * Size of Engine in Motorcycles or Motor Scooters
      * 
      */
-    @SerializedName("LicenseState")
+    @SerializedName("EngineSizeMotorcycle")
     @Expose
-    private String licenseState;
+    private String engineSizeMotorcycle;
     /**
-     * 
-     */
-    @SerializedName("AgeLicenseFirstIssued")
-    @Expose
-    private Double ageLicenseFirstIssued;
-    /**
-     * 
-     */
-    @SerializedName("DriverBirthdate")
-    @Expose
-    private String driverBirthdate;
-    /**
-     * 
-     */
-    @SerializedName("PrimaryDriverAge")
-    @Expose
-    private Double primaryDriverAge;
-    /**
-     * 
-     */
-    @SerializedName("PrimaryDriverGoodStudentDiscount")
-    @Expose
-    private Vehicle.PrimaryDriverGoodStudentDiscount primaryDriverGoodStudentDiscount;
-    /**
+     * Unique combination of numbers and letters that identify each vehicle.
      * 
      */
     @SerializedName("VIN")
     @Expose
-    private Double vin;
+    private String vin;
     /**
+     * State where the vehicle is principally garaged.
      * 
      */
-    @SerializedName("GarageZip5")
+    @SerializedName("GarageState")
     @Expose
-    private String garageZip5;
+    private String garageState;
     /**
+     * First 5 digits of Zip Code of where the vehicle is principally garaged.
      * 
      */
-    @SerializedName("GarageZip4")
+    @SerializedName("GarageZIP5")
     @Expose
-    private String garageZip4;
+    private String garageZIP5;
     /**
+     * Last 4 digits of Zip Code of where the vehicle is principally garaged.
      * 
      */
-    @SerializedName("Make")
+    @SerializedName("GarageZIP4")
     @Expose
-    private String make;
+    private String garageZIP4;
     /**
+     * Model Year
      * 
      */
-    @SerializedName("Model")
+    @SerializedName("VehicleYear")
     @Expose
-    private String model;
+    private String vehicleYear;
     /**
+     * Primary use of the vehicle.
      * 
      */
-    @SerializedName("Trim")
+    @SerializedName("VehicleUse")
     @Expose
-    private String trim;
+    private Vehicle.VehicleUse vehicleUse;
     /**
+     * Abstraction of the vehicle rating symbols.  Not company rating symbols.
      * 
      */
-    @SerializedName("Symbol")
+    @SerializedName("VechicleSymbol")
     @Expose
-    private String symbol;
+    private String vechicleSymbol;
     /**
+     * Vehicle Performance characteristic
      * 
      */
-    @SerializedName("Year")
+    @SerializedName("VechiclePerformance")
     @Expose
-    private String year;
+    private String vechiclePerformance;
     /**
-     * 
-     */
-    @SerializedName("Use")
-    @Expose
-    private Vehicle.Use use;
-    /**
+     * Number of miles driven per commute.
      * 
      */
     @SerializedName("PerCommuteMiles")
     @Expose
     private Double perCommuteMiles;
     /**
+     * Number of miles driven annually.
      * 
      */
-    @SerializedName("AnnualMiles")
+    @SerializedName("AnnualVehicleMiles")
     @Expose
-    private String annualMiles;
+    private Double annualVehicleMiles;
     /**
+     * Code indicating whether Anti-Lock Brakes discount was applied to the vehicle.
      * 
      */
-    @SerializedName("AntilockBrakes")
+    @SerializedName("AntilockBrakesDiscount")
     @Expose
-    private Vehicle.AntilockBrakes antilockBrakes;
+    private Vehicle.AntilockBrakesDiscount antilockBrakesDiscount;
     /**
+     * Code indicating whether Safety Restraint discount was applied to the vehicle.
      * 
      */
-    @SerializedName("SafetyRestraintDevice")
+    @SerializedName("SafetyRestraintDiscount")
     @Expose
-    private String safetyRestraintDevice;
+    private Vehicle.SafetyRestraintDiscount safetyRestraintDiscount;
     /**
+     * Code indicating whether Anti-Theft Device discount was applied to the vehicle.
      * 
      */
-    @SerializedName("Customizations")
+    @SerializedName("AntiTheftDeviceDiscount")
     @Expose
-    private String customizations;
-    /**
-     * 
-     */
-    @SerializedName("FuelType")
-    @Expose
-    private Vehicle.FuelType fuelType;
-    /**
-     * 
-     */
-    @SerializedName("Telematics")
-    @Expose
-    private Vehicle.Telematics telematics;
-    /**
-     * 
-     */
-    @SerializedName("AntitheftDevice")
-    @Expose
-    private Vehicle.AntitheftDevice antitheftDevice;
+    private Vehicle.AntiTheftDeviceDiscount antiTheftDeviceDiscount;
 
     /**
+     * The shape and model of a vehicle.
      * 
      */
-    public Vehicle.PrimaryDriverGender getPrimaryDriverGender() {
-        return primaryDriverGender;
+    public String getBodyStyle() {
+        return bodyStyle;
     }
 
     /**
+     * The shape and model of a vehicle.
      * 
      */
-    public void setPrimaryDriverGender(Vehicle.PrimaryDriverGender primaryDriverGender) {
-        this.primaryDriverGender = primaryDriverGender;
+    public void setBodyStyle(String bodyStyle) {
+        this.bodyStyle = bodyStyle;
     }
 
     /**
+     * Type of Vehicle
      * 
      */
-    public String getLicenseNumber() {
-        return licenseNumber;
+    public String getBodySize() {
+        return bodySize;
     }
 
     /**
+     * Type of Vehicle
      * 
      */
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber;
+    public void setBodySize(String bodySize) {
+        this.bodySize = bodySize;
     }
 
     /**
+     * Size of Engine in Motorcycles or Motor Scooters
      * 
      */
-    public String getLicenseState() {
-        return licenseState;
+    public String getEngineSizeMotorcycle() {
+        return engineSizeMotorcycle;
     }
 
     /**
+     * Size of Engine in Motorcycles or Motor Scooters
      * 
      */
-    public void setLicenseState(String licenseState) {
-        this.licenseState = licenseState;
+    public void setEngineSizeMotorcycle(String engineSizeMotorcycle) {
+        this.engineSizeMotorcycle = engineSizeMotorcycle;
     }
 
     /**
+     * Unique combination of numbers and letters that identify each vehicle.
      * 
      */
-    public Double getAgeLicenseFirstIssued() {
-        return ageLicenseFirstIssued;
-    }
-
-    /**
-     * 
-     */
-    public void setAgeLicenseFirstIssued(Double ageLicenseFirstIssued) {
-        this.ageLicenseFirstIssued = ageLicenseFirstIssued;
-    }
-
-    /**
-     * 
-     */
-    public String getDriverBirthdate() {
-        return driverBirthdate;
-    }
-
-    /**
-     * 
-     */
-    public void setDriverBirthdate(String driverBirthdate) {
-        this.driverBirthdate = driverBirthdate;
-    }
-
-    /**
-     * 
-     */
-    public Double getPrimaryDriverAge() {
-        return primaryDriverAge;
-    }
-
-    /**
-     * 
-     */
-    public void setPrimaryDriverAge(Double primaryDriverAge) {
-        this.primaryDriverAge = primaryDriverAge;
-    }
-
-    /**
-     * 
-     */
-    public Vehicle.PrimaryDriverGoodStudentDiscount getPrimaryDriverGoodStudentDiscount() {
-        return primaryDriverGoodStudentDiscount;
-    }
-
-    /**
-     * 
-     */
-    public void setPrimaryDriverGoodStudentDiscount(Vehicle.PrimaryDriverGoodStudentDiscount primaryDriverGoodStudentDiscount) {
-        this.primaryDriverGoodStudentDiscount = primaryDriverGoodStudentDiscount;
-    }
-
-    /**
-     * 
-     */
-    public Double getVin() {
+    public String getVin() {
         return vin;
     }
 
     /**
+     * Unique combination of numbers and letters that identify each vehicle.
      * 
      */
-    public void setVin(Double vin) {
+    public void setVin(String vin) {
         this.vin = vin;
     }
 
     /**
+     * State where the vehicle is principally garaged.
      * 
      */
-    public String getGarageZip5() {
-        return garageZip5;
+    public String getGarageState() {
+        return garageState;
     }
 
     /**
+     * State where the vehicle is principally garaged.
      * 
      */
-    public void setGarageZip5(String garageZip5) {
-        this.garageZip5 = garageZip5;
+    public void setGarageState(String garageState) {
+        this.garageState = garageState;
     }
 
     /**
+     * First 5 digits of Zip Code of where the vehicle is principally garaged.
      * 
      */
-    public String getGarageZip4() {
-        return garageZip4;
+    public String getGarageZIP5() {
+        return garageZIP5;
     }
 
     /**
+     * First 5 digits of Zip Code of where the vehicle is principally garaged.
      * 
      */
-    public void setGarageZip4(String garageZip4) {
-        this.garageZip4 = garageZip4;
+    public void setGarageZIP5(String garageZIP5) {
+        this.garageZIP5 = garageZIP5;
     }
 
     /**
+     * Last 4 digits of Zip Code of where the vehicle is principally garaged.
      * 
      */
-    public String getMake() {
-        return make;
+    public String getGarageZIP4() {
+        return garageZIP4;
     }
 
     /**
+     * Last 4 digits of Zip Code of where the vehicle is principally garaged.
      * 
      */
-    public void setMake(String make) {
-        this.make = make;
+    public void setGarageZIP4(String garageZIP4) {
+        this.garageZIP4 = garageZIP4;
     }
 
     /**
+     * Model Year
      * 
      */
-    public String getModel() {
-        return model;
+    public String getVehicleYear() {
+        return vehicleYear;
     }
 
     /**
+     * Model Year
      * 
      */
-    public void setModel(String model) {
-        this.model = model;
+    public void setVehicleYear(String vehicleYear) {
+        this.vehicleYear = vehicleYear;
     }
 
     /**
+     * Primary use of the vehicle.
      * 
      */
-    public String getTrim() {
-        return trim;
+    public Vehicle.VehicleUse getVehicleUse() {
+        return vehicleUse;
     }
 
     /**
+     * Primary use of the vehicle.
      * 
      */
-    public void setTrim(String trim) {
-        this.trim = trim;
+    public void setVehicleUse(Vehicle.VehicleUse vehicleUse) {
+        this.vehicleUse = vehicleUse;
     }
 
     /**
+     * Abstraction of the vehicle rating symbols.  Not company rating symbols.
      * 
      */
-    public String getSymbol() {
-        return symbol;
+    public String getVechicleSymbol() {
+        return vechicleSymbol;
     }
 
     /**
+     * Abstraction of the vehicle rating symbols.  Not company rating symbols.
      * 
      */
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
+    public void setVechicleSymbol(String vechicleSymbol) {
+        this.vechicleSymbol = vechicleSymbol;
     }
 
     /**
+     * Vehicle Performance characteristic
      * 
      */
-    public String getYear() {
-        return year;
+    public String getVechiclePerformance() {
+        return vechiclePerformance;
     }
 
     /**
+     * Vehicle Performance characteristic
      * 
      */
-    public void setYear(String year) {
-        this.year = year;
+    public void setVechiclePerformance(String vechiclePerformance) {
+        this.vechiclePerformance = vechiclePerformance;
     }
 
     /**
-     * 
-     */
-    public Vehicle.Use getUse() {
-        return use;
-    }
-
-    /**
-     * 
-     */
-    public void setUse(Vehicle.Use use) {
-        this.use = use;
-    }
-
-    /**
+     * Number of miles driven per commute.
      * 
      */
     public Double getPerCommuteMiles() {
@@ -392,6 +313,7 @@ public class Vehicle {
     }
 
     /**
+     * Number of miles driven per commute.
      * 
      */
     public void setPerCommuteMiles(Double perCommuteMiles) {
@@ -399,124 +321,91 @@ public class Vehicle {
     }
 
     /**
+     * Number of miles driven annually.
      * 
      */
-    public String getAnnualMiles() {
-        return annualMiles;
+    public Double getAnnualVehicleMiles() {
+        return annualVehicleMiles;
     }
 
     /**
+     * Number of miles driven annually.
      * 
      */
-    public void setAnnualMiles(String annualMiles) {
-        this.annualMiles = annualMiles;
+    public void setAnnualVehicleMiles(Double annualVehicleMiles) {
+        this.annualVehicleMiles = annualVehicleMiles;
     }
 
     /**
+     * Code indicating whether Anti-Lock Brakes discount was applied to the vehicle.
      * 
      */
-    public Vehicle.AntilockBrakes getAntilockBrakes() {
-        return antilockBrakes;
+    public Vehicle.AntilockBrakesDiscount getAntilockBrakesDiscount() {
+        return antilockBrakesDiscount;
     }
 
     /**
+     * Code indicating whether Anti-Lock Brakes discount was applied to the vehicle.
      * 
      */
-    public void setAntilockBrakes(Vehicle.AntilockBrakes antilockBrakes) {
-        this.antilockBrakes = antilockBrakes;
+    public void setAntilockBrakesDiscount(Vehicle.AntilockBrakesDiscount antilockBrakesDiscount) {
+        this.antilockBrakesDiscount = antilockBrakesDiscount;
     }
 
     /**
+     * Code indicating whether Safety Restraint discount was applied to the vehicle.
      * 
      */
-    public String getSafetyRestraintDevice() {
-        return safetyRestraintDevice;
+    public Vehicle.SafetyRestraintDiscount getSafetyRestraintDiscount() {
+        return safetyRestraintDiscount;
     }
 
     /**
+     * Code indicating whether Safety Restraint discount was applied to the vehicle.
      * 
      */
-    public void setSafetyRestraintDevice(String safetyRestraintDevice) {
-        this.safetyRestraintDevice = safetyRestraintDevice;
+    public void setSafetyRestraintDiscount(Vehicle.SafetyRestraintDiscount safetyRestraintDiscount) {
+        this.safetyRestraintDiscount = safetyRestraintDiscount;
     }
 
     /**
+     * Code indicating whether Anti-Theft Device discount was applied to the vehicle.
      * 
      */
-    public String getCustomizations() {
-        return customizations;
+    public Vehicle.AntiTheftDeviceDiscount getAntiTheftDeviceDiscount() {
+        return antiTheftDeviceDiscount;
     }
 
     /**
+     * Code indicating whether Anti-Theft Device discount was applied to the vehicle.
      * 
      */
-    public void setCustomizations(String customizations) {
-        this.customizations = customizations;
-    }
-
-    /**
-     * 
-     */
-    public Vehicle.FuelType getFuelType() {
-        return fuelType;
-    }
-
-    /**
-     * 
-     */
-    public void setFuelType(Vehicle.FuelType fuelType) {
-        this.fuelType = fuelType;
-    }
-
-    /**
-     * 
-     */
-    public Vehicle.Telematics getTelematics() {
-        return telematics;
-    }
-
-    /**
-     * 
-     */
-    public void setTelematics(Vehicle.Telematics telematics) {
-        this.telematics = telematics;
-    }
-
-    /**
-     * 
-     */
-    public Vehicle.AntitheftDevice getAntitheftDevice() {
-        return antitheftDevice;
-    }
-
-    /**
-     * 
-     */
-    public void setAntitheftDevice(Vehicle.AntitheftDevice antitheftDevice) {
-        this.antitheftDevice = antitheftDevice;
+    public void setAntiTheftDeviceDiscount(Vehicle.AntiTheftDeviceDiscount antiTheftDeviceDiscount) {
+        this.antiTheftDeviceDiscount = antiTheftDeviceDiscount;
     }
 
 
     /**
+     * Code indicating whether Anti-Lock Brakes discount was applied to the vehicle.
      * 
      */
-    
-    public enum AntilockBrakes {
+    @Generated("jsonschema2pojo")
+    public enum AntilockBrakesDiscount {
 
         @SerializedName("Yes")
         YES("Yes"),
         @SerializedName("No")
         NO("No");
         private final String value;
-        private final static Map<String, Vehicle.AntilockBrakes> CONSTANTS = new HashMap<String, Vehicle.AntilockBrakes>();
+        private final static Map<String, Vehicle.AntilockBrakesDiscount> CONSTANTS = new HashMap<String, Vehicle.AntilockBrakesDiscount>();
 
         static {
-            for (Vehicle.AntilockBrakes c: values()) {
+            for (Vehicle.AntilockBrakesDiscount c: values()) {
                 CONSTANTS.put(c.value, c);
             }
         }
 
-        AntilockBrakes(String value) {
+        AntilockBrakesDiscount(String value) {
             this.value = value;
         }
 
@@ -529,8 +418,8 @@ public class Vehicle {
             return this.value;
         }
 
-        public static Vehicle.AntilockBrakes fromValue(String value) {
-            Vehicle.AntilockBrakes constant = CONSTANTS.get(value);
+        public static Vehicle.AntilockBrakesDiscount fromValue(String value) {
+            Vehicle.AntilockBrakesDiscount constant = CONSTANTS.get(value);
             if (constant == null) {
                 throw new IllegalArgumentException(value);
             } else {
@@ -542,169 +431,26 @@ public class Vehicle {
 
 
     /**
+     * Code indicating whether Anti-Theft Device discount was applied to the vehicle.
      * 
      */
-    
-    public enum AntitheftDevice {
-
-        @SerializedName("Full")
-        FULL("Full"),
-        @SerializedName("Partial")
-        PARTIAL("Partial");
-        private final String value;
-        private final static Map<String, Vehicle.AntitheftDevice> CONSTANTS = new HashMap<String, Vehicle.AntitheftDevice>();
-
-        static {
-            for (Vehicle.AntitheftDevice c: values()) {
-                CONSTANTS.put(c.value, c);
-            }
-        }
-
-        AntitheftDevice(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
-
-        public String value() {
-            return this.value;
-        }
-
-        public static Vehicle.AntitheftDevice fromValue(String value) {
-            Vehicle.AntitheftDevice constant = CONSTANTS.get(value);
-            if (constant == null) {
-                throw new IllegalArgumentException(value);
-            } else {
-                return constant;
-            }
-        }
-
-    }
-
-
-    /**
-     * 
-     */
-    
-    public enum FuelType {
-
-        @SerializedName("Gas")
-        GAS("Gas"),
-        @SerializedName("e85")
-        E_85("e85"),
-        @SerializedName("LNG")
-        LNG("LNG"),
-        @SerializedName("Diesel")
-        DIESEL("Diesel"),
-        @SerializedName("Electric")
-        ELECTRIC("Electric"),
-        @SerializedName("Hybrid")
-        HYBRID("Hybrid"),
-        @SerializedName("Hydrogen")
-        HYDROGEN("Hydrogen"),
-        @SerializedName("Experimental")
-        EXPERIMENTAL("Experimental");
-        private final String value;
-        private final static Map<String, Vehicle.FuelType> CONSTANTS = new HashMap<String, Vehicle.FuelType>();
-
-        static {
-            for (Vehicle.FuelType c: values()) {
-                CONSTANTS.put(c.value, c);
-            }
-        }
-
-        FuelType(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
-
-        public String value() {
-            return this.value;
-        }
-
-        public static Vehicle.FuelType fromValue(String value) {
-            Vehicle.FuelType constant = CONSTANTS.get(value);
-            if (constant == null) {
-                throw new IllegalArgumentException(value);
-            } else {
-                return constant;
-            }
-        }
-
-    }
-
-
-    /**
-     * 
-     */
-    
-    public enum PrimaryDriverGender {
-
-        @SerializedName("Male")
-        MALE("Male"),
-        @SerializedName("Female")
-        FEMALE("Female");
-        private final String value;
-        private final static Map<String, Vehicle.PrimaryDriverGender> CONSTANTS = new HashMap<String, Vehicle.PrimaryDriverGender>();
-
-        static {
-            for (Vehicle.PrimaryDriverGender c: values()) {
-                CONSTANTS.put(c.value, c);
-            }
-        }
-
-        PrimaryDriverGender(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
-
-        public String value() {
-            return this.value;
-        }
-
-        public static Vehicle.PrimaryDriverGender fromValue(String value) {
-            Vehicle.PrimaryDriverGender constant = CONSTANTS.get(value);
-            if (constant == null) {
-                throw new IllegalArgumentException(value);
-            } else {
-                return constant;
-            }
-        }
-
-    }
-
-
-    /**
-     * 
-     */
-    
-    public enum PrimaryDriverGoodStudentDiscount {
+    @Generated("jsonschema2pojo")
+    public enum AntiTheftDeviceDiscount {
 
         @SerializedName("Yes")
         YES("Yes"),
         @SerializedName("No")
         NO("No");
         private final String value;
-        private final static Map<String, Vehicle.PrimaryDriverGoodStudentDiscount> CONSTANTS = new HashMap<String, Vehicle.PrimaryDriverGoodStudentDiscount>();
+        private final static Map<String, Vehicle.AntiTheftDeviceDiscount> CONSTANTS = new HashMap<String, Vehicle.AntiTheftDeviceDiscount>();
 
         static {
-            for (Vehicle.PrimaryDriverGoodStudentDiscount c: values()) {
+            for (Vehicle.AntiTheftDeviceDiscount c: values()) {
                 CONSTANTS.put(c.value, c);
             }
         }
 
-        PrimaryDriverGoodStudentDiscount(String value) {
+        AntiTheftDeviceDiscount(String value) {
             this.value = value;
         }
 
@@ -717,8 +463,8 @@ public class Vehicle {
             return this.value;
         }
 
-        public static Vehicle.PrimaryDriverGoodStudentDiscount fromValue(String value) {
-            Vehicle.PrimaryDriverGoodStudentDiscount constant = CONSTANTS.get(value);
+        public static Vehicle.AntiTheftDeviceDiscount fromValue(String value) {
+            Vehicle.AntiTheftDeviceDiscount constant = CONSTANTS.get(value);
             if (constant == null) {
                 throw new IllegalArgumentException(value);
             } else {
@@ -730,25 +476,26 @@ public class Vehicle {
 
 
     /**
+     * Code indicating whether Safety Restraint discount was applied to the vehicle.
      * 
      */
-    
-    public enum Telematics {
+    @Generated("jsonschema2pojo")
+    public enum SafetyRestraintDiscount {
 
         @SerializedName("Yes")
         YES("Yes"),
         @SerializedName("No")
         NO("No");
         private final String value;
-        private final static Map<String, Vehicle.Telematics> CONSTANTS = new HashMap<String, Vehicle.Telematics>();
+        private final static Map<String, Vehicle.SafetyRestraintDiscount> CONSTANTS = new HashMap<String, Vehicle.SafetyRestraintDiscount>();
 
         static {
-            for (Vehicle.Telematics c: values()) {
+            for (Vehicle.SafetyRestraintDiscount c: values()) {
                 CONSTANTS.put(c.value, c);
             }
         }
 
-        Telematics(String value) {
+        SafetyRestraintDiscount(String value) {
             this.value = value;
         }
 
@@ -761,8 +508,8 @@ public class Vehicle {
             return this.value;
         }
 
-        public static Vehicle.Telematics fromValue(String value) {
-            Vehicle.Telematics constant = CONSTANTS.get(value);
+        public static Vehicle.SafetyRestraintDiscount fromValue(String value) {
+            Vehicle.SafetyRestraintDiscount constant = CONSTANTS.get(value);
             if (constant == null) {
                 throw new IllegalArgumentException(value);
             } else {
@@ -774,27 +521,28 @@ public class Vehicle {
 
 
     /**
+     * Primary use of the vehicle.
      * 
      */
-    
-    public enum Use {
+    @Generated("jsonschema2pojo")
+    public enum VehicleUse {
 
-        @SerializedName("Peronal")
-        PERONAL("Peronal"),
+        @SerializedName("Personal")
+        PERSONAL("Personal"),
         @SerializedName("Work")
         WORK("Work"),
         @SerializedName("Delivery")
         DELIVERY("Delivery");
         private final String value;
-        private final static Map<String, Vehicle.Use> CONSTANTS = new HashMap<String, Vehicle.Use>();
+        private final static Map<String, Vehicle.VehicleUse> CONSTANTS = new HashMap<String, Vehicle.VehicleUse>();
 
         static {
-            for (Vehicle.Use c: values()) {
+            for (Vehicle.VehicleUse c: values()) {
                 CONSTANTS.put(c.value, c);
             }
         }
 
-        Use(String value) {
+        VehicleUse(String value) {
             this.value = value;
         }
 
@@ -807,8 +555,8 @@ public class Vehicle {
             return this.value;
         }
 
-        public static Vehicle.Use fromValue(String value) {
-            Vehicle.Use constant = CONSTANTS.get(value);
+        public static Vehicle.VehicleUse fromValue(String value) {
+            Vehicle.VehicleUse constant = CONSTANTS.get(value);
             if (constant == null) {
                 throw new IllegalArgumentException(value);
             } else {

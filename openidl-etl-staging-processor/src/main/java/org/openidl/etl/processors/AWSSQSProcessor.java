@@ -1,8 +1,19 @@
 package org.openidl.etl.processors;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.lambda.runtime.events.SQSEvent;
+import com.amazonaws.services.lambda.runtime.events.SQSEvent.SQSMessage;
+import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
+import com.amazonaws.services.sqs.model.SendMessageRequest;
 
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieBuilder;
@@ -21,27 +32,12 @@ import org.openidl.etl.ValidationOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.amazonaws.services.lambda.runtime.events.SQSEvent;
-import com.amazonaws.services.lambda.runtime.events.SQSEvent.SQSMessage;
-import com.google.gson.Gson;
-
-import com.amazonaws.services.sqs.AmazonSQS;
-import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
-import com.amazonaws.services.sqs.model.SendMessageRequest;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 public class AWSSQSProcessor implements RequestHandler<SQSEvent, Void> {
 
 	private static final Logger logger = LoggerFactory.getLogger(AWSSQSProcessor.class);
 
 	private static KieSession kieSession;
 	private static LineHelper lineHelper = new AutoHelper();
-	private static Gson gson = new Gson();
 	private static AmazonSQS sqs;
 	private static Properties configuration;
 
@@ -117,7 +113,7 @@ public class AWSSQSProcessor implements RequestHandler<SQSEvent, Void> {
 
 			//create the rule
 			DataValidationRule record = new DataValidationRule(fact);
-			record.setOriginalRecord(gson.toJson(msg.getBody()));
+			record.setOriginalRecord(msg.getBody());
 
 			//add the record to the 
 			kieSession.insert(record);
@@ -135,7 +131,8 @@ public class AWSSQSProcessor implements RequestHandler<SQSEvent, Void> {
 
 			logger.info("Found Errors: " + outputs.size());
 			if (outputs.size() > 0 ) {
-				sendFailure("Failed", record.getOriginalRecord());
+				String loadedRecord = lineHelper.loadErrors(record);
+				sendFailure("Failed", loadedRecord);
 			} else {
 				sendSuccess("Success", record.getOriginalRecord());
 			}
@@ -169,13 +166,8 @@ public class AWSSQSProcessor implements RequestHandler<SQSEvent, Void> {
 		List<SQSMessage> messages = new ArrayList<>();
 		SQSMessage message = new SQSMessage();
 		
-		String sampleBody = "{\r\n"
-				+ "  \"_id\": \"ID0000001\",\r\n"
-				+ "  \"Policy\": {\r\n"
-				+ "  \"PolicyNumber\": \"polno123\"\r\n"
-				+ "  }\r\n"
-				+ "}\r\n"
-				+ "";
+		// to create a string from json use https://jsontostring.com/
+		String sampleBody = "{\"RecordLOB\":\"Auto\",\"RecordType\":\"Policy\",\"Policy\":{\"CompanyID\":\"12345\",\"AnnualStatementLine\":\"19.1\",\"PolicyCategory\":\"Personal\",\"Subline\":\"PD\",\"PolicyIdentifier\":\"12345678\",\"PolicyEffectiveDate\":\"2022-01-01\",\"TransactionType\":\"CHG\",\"TransactionEffectiveDate\":\"2022-03-01\",\"TransactionExpirationDate\":\"2023-01-01\",\"Market\":\"??\",\"AccountingDate\":\"2022-03-01\",\"Program\":\"3\",\"MultiCarDiscountCode\":\"Yes\",\"PackageCode\":\"Standalone\",\"PoolAffiliation\":\"None\",\"NCProgramEnhancementIndicator\":\"No\",\"NCReinsuranceFacility\":\"No\",\"SCReinsuranceFacility\":\"No\",\"MultiCarRisks\":\"No\"},\"Driver\":{\"Gender\":\"Female\",\"DriverAge\":50,\"MaritalStatus\":\"Married\",\"SafeDrivingDefensiveDriverDiscount\":\"Yes\",\"GoodStudentDiscount\":\"Yes\",\"NumberOfPenaltyPoints\":0,\"DriversTrainingDiscount\":\"Yes\",\"55AndOverDiscount\":\"No\",\"AccidentPreventionCredit\":\"Yes\"},\"Vehicle\":{\"BodyStyle\":\"??\",\"BodySize\":\"??\",\"EngineSizeMotorcycle\":\"??\",\"VIN\":\"ABCDEFG12345678\",\"GarageState\":\"NJ\",\"GarageZIP5\":\"02002\",\"GarageZIP4\":\"0000\",\"VehicleYear\":\"2010\",\"VehicleUse\":\"Personal\",\"VechicleSymbol\":\"??\",\"VechiclePerformance\":\"??\",\"PerCommuteMiles\":20,\"AnnualVehicleMiles\":10000,\"AntilockBrakesDiscount\":\"Yes\",\"SafetyRestraintDiscount\":\"Yes\",\"AntiTheftDeviceDiscount\":\"No\"},\"Coverage\":{\"CoverageCode\":\"1\"}}"; //,\"PerPersonLimit\":100000,\"PerAccidentLimit\":300000,\"PhysicalDamageLimit\":100000,\"CombinedSingleLimit\":\"??\",\"Premium\":100,\"Deductible\":2500,\"UMUIMStackingIndicator\":\"No\",\"MedicalExpensesDeductibleAmount\":2000,\"NJThresholdTortLimitation\":\"No\",\"PrimaryNoFaultHealthPlan\":\"??\",\"CombinedFirstPartyBenefits\":\"??\"}},{\"system\":{\"ruleValidation\":{\"valid\":\"Yes\",\"validated\":\"Yes\"}},\"RecordLOB\":\"Auto\",\"RecordType\":\"Policy\",\"Policy\":{\"CompanyID\":\"12345\",\"AnnualStatementLine\":\"19.1\",\"PolicyCategory\":\"Personal\",\"Subline\":\"PD\",\"PolicyIdentifier\":\"12345678\",\"PolicyEffectiveDate\":\"2022-01-01\",\"TransactionType\":\"CHG\",\"TransactionEffectiveDate\":\"2022-03-01\",\"TransactionExpirationDate\":\"2023-01-01\",\"Market\":\"??\",\"AccountingDate\":\"2022-03-01\",\"Program\":\"??\",\"MultiCarDiscountCode\":\"Yes\",\"PackageCode\":\"Standalone\",\"PoolAffiliation\":\"None\",\"NCProgramEnhancementIndicator\":\"No\",\"NCReinsuranceFacility\":\"No\",\"SCReinsuranceFacility\":\"No\",\"MultiCarRisks\":\"No\"},\"Driver\":{\"Gender\":\"Female\",\"DriverAge\":50,\"MaritalStatus\":\"Married\",\"SafeDrivingDefensiveDriverDiscount\":\"Yes\",\"GoodStudentDiscount\":\"Yes\",\"NumberOfPenaltyPoints\":0,\"DriversTrainingDiscount\":\"Yes\",\"55AndOverDiscount\":\"No\",\"AccidentPreventionCredit\":\"Yes\"},\"Vehicle\":{\"BodyStyle\":\"??\",\"BodySize\":\"??\",\"EngineSizeMotorcycle\":\"??\",\"VIN\":\"ABCDEFG12345678\",\"GarageState\":\"NJ\",\"GarageZIP5\":\"02002\",\"GarageZIP4\":\"0000\",\"VehicleYear\":\"2010\",\"VehicleUse\":\"Personal\",\"VechicleSymbol\":\"??\",\"VechiclePerformance\":\"??\",\"PerCommuteMiles\":20,\"AnnualVehicleMiles\":10000,\"AntilockBrakesDiscount\":\"Yes\",\"SafetyRestraintDiscount\":\"Yes\",\"AntiTheftDeviceDiscount\":\"No\"},\"Coverage\":{\"CoverageCode\":\"??\",\"PerPersonLimit\":100000,\"PerAccidentLimit\":300000,\"PhysicalDamageLimit\":100000,\"CombinedSingleLimit\":\"??\",\"Premium\":100,\"Deductible\":2500,\"UMUIMStackingIndicator\":\"No\",\"MedicalExpensesDeductibleAmount\":2000,\"NJThresholdTortLimitation\":\"No\",\"PrimaryNoFaultHealthPlan\":\"??\",\"CombinedFirstPartyBenefits\":\"??\"}},{\"system\":{\"ruleValidation\":{\"valid\":\"Yes\",\"validated\":\"Yes\"}},\"RecordLOB\":\"Auto\",\"RecordType\":\"Policy\",\"Policy\":{\"CompanyID\":\"12345\",\"AnnualStatementLine\":\"19.1\",\"PolicyCategory\":\"Personal\",\"Subline\":\"COMP\",\"PolicyIdentifier\":\"12345678\",\"PolicyEffectiveDate\":\"2022-01-01\",\"TransactionType\":\"CHG\",\"TransactionEffectiveDate\":\"2022-03-01\",\"TransactionExpirationDate\":\"2023-01-01\",\"Market\":\"??\",\"AccountingDate\":\"2022-03-01\",\"Program\":\"??\",\"MultiCarDiscountCode\":\"Yes\",\"PackageCode\":\"Standalone\",\"PoolAffiliation\":\"None\",\"NCProgramEnhancementIndicator\":\"No\",\"NCReinsuranceFacility\":\"No\",\"SCReinsuranceFacility\":\"No\",\"MultiCarRisks\":\"No\"},\"Driver\":{\"Gender\":\"Female\",\"DriverAge\":50,\"MaritalStatus\":\"Married\",\"SafeDrivingDefensiveDriverDiscount\":\"Yes\",\"GoodStudentDiscount\":\"Yes\",\"NumberOfPenaltyPoints\":0,\"DriversTrainingDiscount\":\"Yes\",\"55AndOverDiscount\":\"No\",\"AccidentPreventionCredit\":\"Yes\"},\"Vehicle\":{\"BodyStyle\":\"??\",\"BodySize\":\"??\",\"EngineSizeMotorcycle\":\"??\",\"VIN\":\"ABCDEFG12345678\",\"GarageState\":\"NJ\",\"GarageZIP5\":\"02002\",\"GarageZIP4\":\"0000\",\"VehicleYear\":\"2010\",\"VehicleUse\":\"Personal\",\"VechicleSymbol\":\"??\",\"VechiclePerformance\":\"??\",\"PerCommuteMiles\":20,\"AnnualVehicleMiles\":10000,\"AntilockBrakesDiscount\":\"Yes\",\"SafetyRestraintDiscount\":\"Yes\",\"AntiTheftDeviceDiscount\":\"No\"},\"Coverage\":{\"CoverageCode\":\"??\",\"PerPersonLimit\":100000,\"PerAccidentLimit\":300000,\"PhysicalDamageLimit\":100000,\"CombinedSingleLimit\":\"??\",\"Premium\":100,\"Deductible\":2500,\"UMUIMStackingIndicator\":\"No\",\"MedicalExpensesDeductibleAmount\":2000,\"NJThresholdTortLimitation\":\"No\",\"PrimaryNoFaultHealthPlan\":\"??\",\"CombinedFirstPartyBenefits\":\"??\"}}";
 		message.setBody(sampleBody);
 		messages.add(message);
 		event.setRecords(messages);

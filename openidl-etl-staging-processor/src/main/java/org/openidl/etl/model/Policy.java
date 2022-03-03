@@ -3,7 +3,7 @@ package org.openidl.etl.model;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,125 +12,161 @@ import com.google.gson.annotations.SerializedName;
  * policy level elements
  * 
  */
-
+@Generated("jsonschema2pojo")
 public class Policy {
 
     /**
+     * A unique 4-digit code assigned by the Statistical Bureaus to identify each insurance company.
      * 
      */
-    @SerializedName("RecordLOB")
+    @SerializedName("CompanyID")
     @Expose
-    private String recordLOB;
+    private String companyID;
     /**
-     * 
-     */
-    @SerializedName("InsurerNAIC")
-    @Expose
-    private String insurerNAIC;
-    /**
+     * A code identifying the line of insurance the transaction was written under.
      * 
      */
     @SerializedName("AnnualStatementLine")
     @Expose
     private String annualStatementLine;
     /**
+     * A code identifying whether the record is Personal or Commercial.
+     * 
+     */
+    @SerializedName("PolicyCategory")
+    @Expose
+    private Policy.PolicyCategory policyCategory;
+    /**
+     * A code identifying the coverage.
      * 
      */
     @SerializedName("Subline")
     @Expose
-    private Policy.Subline subline;
+    private String subline;
     /**
+     * A unique combination of letters and numbers that identifies an insured's insurance policy.  This is the foreign key for connecting the claim and policy records.
      * 
      */
-    @SerializedName("PolicyNumber")
+    @SerializedName("PolicyIdentifier")
     @Expose
-    private String policyNumber;
+    private String policyIdentifier;
     /**
-     * Effective Date of the Policy
+     * The date the policy became effective.
      * 
      */
     @SerializedName("PolicyEffectiveDate")
     @Expose
     private String policyEffectiveDate;
     /**
-     * Effective Date of the Policy
+     * A code identifying whether the record is a New Business, Change, Renewal, Cancellation, etc.
      * 
      */
-    @SerializedName("PolicyExpirationDate")
+    @SerializedName("TransactionType")
     @Expose
-    private String policyExpirationDate;
+    private Policy.TransactionType transactionType;
     /**
+     * Date the change becomes effective.  Not the booking date.
      * 
      */
-    @SerializedName("VoluntaryResidual")
+    @SerializedName("TransactionEffectiveDate")
     @Expose
-    private Policy.VoluntaryResidual voluntaryResidual;
+    private String transactionEffectiveDate;
     /**
+     * Date the change ends.
      * 
      */
-    @SerializedName("PolicyAddress1")
+    @SerializedName("TransactionExpirationDate")
     @Expose
-    private String policyAddress1;
+    private String transactionExpirationDate;
     /**
+     * Market in which the policy is being written through.
      * 
      */
-    @SerializedName("PolicyAddress2")
+    @SerializedName("Market")
     @Expose
-    private String policyAddress2;
+    private String market;
     /**
+     * The date the transaction was financially booked.
      * 
      */
-    @SerializedName("PolicyState")
+    @SerializedName("AccountingDate")
     @Expose
-    private String policyState;
+    private String accountingDate;
     /**
+     * A code that indicates whether the basic rules and forms used in writing the policy are using certain Bureau's rules or form or if they are independent.
      * 
      */
-    @SerializedName("PolicyZip5")
+    @SerializedName("Program")
     @Expose
-    private String policyZip5;
+    private String program;
     /**
+     * A code that indicates whether there is a multi-car discount or just a single rated car.
      * 
      */
-    @SerializedName("PolicyZip4")
+    @SerializedName("MultiCarDiscountCode")
     @Expose
-    private String policyZip4;
+    private Policy.MultiCarDiscountCode multiCarDiscountCode;
     /**
+     * A code identifying whether the policy is standalone or part of a package.
      * 
      */
-    @SerializedName("CreditScored")
+    @SerializedName("PackageCode")
     @Expose
-    private Policy.CreditScored creditScored;
+    private Policy.PackageCode packageCode;
+    /**
+     * Identifies business written in a pool such as an assigned risk facility or joint underwriting association, and business not written in a pool.
+     * 
+     */
+    @SerializedName("PoolAffiliation")
+    @Expose
+    private Policy.PoolAffiliation poolAffiliation;
+    /**
+     * Based on North Carolina Session 2015 House Bill 288, premiums and losses resulting from program enhancements must not comingle with basic data. This code indicates the use of enhanced endorsements.
+     * 
+     */
+    @SerializedName("NCProgramEnhancementIndicator")
+    @Expose
+    private Policy.NCProgramEnhancementIndicator nCProgramEnhancementIndicator;
+    /**
+     * A code that distinguishes between business written under the NC Reinsurance Facility and that which is not.
+     * 
+     */
+    @SerializedName("NCReinsuranceFacility")
+    @Expose
+    private Policy.NCReinsuranceFacility nCReinsuranceFacility;
+    /**
+     * A code that distinguishes between business written under the SC Reinsurance Facility and that which is not.
+     * 
+     */
+    @SerializedName("SCReinsuranceFacility")
+    @Expose
+    private Policy.SCReinsuranceFacility sCReinsuranceFacility;
+    /**
+     * A field that indicates whether the multi-car risk is subject to the PIP Premium Discount and whether the Principal Auto is not Discounted. 
+     * 
+     */
+    @SerializedName("MultiCarRisks")
+    @Expose
+    private Policy.MultiCarRisks multiCarRisks;
 
     /**
+     * A unique 4-digit code assigned by the Statistical Bureaus to identify each insurance company.
      * 
      */
-    public String getRecordLOB() {
-        return recordLOB;
+    public String getCompanyID() {
+        return companyID;
     }
 
     /**
+     * A unique 4-digit code assigned by the Statistical Bureaus to identify each insurance company.
      * 
      */
-    public void setRecordLOB(String recordLOB) {
-        this.recordLOB = recordLOB;
+    public void setCompanyID(String companyID) {
+        this.companyID = companyID;
     }
 
     /**
-     * 
-     */
-    public String getInsurerNAIC() {
-        return insurerNAIC;
-    }
-
-    /**
-     * 
-     */
-    public void setInsurerNAIC(String insurerNAIC) {
-        this.insurerNAIC = insurerNAIC;
-    }
-
-    /**
+     * A code identifying the line of insurance the transaction was written under.
      * 
      */
     public String getAnnualStatementLine() {
@@ -138,6 +174,7 @@ public class Policy {
     }
 
     /**
+     * A code identifying the line of insurance the transaction was written under.
      * 
      */
     public void setAnnualStatementLine(String annualStatementLine) {
@@ -145,35 +182,55 @@ public class Policy {
     }
 
     /**
+     * A code identifying whether the record is Personal or Commercial.
      * 
      */
-    public Policy.Subline getSubline() {
+    public Policy.PolicyCategory getPolicyCategory() {
+        return policyCategory;
+    }
+
+    /**
+     * A code identifying whether the record is Personal or Commercial.
+     * 
+     */
+    public void setPolicyCategory(Policy.PolicyCategory policyCategory) {
+        this.policyCategory = policyCategory;
+    }
+
+    /**
+     * A code identifying the coverage.
+     * 
+     */
+    public String getSubline() {
         return subline;
     }
 
     /**
+     * A code identifying the coverage.
      * 
      */
-    public void setSubline(Policy.Subline subline) {
+    public void setSubline(String subline) {
         this.subline = subline;
     }
 
     /**
+     * A unique combination of letters and numbers that identifies an insured's insurance policy.  This is the foreign key for connecting the claim and policy records.
      * 
      */
-    public String getPolicyNumber() {
-        return policyNumber;
+    public String getPolicyIdentifier() {
+        return policyIdentifier;
     }
 
     /**
+     * A unique combination of letters and numbers that identifies an insured's insurance policy.  This is the foreign key for connecting the claim and policy records.
      * 
      */
-    public void setPolicyNumber(String policyNumber) {
-        this.policyNumber = policyNumber;
+    public void setPolicyIdentifier(String policyIdentifier) {
+        this.policyIdentifier = policyIdentifier;
     }
 
     /**
-     * Effective Date of the Policy
+     * The date the policy became effective.
      * 
      */
     public String getPolicyEffectiveDate() {
@@ -181,7 +238,7 @@ public class Policy {
     }
 
     /**
-     * Effective Date of the Policy
+     * The date the policy became effective.
      * 
      */
     public void setPolicyEffectiveDate(String policyEffectiveDate) {
@@ -189,140 +246,235 @@ public class Policy {
     }
 
     /**
-     * Effective Date of the Policy
+     * A code identifying whether the record is a New Business, Change, Renewal, Cancellation, etc.
      * 
      */
-    public String getPolicyExpirationDate() {
-        return policyExpirationDate;
+    public Policy.TransactionType getTransactionType() {
+        return transactionType;
     }
 
     /**
-     * Effective Date of the Policy
+     * A code identifying whether the record is a New Business, Change, Renewal, Cancellation, etc.
      * 
      */
-    public void setPolicyExpirationDate(String policyExpirationDate) {
-        this.policyExpirationDate = policyExpirationDate;
+    public void setTransactionType(Policy.TransactionType transactionType) {
+        this.transactionType = transactionType;
     }
 
     /**
+     * Date the change becomes effective.  Not the booking date.
      * 
      */
-    public Policy.VoluntaryResidual getVoluntaryResidual() {
-        return voluntaryResidual;
+    public String getTransactionEffectiveDate() {
+        return transactionEffectiveDate;
     }
 
     /**
+     * Date the change becomes effective.  Not the booking date.
      * 
      */
-    public void setVoluntaryResidual(Policy.VoluntaryResidual voluntaryResidual) {
-        this.voluntaryResidual = voluntaryResidual;
+    public void setTransactionEffectiveDate(String transactionEffectiveDate) {
+        this.transactionEffectiveDate = transactionEffectiveDate;
     }
 
     /**
+     * Date the change ends.
      * 
      */
-    public String getPolicyAddress1() {
-        return policyAddress1;
+    public String getTransactionExpirationDate() {
+        return transactionExpirationDate;
     }
 
     /**
+     * Date the change ends.
      * 
      */
-    public void setPolicyAddress1(String policyAddress1) {
-        this.policyAddress1 = policyAddress1;
+    public void setTransactionExpirationDate(String transactionExpirationDate) {
+        this.transactionExpirationDate = transactionExpirationDate;
     }
 
     /**
+     * Market in which the policy is being written through.
      * 
      */
-    public String getPolicyAddress2() {
-        return policyAddress2;
+    public String getMarket() {
+        return market;
     }
 
     /**
+     * Market in which the policy is being written through.
      * 
      */
-    public void setPolicyAddress2(String policyAddress2) {
-        this.policyAddress2 = policyAddress2;
+    public void setMarket(String market) {
+        this.market = market;
     }
 
     /**
+     * The date the transaction was financially booked.
      * 
      */
-    public String getPolicyState() {
-        return policyState;
+    public String getAccountingDate() {
+        return accountingDate;
     }
 
     /**
+     * The date the transaction was financially booked.
      * 
      */
-    public void setPolicyState(String policyState) {
-        this.policyState = policyState;
+    public void setAccountingDate(String accountingDate) {
+        this.accountingDate = accountingDate;
     }
 
     /**
+     * A code that indicates whether the basic rules and forms used in writing the policy are using certain Bureau's rules or form or if they are independent.
      * 
      */
-    public String getPolicyZip5() {
-        return policyZip5;
+    public String getProgram() {
+        return program;
     }
 
     /**
+     * A code that indicates whether the basic rules and forms used in writing the policy are using certain Bureau's rules or form or if they are independent.
      * 
      */
-    public void setPolicyZip5(String policyZip5) {
-        this.policyZip5 = policyZip5;
+    public void setProgram(String program) {
+        this.program = program;
     }
 
     /**
+     * A code that indicates whether there is a multi-car discount or just a single rated car.
      * 
      */
-    public String getPolicyZip4() {
-        return policyZip4;
+    public Policy.MultiCarDiscountCode getMultiCarDiscountCode() {
+        return multiCarDiscountCode;
     }
 
     /**
+     * A code that indicates whether there is a multi-car discount or just a single rated car.
      * 
      */
-    public void setPolicyZip4(String policyZip4) {
-        this.policyZip4 = policyZip4;
+    public void setMultiCarDiscountCode(Policy.MultiCarDiscountCode multiCarDiscountCode) {
+        this.multiCarDiscountCode = multiCarDiscountCode;
     }
 
     /**
+     * A code identifying whether the policy is standalone or part of a package.
      * 
      */
-    public Policy.CreditScored getCreditScored() {
-        return creditScored;
+    public Policy.PackageCode getPackageCode() {
+        return packageCode;
     }
 
     /**
+     * A code identifying whether the policy is standalone or part of a package.
      * 
      */
-    public void setCreditScored(Policy.CreditScored creditScored) {
-        this.creditScored = creditScored;
+    public void setPackageCode(Policy.PackageCode packageCode) {
+        this.packageCode = packageCode;
+    }
+
+    /**
+     * Identifies business written in a pool such as an assigned risk facility or joint underwriting association, and business not written in a pool.
+     * 
+     */
+    public Policy.PoolAffiliation getPoolAffiliation() {
+        return poolAffiliation;
+    }
+
+    /**
+     * Identifies business written in a pool such as an assigned risk facility or joint underwriting association, and business not written in a pool.
+     * 
+     */
+    public void setPoolAffiliation(Policy.PoolAffiliation poolAffiliation) {
+        this.poolAffiliation = poolAffiliation;
+    }
+
+    /**
+     * Based on North Carolina Session 2015 House Bill 288, premiums and losses resulting from program enhancements must not comingle with basic data. This code indicates the use of enhanced endorsements.
+     * 
+     */
+    public Policy.NCProgramEnhancementIndicator getNCProgramEnhancementIndicator() {
+        return nCProgramEnhancementIndicator;
+    }
+
+    /**
+     * Based on North Carolina Session 2015 House Bill 288, premiums and losses resulting from program enhancements must not comingle with basic data. This code indicates the use of enhanced endorsements.
+     * 
+     */
+    public void setNCProgramEnhancementIndicator(Policy.NCProgramEnhancementIndicator nCProgramEnhancementIndicator) {
+        this.nCProgramEnhancementIndicator = nCProgramEnhancementIndicator;
+    }
+
+    /**
+     * A code that distinguishes between business written under the NC Reinsurance Facility and that which is not.
+     * 
+     */
+    public Policy.NCReinsuranceFacility getNCReinsuranceFacility() {
+        return nCReinsuranceFacility;
+    }
+
+    /**
+     * A code that distinguishes between business written under the NC Reinsurance Facility and that which is not.
+     * 
+     */
+    public void setNCReinsuranceFacility(Policy.NCReinsuranceFacility nCReinsuranceFacility) {
+        this.nCReinsuranceFacility = nCReinsuranceFacility;
+    }
+
+    /**
+     * A code that distinguishes between business written under the SC Reinsurance Facility and that which is not.
+     * 
+     */
+    public Policy.SCReinsuranceFacility getSCReinsuranceFacility() {
+        return sCReinsuranceFacility;
+    }
+
+    /**
+     * A code that distinguishes between business written under the SC Reinsurance Facility and that which is not.
+     * 
+     */
+    public void setSCReinsuranceFacility(Policy.SCReinsuranceFacility sCReinsuranceFacility) {
+        this.sCReinsuranceFacility = sCReinsuranceFacility;
+    }
+
+    /**
+     * A field that indicates whether the multi-car risk is subject to the PIP Premium Discount and whether the Principal Auto is not Discounted. 
+     * 
+     */
+    public Policy.MultiCarRisks getMultiCarRisks() {
+        return multiCarRisks;
+    }
+
+    /**
+     * A field that indicates whether the multi-car risk is subject to the PIP Premium Discount and whether the Principal Auto is not Discounted. 
+     * 
+     */
+    public void setMultiCarRisks(Policy.MultiCarRisks multiCarRisks) {
+        this.multiCarRisks = multiCarRisks;
     }
 
 
     /**
+     * A code that indicates whether there is a multi-car discount or just a single rated car.
      * 
      */
-    
-    public enum CreditScored {
+    @Generated("jsonschema2pojo")
+    public enum MultiCarDiscountCode {
 
         @SerializedName("Yes")
         YES("Yes"),
         @SerializedName("No")
         NO("No");
         private final String value;
-        private final static Map<String, Policy.CreditScored> CONSTANTS = new HashMap<String, Policy.CreditScored>();
+        private final static Map<String, Policy.MultiCarDiscountCode> CONSTANTS = new HashMap<String, Policy.MultiCarDiscountCode>();
 
         static {
-            for (Policy.CreditScored c: values()) {
+            for (Policy.MultiCarDiscountCode c: values()) {
                 CONSTANTS.put(c.value, c);
             }
         }
 
-        CreditScored(String value) {
+        MultiCarDiscountCode(String value) {
             this.value = value;
         }
 
@@ -335,8 +487,8 @@ public class Policy {
             return this.value;
         }
 
-        public static Policy.CreditScored fromValue(String value) {
-            Policy.CreditScored constant = CONSTANTS.get(value);
+        public static Policy.MultiCarDiscountCode fromValue(String value) {
+            Policy.MultiCarDiscountCode constant = CONSTANTS.get(value);
             if (constant == null) {
                 throw new IllegalArgumentException(value);
             } else {
@@ -348,25 +500,206 @@ public class Policy {
 
 
     /**
+     * A field that indicates whether the multi-car risk is subject to the PIP Premium Discount and whether the Principal Auto is not Discounted. 
      * 
      */
-    
-    public enum Subline {
+    @Generated("jsonschema2pojo")
+    public enum MultiCarRisks {
+
+        @SerializedName("Yes")
+        YES("Yes"),
+        @SerializedName("No")
+        NO("No");
+        private final String value;
+        private final static Map<String, Policy.MultiCarRisks> CONSTANTS = new HashMap<String, Policy.MultiCarRisks>();
+
+        static {
+            for (Policy.MultiCarRisks c: values()) {
+                CONSTANTS.put(c.value, c);
+            }
+        }
+
+        MultiCarRisks(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+
+        public static Policy.MultiCarRisks fromValue(String value) {
+            Policy.MultiCarRisks constant = CONSTANTS.get(value);
+            if (constant == null) {
+                throw new IllegalArgumentException(value);
+            } else {
+                return constant;
+            }
+        }
+
+    }
+
+
+    /**
+     * Based on North Carolina Session 2015 House Bill 288, premiums and losses resulting from program enhancements must not comingle with basic data. This code indicates the use of enhanced endorsements.
+     * 
+     */
+    @Generated("jsonschema2pojo")
+    public enum NCProgramEnhancementIndicator {
+
+        @SerializedName("Yes")
+        YES("Yes"),
+        @SerializedName("No")
+        NO("No");
+        private final String value;
+        private final static Map<String, Policy.NCProgramEnhancementIndicator> CONSTANTS = new HashMap<String, Policy.NCProgramEnhancementIndicator>();
+
+        static {
+            for (Policy.NCProgramEnhancementIndicator c: values()) {
+                CONSTANTS.put(c.value, c);
+            }
+        }
+
+        NCProgramEnhancementIndicator(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+
+        public static Policy.NCProgramEnhancementIndicator fromValue(String value) {
+            Policy.NCProgramEnhancementIndicator constant = CONSTANTS.get(value);
+            if (constant == null) {
+                throw new IllegalArgumentException(value);
+            } else {
+                return constant;
+            }
+        }
+
+    }
+
+
+    /**
+     * A code that distinguishes between business written under the NC Reinsurance Facility and that which is not.
+     * 
+     */
+    @Generated("jsonschema2pojo")
+    public enum NCReinsuranceFacility {
+
+        @SerializedName("Yes")
+        YES("Yes"),
+        @SerializedName("No")
+        NO("No");
+        private final String value;
+        private final static Map<String, Policy.NCReinsuranceFacility> CONSTANTS = new HashMap<String, Policy.NCReinsuranceFacility>();
+
+        static {
+            for (Policy.NCReinsuranceFacility c: values()) {
+                CONSTANTS.put(c.value, c);
+            }
+        }
+
+        NCReinsuranceFacility(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+
+        public static Policy.NCReinsuranceFacility fromValue(String value) {
+            Policy.NCReinsuranceFacility constant = CONSTANTS.get(value);
+            if (constant == null) {
+                throw new IllegalArgumentException(value);
+            } else {
+                return constant;
+            }
+        }
+
+    }
+
+
+    /**
+     * A code identifying whether the policy is standalone or part of a package.
+     * 
+     */
+    @Generated("jsonschema2pojo")
+    public enum PackageCode {
+
+        @SerializedName("Standalone")
+        STANDALONE("Standalone"),
+        @SerializedName("Package")
+        PACKAGE("Package");
+        private final String value;
+        private final static Map<String, Policy.PackageCode> CONSTANTS = new HashMap<String, Policy.PackageCode>();
+
+        static {
+            for (Policy.PackageCode c: values()) {
+                CONSTANTS.put(c.value, c);
+            }
+        }
+
+        PackageCode(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+
+        public static Policy.PackageCode fromValue(String value) {
+            Policy.PackageCode constant = CONSTANTS.get(value);
+            if (constant == null) {
+                throw new IllegalArgumentException(value);
+            } else {
+                return constant;
+            }
+        }
+
+    }
+
+
+    /**
+     * A code identifying whether the record is Personal or Commercial.
+     * 
+     */
+    @Generated("jsonschema2pojo")
+    public enum PolicyCategory {
 
         @SerializedName("Personal")
         PERSONAL("Personal"),
         @SerializedName("Commercial")
         COMMERCIAL("Commercial");
         private final String value;
-        private final static Map<String, Policy.Subline> CONSTANTS = new HashMap<String, Policy.Subline>();
+        private final static Map<String, Policy.PolicyCategory> CONSTANTS = new HashMap<String, Policy.PolicyCategory>();
 
         static {
-            for (Policy.Subline c: values()) {
+            for (Policy.PolicyCategory c: values()) {
                 CONSTANTS.put(c.value, c);
             }
         }
 
-        Subline(String value) {
+        PolicyCategory(String value) {
             this.value = value;
         }
 
@@ -379,8 +712,8 @@ public class Policy {
             return this.value;
         }
 
-        public static Policy.Subline fromValue(String value) {
-            Policy.Subline constant = CONSTANTS.get(value);
+        public static Policy.PolicyCategory fromValue(String value) {
+            Policy.PolicyCategory constant = CONSTANTS.get(value);
             if (constant == null) {
                 throw new IllegalArgumentException(value);
             } else {
@@ -392,25 +725,28 @@ public class Policy {
 
 
     /**
+     * Identifies business written in a pool such as an assigned risk facility or joint underwriting association, and business not written in a pool.
      * 
      */
-    
-    public enum VoluntaryResidual {
+    @Generated("jsonschema2pojo")
+    public enum PoolAffiliation {
 
-        @SerializedName("Voluntary")
-        VOLUNTARY("Voluntary"),
-        @SerializedName("Residual")
-        RESIDUAL("Residual");
+        @SerializedName("Assigned Risk")
+        ASSIGNED_RISK("Assigned Risk"),
+        @SerializedName("JUA")
+        JUA("JUA"),
+        @SerializedName("None")
+        NONE("None");
         private final String value;
-        private final static Map<String, Policy.VoluntaryResidual> CONSTANTS = new HashMap<String, Policy.VoluntaryResidual>();
+        private final static Map<String, Policy.PoolAffiliation> CONSTANTS = new HashMap<String, Policy.PoolAffiliation>();
 
         static {
-            for (Policy.VoluntaryResidual c: values()) {
+            for (Policy.PoolAffiliation c: values()) {
                 CONSTANTS.put(c.value, c);
             }
         }
 
-        VoluntaryResidual(String value) {
+        PoolAffiliation(String value) {
             this.value = value;
         }
 
@@ -423,8 +759,104 @@ public class Policy {
             return this.value;
         }
 
-        public static Policy.VoluntaryResidual fromValue(String value) {
-            Policy.VoluntaryResidual constant = CONSTANTS.get(value);
+        public static Policy.PoolAffiliation fromValue(String value) {
+            Policy.PoolAffiliation constant = CONSTANTS.get(value);
+            if (constant == null) {
+                throw new IllegalArgumentException(value);
+            } else {
+                return constant;
+            }
+        }
+
+    }
+
+
+    /**
+     * A code that distinguishes between business written under the SC Reinsurance Facility and that which is not.
+     * 
+     */
+    @Generated("jsonschema2pojo")
+    public enum SCReinsuranceFacility {
+
+        @SerializedName("Yes")
+        YES("Yes"),
+        @SerializedName("No")
+        NO("No");
+        private final String value;
+        private final static Map<String, Policy.SCReinsuranceFacility> CONSTANTS = new HashMap<String, Policy.SCReinsuranceFacility>();
+
+        static {
+            for (Policy.SCReinsuranceFacility c: values()) {
+                CONSTANTS.put(c.value, c);
+            }
+        }
+
+        SCReinsuranceFacility(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+
+        public static Policy.SCReinsuranceFacility fromValue(String value) {
+            Policy.SCReinsuranceFacility constant = CONSTANTS.get(value);
+            if (constant == null) {
+                throw new IllegalArgumentException(value);
+            } else {
+                return constant;
+            }
+        }
+
+    }
+
+
+    /**
+     * A code identifying whether the record is a New Business, Change, Renewal, Cancellation, etc.
+     * 
+     */
+    @Generated("jsonschema2pojo")
+    public enum TransactionType {
+
+        @SerializedName("NL")
+        NL("NL"),
+        @SerializedName("CHG")
+        CHG("CHG"),
+        @SerializedName("RENL")
+        RENL("RENL"),
+        @SerializedName("CANC")
+        CANC("CANC"),
+        @SerializedName("REIN")
+        REIN("REIN");
+        private final String value;
+        private final static Map<String, Policy.TransactionType> CONSTANTS = new HashMap<String, Policy.TransactionType>();
+
+        static {
+            for (Policy.TransactionType c: values()) {
+                CONSTANTS.put(c.value, c);
+            }
+        }
+
+        TransactionType(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+
+        public static Policy.TransactionType fromValue(String value) {
+            Policy.TransactionType constant = CONSTANTS.get(value);
             if (constant == null) {
                 throw new IllegalArgumentException(value);
             } else {

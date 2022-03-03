@@ -1,10 +1,18 @@
 package org.openidl.etl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gson.Gson;
+
+import org.openidl.etl.model.Error__1;
 import org.openidl.etl.model.OpenidlAutoPolicyRecord;
+import org.openidl.etl.model.RuleValidation;
+import org.openidl.etl.model.System;
+import org.openidl.etl.reference.ReferenceLookup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Specifically made for the Auto line
@@ -13,7 +21,10 @@ import org.openidl.etl.model.OpenidlAutoPolicyRecord;
  */
 public class AutoHelper implements LineHelper{
 
+	private static final Logger logger = LoggerFactory.getLogger(AutoHelper.class);
+
 	private static Gson gson = new Gson();
+	private ReferenceLookup referenceLookup = new ReferenceLookup();
 
 	@Override
 	public Map<String, DataFactProperty> getFields(){
@@ -70,15 +81,42 @@ public class AutoHelper implements LineHelper{
 
 		//transform the data from the SQS message to format expected to run the rule
 		Map<String, String> data = new HashMap<String, String>();
-		data.put("LOB", openidlAutoPolicyRecord.getPolicy().getRecordLOB());
-		data.put("state", openidlAutoPolicyRecord.getPolicy().getPolicyState());
-		data.put("coverageCode", openidlAutoPolicyRecord.getCoverage() == null ? null : (openidlAutoPolicyRecord.getCoverage().getCoverageType() == null ? null : openidlAutoPolicyRecord.getCoverage().getCoverageType().value()));
-		data.put("programCode", openidlAutoPolicyRecord.getPolicy().getAnnualStatementLine());
-		data.put("sublineCode", openidlAutoPolicyRecord.getPolicy() == null ? null : (openidlAutoPolicyRecord.getPolicy().getSubline() == null ?  null : openidlAutoPolicyRecord.getPolicy().getSubline().value()));
+		data.put("LOB", referenceLookup.lookupLOBCode(openidlAutoPolicyRecord.getRecordLOB().value()));
+		data.put("state", referenceLookup.lookupStateCode(openidlAutoPolicyRecord.getVehicle().getGarageState()));
+		data.put("coverageCode", openidlAutoPolicyRecord.getCoverage() == null ? null : openidlAutoPolicyRecord.getCoverage().getCoverageCode());
+		data.put("programCode", openidlAutoPolicyRecord.getPolicy() == null ? null : openidlAutoPolicyRecord.getPolicy().getProgram());
+		data.put("sublineCode", referenceLookup.lookupSubline(openidlAutoPolicyRecord.getPolicy() == null ? null : openidlAutoPolicyRecord.getPolicy().getPolicyCategory().value()));
 
 		return data;
 	}
 
+	@Override
+	public String loadErrors(DataValidationRule rule) {
+		
+		String originalRecord = rule.getOriginalRecord();
+		
+		OpenidlAutoPolicyRecord record = gson.fromJson(originalRecord, OpenidlAutoPolicyRecord.class);
+
+		if (record.getSystem() == null) record.setSystem(new System());
+		if (record.getSystem().getRuleValidation() == null) record.getSystem().setRuleValidation(new RuleValidation());
+		for (ValidationOutput output : rule.getOutput().getValidations()) {
+			if (record.getSystem().getRuleValidation().getErrors() == null) record.getSystem().getRuleValidation().setErrors(new ArrayList<Error__1>());
+			Error__1 error = new Error__1();
+			error.setMessage(output.getErrorMessage());
+			error.setCode(output.getErrorCode());
+			error.setPath(output.getField());
+			record.getSystem().getRuleValidation().getErrors().add(error);
+			logger.info(error.getCode() + " :: " + error.getPath() + " :: " + error.getMessage());
+		}
+		record.getSystem().getRuleValidation().setValidated(RuleValidation.Validated.YES);
+		if (rule.getOutput().getValidations().size() > 0) {
+			record.getSystem().getRuleValidation().setValid(RuleValidation.Valid.NO);
+		} else {
+			record.getSystem().getRuleValidation().setValid(RuleValidation.Valid.YES);
+		}
+		return gson.toJson(record);
+	}
+	
 	@Override
 	public String getRuleFilePath() {
 		

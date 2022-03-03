@@ -219,6 +219,7 @@ run `npm install`
 
 -   configure
     -   copy the template config file and update the url
+    -   config files may be available in secrets manager at openidl/etl/{{org}}/{{env}}/input | staging | success | failure
 -   change into the openidl-etl-tester directory
 -   create sample records
     -   use `openidl-tester/test/samplemessages.json` as a template

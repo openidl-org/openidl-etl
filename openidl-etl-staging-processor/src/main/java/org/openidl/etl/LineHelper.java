@@ -26,4 +26,11 @@ public interface LineHelper {
 	 * Create a map from the input record
 	 */
 	public Map<String,String> mapFromOpenidlRecord(String record);
+
+	/**
+	 * Returns the string version of the json object with validations added in.
+	 * @param rule
+	 * @return
+	 */
+	public String loadErrors(DataValidationRule rule);
 }

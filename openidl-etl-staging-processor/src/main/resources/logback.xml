@@ -7,13 +7,11 @@
     </encoder>
   </appender>
 
-  <logger name="org.kie" level="warn"/>
-  <logger name="org.drools" level="warn"/>
+  <logger name="org.kie" level="warn" />
+  <logger name="org.drools" level="warn" />
 
   <root level="info">
     <appender-ref ref="consoleAppender" />
   </root>
 
 </configuration>
-
-
