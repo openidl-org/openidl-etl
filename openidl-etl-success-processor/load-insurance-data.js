@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 const fs = require('fs')
 const config = require('./config/config.json')
 
-function buildPayload(records) {
+module.exports.buildPayload = function (records) {
     let payload = {
         "records": [],
         "sourceId": config.sourceId,
@@ -27,7 +27,7 @@ function buildPayload(records) {
     }
     return payload;
 }
-async function loadInsuranceData(apiUrl, payload, token) {
+async function callAPI(apiUrl, payload, token) {
     try {
         console.log("Calling API with batch: ", payload.batchId)
         let response = await fetch(apiUrl + "openidl/api/load-insurance-data", {
@@ -63,16 +63,16 @@ let dryRun = (dryRunArg && (dryRunArg === 'dry-run' || dryRunArg === 'true'))
 console.log(commandArgs)
 console.log('dryRun: ' + dryRun)
 
-module.exports.processRecords = async function (records) {
+module.exports.loadInsuranceData = async function (records) {
     console.log("Inside process records.  " + records.length + " records.")
     let baseURL = buildURL(config, 'carrier', 'utilities')
     console.log(`Logging in`)
     // let credentials = await getCredentials()
     let userToken = await login(baseURL, config.username, config.password)
     // console.log(userToken)
-    console.log(`Token: ${userToken}`)
+    // console.log(`Token: ${userToken}`)
     baseURL = buildURL(config, 'carrier', 'insurance-data-manager')
     // console.log(JSON.stringify(dataToLoad))
-    let payload = buildPayload(records)
-    await loadInsuranceData(baseURL, payload, userToken)
+    let payload = module.exports.buildPayload(records)
+    await callAPI(baseURL, payload, userToken)
 }

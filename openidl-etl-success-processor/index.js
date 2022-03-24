@@ -1,15 +1,14 @@
-const processRecords = require('./load-insurance-data').processRecords
+const processRecords = require('./processor').process
 
 exports.handler = async function (event, context) {
-    let records = []
-    event.Records.forEach(record => {
+    let recordsToLoad = []
+    event.Records.forEach(recordToLoad => {
         console.log("We have a new record");
         const { body } = record;
-        records.push(JSON.parse(body))
+        recordsToLoad.push(JSON.parse(body))
         console.log(`ETL ID: ${JSON.parse(body).EtlID}`)
         console.log(body)
     });
-    console.log("Calling procesds records")
-    await processRecords(records)
+    await processRecords(recordsToLoad)
     return {}
 }
