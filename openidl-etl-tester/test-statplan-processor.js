@@ -2,17 +2,12 @@ const fs = require('fs')
 const { handler } = require('../openidl-etl-statplan-processor/index')
 const loadInsuranceData = require('../openidl-etl-success-processor/processor').process
 
-const testPremiumInputFileName = './test/testPAPremiumRecords.txt'
-const testLossInputFileName = './test/testPALossRecords.txt'
-
 // const testFileNames = ['./test/testPAPremiumRecords_CAR1.txt', './test/testPAPremiumRecords_CAR2.txt', './test/testPAPremiumRecords_TRVI.txt']
-const testFileNames = ['./test/PA_Loss_Output_v1.1.txt', './test/PA_Premium_Output_v1.1.txt']
+// const testFileNames = ['./test/PA_Loss_Output_v1.1.txt', './test/PA_Premium_Output_v1.1.txt']
+const testFileNames = ['./test/nd/ndTestPAPremiumRecords_CAR1.txt', './test/nd/ndTestPAPremiumRecords_CAR2.txt', './test/nd/ndTestPAPremiumRecords_CAR3.txt']
 
 let args = process.argv.slice(2)
 console.log('args: ' + args)
-
-// let testPremiumRecordsText = fs.readFileSync(testPremiumInputFileName, 'utf-8')
-// let testLossRecordsText = fs.readFileSync(testLossInputFileName, 'utf-8')
 
 async function processRecords(records) {
     let event = { Records: records }

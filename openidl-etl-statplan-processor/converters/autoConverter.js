@@ -31,6 +31,8 @@ const stateExceptionCodes = require('./reference/stateExceptionCodes.json')
 const causeOfLossCodes = require('./reference/causeOfLossCodes.json')
 const limitedCodingLossTransactionCodes = require('./reference/limitedCodingLossTransactionCodes.json')
 
+const NOT_PROVIDED = 'Not Provided'
+
 function hashString(text) {
     let shasum = crypto.createHash('sha1')
     shasum.update(text)
@@ -85,38 +87,40 @@ module.exports.converter = function (jsonRecord) {
     let vehicle = convertedRecord.Vehicle
     convertedRecord.createdTime = new Date().toISOString()
     policy.LineOfBusiness = 'Auto'
-    policy.Subline = sublineCodes[jsonRecord.subline].name
-    policy.SublineCategory = sublineCodes[jsonRecord.subline].category
+    policy.Subline = jsonRecord.subline.trim() ? sublineCodes[jsonRecord.subline].name : NOT_PROVIDED
+    policy.SublineCategory = jsonRecord.subline.trim() ? sublineCodes[jsonRecord.subline].category : NOT_PROVIDED
     policy.AccountingDate = convertAccountingDate(jsonRecord.accountingDate)
     policy.CompanyCode = jsonRecord.companyCode
     policy.CompanyID = jsonRecord.companyCode
     policy.State = stateCodes.codes[jsonRecord.stateCode]
     policy.Territory = jsonRecord.territory
     policy.OptionalZipCodeIndicator = jsonRecord.optionalZipCodeIndicator
-    convertedRecord.RecordType = transactionCodes[jsonRecord.transactionCode].type
-    convertedRecord.TransactionType = transactionCodes[jsonRecord.transactionCode].name
-    if (convertedRecord.RecordType === 'Premium') {
-        policy.PremiumAmount = convertStringToFloat(jsonRecord.premiumAmount)
-    } else {
-        claim.LossAmount = convertStringToFloat(jsonRecord.lossAmount)
+    convertedRecord.RecordType = jsonRecord.transactionCode.trim() ? transactionCodes[jsonRecord.transactionCode].type : NOT_PROVIDED
+    convertedRecord.TransactionType = jsonRecord.transactionCode.trim() ? transactionCodes[jsonRecord.transactionCode].name : NOT_PROVIDED
+    if (jsonRecord.transactionCode.trim()) {
+        if (convertedRecord.RecordType === 'Premium') {
+            policy.PremiumAmount = convertStringToFloat(jsonRecord.premiumAmount)
+        } else {
+            claim.LossAmount = convertStringToFloat(jsonRecord.lossAmount)
+        }
     }
-    policy.Program = programCodes[jsonRecord.program]
+    policy.Program = jsonRecord.program.trim() ? programCodes[jsonRecord.program] : NOT_PROVIDED
     let coverageCodesState = coverageCodes[policy.State]
     if (!coverageCodesState) coverageCodesState = coverageCodes['MU']
     coverage.CoverageCategory = coverageCodesState[jsonRecord.coverage].category
     coverage.Coverage = coverageCodesState[jsonRecord.coverage].name
     driver.OperatorAge = operatorAgeCodes[jsonRecord.operatorsAge]
-    driver.Gender = sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].gender
-    driver.MaritalStatus = sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].maritalStatus
-    driver.PrincipalSecondary = sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].principalSecondary
-    vehicle.VehicleUse = vehicleUseCodes[jsonRecord.vehicleUse].use
-    vehicle.VehicleUseOperator = vehicleUseCodes[jsonRecord.vehicleUse].operator
-    vehicle.CommuteDistance = vehicleUseCodes[jsonRecord.vehicleUse].commuteDistance
-    vehicle.AnnualDistance = vehicleUseCodes[jsonRecord.vehicleUse].annualDistance
-    vehicle.VehiclePerformance = vehiclePerformanceCodes[jsonRecord.vehiclePerformance]
-    driver.DriversTraining = privatePassengerDriversTrainingGoodStudentCodes[jsonRecord.privatePassengerDriversTrainingGoodStudent].driversTraining
-    driver.GoodStudentDiscount = privatePassengerDriversTrainingGoodStudentCodes[jsonRecord.privatePassengerDriversTrainingGoodStudent].goodStudentDiscount
-    driver.PenaltyPoints = penaltyPointsCodes[jsonRecord.privatePassengerPenaltyPoints]
+    driver.Gender = jsonRecord.sexAndMaritalStatus.trim() ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].gender : NOT_PROVIDED
+    driver.MaritalStatus = jsonRecord.sexAndMaritalStatus.trim() ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].maritalStatus : NOT_PROVIDED
+    driver.PrincipalSecondary = jsonRecord.sexAndMaritalStatus.trim() ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].principalSecondary : NOT_PROVIDED
+    vehicle.VehicleUse = jsonRecord.vehicleUse.trim() ? vehicleUseCodes[jsonRecord.vehicleUse].use : NOT_PROVIDED
+    vehicle.VehicleUseOperator = jsonRecord.vehicleUse.trim() ? vehicleUseCodes[jsonRecord.vehicleUse].operator : NOT_PROVIDED
+    vehicle.CommuteDistance = jsonRecord.vehicleUse.trim() ? vehicleUseCodes[jsonRecord.vehicleUse].commuteDistance : NOT_PROVIDED
+    vehicle.AnnualDistance = jsonRecord.vehicleUse.trim() ? vehicleUseCodes[jsonRecord.vehicleUse].annualDistance : NOT_PROVIDED
+    vehicle.VehiclePerformance = jsonRecord.vehiclePerformance.trim() ? vehiclePerformanceCodes[jsonRecord.vehiclePerformance] : NOT_PROVIDED
+    driver.DriversTraining = jsonRecord.privatePassengerDriversTrainingGoodStudent.trim() ? privatePassengerDriversTrainingGoodStudentCodes[jsonRecord.privatePassengerDriversTrainingGoodStudent].driversTraining : NOT_PROVIDED
+    driver.GoodStudentDiscount = jsonRecord.privatePassengerDriversTrainingGoodStudent.trim() ? privatePassengerDriversTrainingGoodStudentCodes[jsonRecord.privatePassengerDriversTrainingGoodStudent].goodStudentDiscount : NOT_PROVIDED
+    driver.PenaltyPoints = jsonRecord.privatePassengerPenaltyPoints.trim() ? penaltyPointsCodes[jsonRecord.privatePassengerPenaltyPoints] : NOT_PROVIDED
     let liabilityLimitState = liabilityLimitCodes.state[policy.State]
     if (!liabilityLimitState) liabilityLimitState = liabilityLimitCodes.state['MU']
     coverage.LiabilityLimitsName = liabilityLimitState.coverage[jsonRecord.coverage].name

@@ -24,6 +24,11 @@ Holds ETL code for openidl
 
 ## setup queues
 
+-   Create statplan input SQS Queue in AWS
+    -   Name: 'openidl-{{ org }}-etl-statplan-input-queue'
+    -   Type: `Standard`
+    -   Visibility timeout: `2 minute`
+    -   Message retention period: `2 minutes`
 -   Create input SQS Queue in AWS
     -   Name: 'openidl-{{ org }}-etl-input-queue'
     -   Type: `Standard`
@@ -45,13 +50,50 @@ Holds ETL code for openidl
     -   Visibility timeout: `2 minute`
     -   Message retention period: `2 minutes`
 
+## setup dispatch processor
+
+-   change into the openidl-etl-dispatch-processor directory
+
+run `npm install
+
+-   configure the dispatch processor
+
+    -   create a file in the config directory called config.json from the config-template.json provided
+
+-   build
+
+    -   go back to the top folder
+    -   `make build_dispatch_processor`
+
+-   create dispatch processor lambda
+    -   create from blueprint
+    -   under blueprints search for `s3`
+    -   in the results, select `s3-get-object`
+    -   choose configure
+    -   under basic information
+        -   For **Function name** enter 'openidl-{{ org }}-etl-statplan-processor'
+        -   For **Function role**, choose **Create a new role from AWS policy template**
+        -   For **Role name**, enter 'openidl-{{ org }}-etl-statplan-processor-role'
+    -   under **S3 trigger**, choose the s3 bucket previously created
+    -   choose **Create function**
+    -   Edit the Execution Role for the lambda to have access to SQS queue
+        -   Go to lambda `Configuration` tab
+        -   Go to lambda `Permission` section
+        -   Click on Execution role to go to IAM section of AWS
+        -   Click attach policies
+            -   `AmazonS3FullAccess`
+            -   `AmazonSQSFullAccess`
+            -   Please note full access is only for demo purposes only. Limit the scope of the permission to that queue only
+    -   Attach trigger to lambda
+        -   Add a trigger and select the SQS success queue
+
 ## setup input processor
 
 -   change into the openidl-etl-input-processor directory
 
 run `npm install`
 
--   configure the success processor
+-   configure the input processor
 
     -   create a file in config directory called config.json from the config-template.json provided
 
@@ -64,7 +106,42 @@ run `npm install`
     -   Create from scratch
     -   Runtime: `Node.js 14`
     -   Upload fat zip file (see openidl-etl-input-processor/README.md for details about building)
-        -   `openidl-etl-input-processor/function.zip`
+        -   `openidl-etl-input-processor/input-processor.zip`
+    -   Handler
+        `index.js`
+    -   Edit configuration
+        -   Memory: `128 MB`
+        -   Timeout: `2 min`
+    -   Edit the Execution Role for the lambda to have access to SQS queue
+        -   Go to lambda `Configuration` tab
+        -   Go to lambda `Permission` section
+        -   Click on Execution role to go to IAM section of AWS
+        -   Click attach policies
+            -   `AmazonSQSFullAccess`
+            -   Please note full access is only for demo purposes only. Limit the scope of the permission to that queue only
+    -   Attach trigger to lambda
+        -   Add a trigger and select the SQS success queue
+
+## setup statplan processor
+
+-   change into the openidl-etl-statplan-processor directory
+
+run `npm install`
+
+-   configure the statplan processor
+
+    -   create a file in config directory called config.json from the config-template.json provided
+
+-   build
+
+    -   go back to top folder
+    -   `make build_statplan_processor`
+
+-   Create statplan processor lambda
+    -   Create from scratch
+    -   Runtime: `Node.js 14`
+    -   Upload fat zip file (see openidl-etl-input-processor/README.md for details about building)
+        -   `openidl-etl-statplan-processor/statplan-processor.zip`
     -   Handler
         `index.js`
     -   Edit configuration

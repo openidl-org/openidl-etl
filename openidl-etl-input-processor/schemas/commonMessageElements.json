@@ -1,0 +1,582 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "https://openidl.org/schemas/common",
+  "id": "HomeownersPolicyMessage",
+  "type": "object",
+  "title": "Homeowners Policy Message",
+  "additionalProperties": true,
+  "required": [
+    "RecordLOB",
+    "RecordType",
+    "CompanyUse",
+    "Policy"
+  ],
+  "definitions": {
+    "system": {
+      "type": "object",
+      "description": "Manages the information about the processing of the message",
+      "properties": {
+        "schemaValidation": {
+          "type": "object",
+          "description": "This object holds the information obout schema validation.",
+          "properties": {
+            "validated": {
+              "type": "string",
+              "description": "Set to Yes if this record has already had schema validation.",
+              "enum": [
+                "Yes",
+                "No"
+              ]
+            },
+            "valid": {
+              "type": "string",
+              "description": "Set to Yes if this record is valid for the schema.",
+              "enum": [
+                "Yes",
+                "No"
+              ]
+            },
+            "errors": {
+              "type": "array",
+              "description": "Collect all the errors from the schema validator here.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "argument": {
+                    "type": "string"
+                  },
+                  "level": {
+                    "type": "string",
+                    "enum": [
+                      "Error",
+                      "Warning",
+                      "Info"
+                    ]
+                  },
+                  "code": {
+                    "type": "string",
+                    "pattern": "^\\d{4}$"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "schema": {
+                    "type": "string"
+                  },
+                  "stack": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ruleValidation": {
+          "type": "object",
+          "description": "This object holds the informatioin about the rule validation.",
+          "properties": {
+            "validated": {
+              "type": "string",
+              "description": "Set to Yes if this record has been validated against the rules.",
+              "enum": [
+                "Yes",
+                "No"
+              ]
+            },
+            "valid": {
+              "type": "string",
+              "description": "Set to Yes if this record is valid based on the rules.",
+              "enum": [
+                "Yes",
+                "No"
+              ]
+            },
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "argument": {
+                    "type": "string"
+                  },
+                  "level": {
+                    "type": "string",
+                    "enum": [
+                      "Error",
+                      "Warning",
+                      "Info"
+                    ]
+                  },
+                  "code": {
+                    "type": "string",
+                    "pattern": "^\\d{4}$"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "schema": {
+                    "type": "string"
+                  },
+                  "stack": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "log": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "string",
+                "enum": [
+                  "Error",
+                  "Warning",
+                  "Info"
+                ]
+              },
+              "code": {
+                "type": "string",
+                "pattern": "^\\d{4}$"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "RecordLOB": {
+      "type": "string",
+      "description": "A code identifying the broader line of insurance the transaction is to be reported as.",
+      "enum": [
+        "Auto"
+      ]
+    },
+    "RecordType": {
+      "type": "string",
+      "description": "A code identifying the type of transaction being reported.",
+      "enum": [
+        "Policy",
+        "Claim"
+      ]
+    },
+    "CompanyUse": {
+      "type": "string",
+      "description": "This field is for COMPANY USE. It is strongly recommended that companies use this field in conjunction with the POLICY NUMBER and CLAIM NUMBER fields to provide an audit trail."
+    },
+    "Policy": {
+      "type": "object",
+      "description": "policy level elements",
+      "additionalProperties": true,
+      "properties": {
+        "CompanyID": {
+          "type": "string",
+          "description": "A unique 4-digit code assigned by the Statistical Bureaus to identify each insurance company."
+        },
+        "AnnualStatementLine": {
+          "type": "string",
+          "description": "A code identifying the line of insurance the transaction was written under."
+        },
+        "PolicyCategory": {
+          "type": "string",
+          "description": "A code identifying whether the record is Personal or Commercial.",
+          "enum": [
+            "Personal",
+            "Commercial"
+          ]
+        },
+        "Subline": {
+          "type": "string",
+          "description": "A code identifying the coverage."
+        },
+        "Program": {
+          "type": "string",
+          "description": "A code that indicates whether the basic rules and forms used in writing the policy are using certain Bureau's rules or form or if they are independent."
+        },
+        "PolicyIdentifier": {
+          "type": "string",
+          "description": "A unique combination of letters and numbers that identifies an insured's insurance policy.  This is the foreign key for connecting the claim and policy records."
+        },
+        "PolicyEffectiveDate": {
+          "type": "string",
+          "format": "date",
+          "description": "The date the policy became effective."
+        },
+        "TransactionType": {
+          "type": "string",
+          "description": "A code identifying whether the record is a New Business, Change, Renewal, Cancellation, etc.",
+          "enum": [
+            "NL",
+            "CHG",
+            "RENL",
+            "CANC",
+            "REIN"
+          ]
+        },
+        "TransactionEffectiveDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Date the change becomes effective.  Not the booking date."
+        },
+        "TransactionExpirationDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Date the change ends."
+        },
+        "PolicyAddress": {
+          "$ref": "#/definitions/Address"
+        },
+        "Market": {
+          "type": "string",
+          "description": "Market in which the policy is being written through."
+        },
+        "AccountingDate": {
+          "type": "string",
+          "format": "date",
+          "description": "The date the transaction was financially booked."
+        }
+      },
+      "required": [
+        "CompanyID",
+        "AnnualStatementLine",
+        "PolicyCategory",
+        "Subline",
+        "Program",
+        "PolicyAddress",
+        "PolicyIdentifier",
+        "PolicyEffectiveDate",
+        "TransactionType",
+        "TransactionEffectiveDate",
+        "TransactionExpirationDate",
+        "Market",
+        "AccountingDate"
+      ]
+    },
+    "Claim": {
+      "type": "object",
+      "description": "claim level elements",
+      "additionalProperties": true,
+      "properties": {
+        "LossAmount": {
+          "type": "number",
+          "description": "The amount of the loss."
+        },
+        "ClaimCount": {
+          "type": "number",
+          "description": "The number of claims."
+        },
+        "CauseOfLoss": {
+          "type": "string",
+          "description": "The cause of the loss.  Differes by line of business"
+        },
+        "AccidentDate": {
+          "type": "string",
+          "format": "date",
+          "description": "The date the accident occurred."
+        },
+        "ClaimIdentifier": {
+          "type": "string",
+          "description": "A unique combination of letters and numbers that identifies an insured's claim."
+        },
+        "ClaimNumber": {
+          "type": "string",
+          "description": "Loss records must contain the CLAIM NUMBER or any other alphanumeric identification number which will make it possible to locate all loss records associated with a specific occurrence."
+        }
+      },
+      "required": [
+        "LossAmount",
+        "ClaimCount",
+        "CauseOfLoss",
+        "AccidentDate",
+        "ClaimIdentifier",
+        "ClaimNumber"
+      ]
+    },
+    "Driver": {
+      "type": "object",
+      "description": "driver level elements",
+      "additionalProperties": false,
+      "properties": {
+        "Gender": {
+          "type": "string",
+          "description": "Gender of highest rated operator of each insured vehicle. ",
+          "enum": [
+            "Male",
+            "Female",
+            "Not Disclosed"
+          ]
+        },
+        "DriverAge": {
+          "type": "number",
+          "description": "Driver's age when policy was written."
+        },
+        "MaritalStatus": {
+          "type": "string",
+          "description": "Indicates whether driver is single or married.",
+          "enum": [
+            "Married",
+            "Single",
+            "Divorced"
+          ]
+        },
+        "SafeDrivingDefensiveDriverDiscount": {
+          "type": "string",
+          "description": "Discount for the practice of using driving strategies that minimize risk and help avoid accidents, as by predicting hazards on the road ",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "GoodStudentDiscount": {
+          "type": "string",
+          "description": "Discount for student getting good grades in school.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "NumberOfPenaltyPoints": {
+          "type": "number",
+          "description": "Number of motoring conviction codes, fixed penalty notices, endorsements against the driver.  "
+        },
+        "DriversTrainingDiscount": {
+          "type": "string",
+          "description": "Discount for Driver taking Driving School lessons.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "55AndOverDiscount": {
+          "type": "string",
+          "description": "Discount for 55 & over years olds for successful completion of the PA certified training course.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "AccidentPreventionCredit": {
+          "type": "string",
+          "description": "Indicates whether the vehicle has an accident prevention credit.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        }
+      },
+      "required": [
+        "Gender",
+        "DriverAge",
+        "MaritalStatus",
+        "SafeDrivingDefensiveDriverDiscount",
+        "GoodStudentDiscount",
+        "NumberOfPenaltyPoints",
+        "DriversTrainingDiscount",
+        "55AndOverDiscount",
+        "AccidentPreventionCredit"
+      ]
+    },
+    "Vehicle": {
+      "type": "object",
+      "description": "vehicle level elements",
+      "properties": {
+        "BodyStyle": {
+          "type": "string",
+          "description": "The shape and model of a vehicle."
+        },
+        "BodySize": {
+          "type": "string",
+          "description": "Type of Vehicle"
+        },
+        "EngineSizeMotorcycle": {
+          "type": "string",
+          "description": "Size of Engine in Motorcycles or Motor Scooters"
+        },
+        "VIN": {
+          "type": "string",
+          "description": "Unique combination of numbers and letters that identify each vehicle."
+        },
+        "GarageState": {
+          "type": "string",
+          "description": "State where the vehicle is principally garaged."
+        },
+        "GarageZIP5": {
+          "type": "string",
+          "description": "First 5 digits of Zip Code of where the vehicle is principally garaged.",
+          "pattern": "^\\d{5}$"
+        },
+        "GarageZIP4": {
+          "type": "string",
+          "description": "Last 4 digits of Zip Code of where the vehicle is principally garaged.",
+          "pattern": "^\\d{4}$"
+        },
+        "VehicleYear": {
+          "type": "string",
+          "description": "Model Year",
+          "pattern": "^\\d{4}$"
+        },
+        "VehicleUse": {
+          "type": "string",
+          "description": "Primary use of the vehicle.",
+          "enum": [
+            "Personal",
+            "Work",
+            "Delivery"
+          ]
+        },
+        "VechicleSymbol": {
+          "type": "string",
+          "description": "Abstraction of the vehicle rating symbols.  Not company rating symbols."
+        },
+        "VechiclePerformance": {
+          "type": "string",
+          "description": "Vehicle Performance characteristic"
+        },
+        "PerCommuteMiles": {
+          "type": "number",
+          "description": "Number of miles driven per commute."
+        },
+        "AnnualVehicleMiles": {
+          "type": "number",
+          "description": "Number of miles driven annually."
+        },
+        "AntilockBrakesDiscount": {
+          "type": "string",
+          "description": "Code indicating whether Anti-Lock Brakes discount was applied to the vehicle.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "SafetyRestraintDiscount": {
+          "type": "string",
+          "description": "Code indicating whether Safety Restraint discount was applied to the vehicle.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "AntiTheftDeviceDiscount": {
+          "type": "string",
+          "description": "Code indicating whether Anti-Theft Device discount was applied to the vehicle.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        }
+      },
+      "required": [
+        "BodyStyle",
+        "BodySize",
+        "EngineSizeMotorcycle",
+        "VIN",
+        "GarageState",
+        "GarageZIP5",
+        "GarageZIP4",
+        "VehicleYear",
+        "VehicleUse",
+        "VechicleSymbol",
+        "VechiclePerformance",
+        "PerCommuteMiles",
+        "AnnualVehicleMiles",
+        "AntilockBrakesDiscount",
+        "SafetyRestraintDiscount",
+        "AntiTheftDeviceDiscount"
+      ]
+    },
+    "Coverage": {
+      "type": "object",
+      "description": "coverage level elements",
+      "properties": {
+        "CoverageCode": {
+          "type": "string",
+          "description": "Code representing the coverage of the vehicle the premium on the record applies to."
+        },
+        "PremiumAmount": {
+          "type": "number",
+          "description": "Transactional Premium applicable to the coverage"
+        },
+        "DeductibleAmount": {
+          "type": "number",
+          "description": "Deductible for the Coverage"
+        },
+        "DeductibleType": {
+          "type": "string",
+          "description": "The type of deductible.  This is LOB specific."
+        },
+        "Exposure": {
+          "type": "number",
+          "description": "Deductible for the Coverage"
+        },
+        "MonthsCovered": {
+          "type": "number",
+          "description": "Number of months Coverage is in effect"
+        }
+      },
+      "required": [
+        "CoverageCode",
+        "PremiumAmount",
+        "DeductibleAmount",
+        "DeductibleType",
+        "Exposure",
+        "MonthsCovered"
+      ]
+    },
+    "Address": {
+      "type": "object",
+      "description": "an address",
+      "additionalProperties": true,
+      "properties": {
+        "StreetAddress": {
+          "type": "string",
+          "description": "The street address for the address"
+        },
+        "StreetAddress2": {
+          "type": "string",
+          "description": "The street address for the address"
+        },
+        "City": {
+          "type": "string",
+          "description": "The city for the address"
+        },
+        "StateAbbreviation": {
+          "type": "string",
+          "description": "The two character abbreviation for the state."
+        },
+        "ZipCode": {
+          "type": "string",
+          "description": "The five digit zip code."
+        },
+        "ZipCodeSuffix": {
+          "type": "string",
+          "description": "The four digit suffix"
+        }
+      },
+      "required": [
+        "StreetAddress",
+        "StreetAddress2",
+        "City",
+        "StateAbbreviation",
+        "ZipCode",
+        "ZipCodeSuffix"
+      ]
+    }
+  }
+}

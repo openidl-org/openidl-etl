@@ -1,0 +1,81 @@
+{
+    "$schema": "../schemas/homeownersPolicyMessage.json",
+    "system": {
+        "ruleValidation": {
+            "validated": "Yes"
+        }
+    },
+    "RecordLOB": "Homeowners",
+    "RecordType": "Policy",
+    "CompanyUse": "",
+    "Policy": {
+        "PolicyCategory": "Personal",
+        "Market": "",
+        "PolicyEffectiveDate": "2022-01-01",
+        "PolicyIdentifier": "",
+        "Subline": "",
+        "TransactionEffectiveDate": "2022-01-01",
+        "TransactionExpirationDate": "2022-12-31",
+        "AccountingDate": "2022-01-01",
+        "CompanyID": "12345",
+        "PolicyAddress": {
+            "StreetAddress": "",
+            "StreetAddress2": "",
+            "City": "",
+            "StateAbbreviation": "NJ",
+            "ZipCode": "",
+            "ZipCodeSuffix": ""
+        },
+        "TransactionType": "NL",
+        "AnnualStatementLine": "19.1",
+        "Program": "AAIS Program - Alternate / Standard Coverage",
+        "County": "Some County",
+        "Area": "Some Area",
+        "Territory": "Some Territory",
+        "StateExceptionA": "",
+        "StateExceptionB": "",
+        "StateExceptionC": "",
+        "SmallPremium": "No",
+        "StateException": ""
+    },
+    "Coverage": {
+        "CoverageCode": "cov",
+        "PremiumAmount": 12345,
+        "Exposure": 20,
+        "DeductibleAmount": 500,
+        "DeductibleType": "Ded Type",
+        "PolicyForm": "Some form",
+        "AmountOfInsurance": 1000000,
+        "LiabilityLimit": 1000000,
+        "MedicalPaymentsLimit": 50000,
+        "WindstormOrHailDeductibleAmount": 200,
+        "EscapedLiquidFuelCoverageProperty": "Does not apply",
+        "EscapedLiquidFuelCoverageLiability": "",
+        "OrdinanceOrLawCoverage": "Does not apply",
+        "TheftDeductibleAmount": "Does not apply",
+        "SecondaryPropertyAmountOfInsurance": 0,
+        "NCProgramEnhancement": "Not enhanced",
+        "MoldDamageCoverage": "Does not apply",
+        "Pool": "No",
+        "MonthsCovered": 3
+    },
+    "Claim": {
+        "LossAmount": 200,
+        "ClaimCount": 1,
+        "LossSettlement": "Some settlement",
+        "CauseOfLoss": "Dunno",
+        "AccidentDate": "2022-03-01",
+        "ClaimIdentifier": "",
+        "ClaimNumber": "",
+        "LimitedCodingLossTransactionCode": "No"
+    },
+    "Home": {
+        "Construction": "Frame",
+        "FireProtection": "1",
+        "YearOfConstruction": 2000,
+        "Occupancy": "Does not apply",
+        "HomeBasedBusiness": "No",
+        "NumberOfFamilies": "1",
+        "BuildingCodeEffectivenessGrade": "1"
+    }
+}

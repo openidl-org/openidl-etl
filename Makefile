@@ -1,3 +1,6 @@
+build_statplan_processor:
+	cd openidl-etl-statplan-processor; zip -r statplan-processor.zip . -x "statplan-processor.zip"; cd ..
+
 build_input_processor:
 	cd openidl-etl-input-processor; zip -r input-processor.zip . -x "input-processor.zip"; cd ..
 

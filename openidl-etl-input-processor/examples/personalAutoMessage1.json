@@ -1,7 +1,14 @@
 {
   "$schema": "../schemas/personalAutoPolicyMessage.json",
+  "system": {},
+  "RecordLOB": "Auto",
+  "RecordType": "Policy",
   "Policy": {
+    "CompanyID": "12345",
+    "PolicyCategory": "Personal",
+    "Subline": "",
+    "Program": "",
     "AnnualStatementLine": "18",
-    "PolicyEffectiveDate": "2022-01-01x"
+    "PolicyEffectiveDate": "2022-01-01"
   }
 }

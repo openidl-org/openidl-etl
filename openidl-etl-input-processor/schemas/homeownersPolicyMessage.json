@@ -1,0 +1,272 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "https://openidl.org/schemas/homeowners",
+  "id": "HomeownersPolicyMessage",
+  "type": "object",
+  "title": "Homeowners Policy Message",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "system": {
+      "$ref": "./commonMessageElements.json#/definitions/system"
+    },
+    "RecordLOB": {
+      "type": "string",
+      "description": "A code identifying the broader line of insurance the transaction is to be reported as.",
+      "enum": [
+        "Homeowners"
+      ]
+    },
+    "RecordType": {
+      "$ref": "./commonMessageElements.json#/definitions/RecordType"
+    },
+    "CompanyUse": {
+      "$ref": "./commonMessageElements.json#/definitions/CompanyUse"
+    },
+    "Policy": {
+      "type": "object",
+      "description": "policy level elements",
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "$ref": "./commonMessageElements.json#/definitions/Policy"
+        },
+        {
+          "$ref": "#/definitions/Policy"
+        }
+      ]
+    },
+    "Claim": {
+      "type": "object",
+      "description": "policy level elements",
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "$ref": "./commonMessageElements.json#/definitions/Claim"
+        },
+        {
+          "$ref": "#/definitions/Claim"
+        }
+      ]
+    },
+    "Home": {
+      "type": "object",
+      "description": "home level elements",
+      "additionalProperties": true,
+      "properties": {
+        "Construction": {
+          "type": "string",
+          "description": "The constructin of the home."
+        },
+        "FireProtection": {
+          "type": "string",
+          "description": "The fire protection for the home."
+        },
+        "YearOfConstruction": {
+          "type": "number",
+          "description": "The year the home was constructed"
+        },
+        "Occupancy": {
+          "type": "string",
+          "description": "Code for occupancy of home"
+        },
+        "HomeBasedBusiness": {
+          "type": "string",
+          "description": "Is this a home based business?",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "NumberOfFamilies": {
+          "type": "string",
+          "description": "Code for number of families in the building."
+        },
+        "BuildingCodeEffectivenessGrade": {
+          "type": "string",
+          "description": "Code for building code effectiveness grade."
+        }
+      },
+      "required": [
+        "Construction",
+        "FireProtection",
+        "YearOfConstruction",
+        "Occupancy",
+        "HomeBasedBusiness",
+        "NumberOfFamilies",
+        "BuildingCodeEffectivenessGrade"
+      ]
+    },
+    "Coverage": {
+      "type": "object",
+      "description": "coverage level elements",
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "$ref": "./commonMessageElements.json#/definitions/Coverage"
+        },
+        {
+          "$ref": "#/definitions/Coverage"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "Policy": {
+      "type": "object",
+      "description": "policy level elements",
+      "additionalProperties": true,
+      "properties": {
+        "County": {
+          "type": "string",
+          "description": "The County for the policy"
+        },
+        "Area": {
+          "type": "string",
+          "description": "The Area for the policy"
+        },
+        "Territory": {
+          "type": "string",
+          "description": "The Territory for the policy"
+        },
+        "StateExceptionA": {
+          "type": "string",
+          "description": "Exception for the state."
+        },
+        "StateExceptionB": {
+          "type": "string",
+          "description": "Exception for the state."
+        },
+        "StateExceptionC": {
+          "type": "string",
+          "description": "Exception for the state."
+        },
+        "SmallPremium": {
+          "type": "string",
+          "description": "Does this policy have a small premium?",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "StateException": {
+          "type": "string",
+          "description": "Exception for the state."
+        }
+      },
+      "required": [
+        "County",
+        "Area",
+        "Territory",
+        "StateExceptionA",
+        "StateExceptionB",
+        "StateExceptionC",
+        "SmallPremium",
+        "StateException"
+      ]
+    },
+    "Claim": {
+      "type": "object",
+      "description": "claim level elements",
+      "additionalProperties": true,
+      "properties": {
+        "LossSettlement": {
+          "type": "string",
+          "description": "Code describing how the loss was settled."
+        },
+        "LimitedCodingLossTransactionCode": {
+          "type": "string",
+          "description": "This code identifies a loss transaction on limited coded records. The field will be populated on loss-related Transaction Codes if the record is not fully coded. The field should be blank in all other cases.  For outstanding limited coding loss records, report the final reserve amount at the end of each quarter.",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        }
+      },
+      "required": [
+        "LossSettlement",
+        "LimitedCodingLossTransactionCode"
+      ]
+    },
+    "Coverage": {
+      "type": "object",
+      "description": "coverage level elements",
+      "additionalProperties": true,
+      "properties": {
+        "CoverageCode": {
+          "type": "string",
+          "description": "Code representing the coverage of the vehicle the premium on the record applies to."
+        },
+        "PolicyForm": {
+          "type": "string",
+          "description": "Code representing the policy form."
+        },
+        "AmountOfInsurance": {
+          "type": "number",
+          "description": "Amount for which the home is insured"
+        },
+        "LiabilityLimit": {
+          "type": "number",
+          "description": "Limit of liability overage."
+        },
+        "MedicalPaymentsLimit": {
+          "type": "number",
+          "description": "Limit of medical payments overage."
+        },
+        "WindstormOrHailDeductibleAmount": {
+          "type": "number",
+          "description": "Deductible for Windstorm or Hail Coverage."
+        },
+        "EscapedLiquidFuelCoverageProperty": {
+          "type": "string",
+          "description": "Code that describes Escaped Liquid Fuel Coverage for Property."
+        },
+        "EscapedLiquidFuelCoverageLiability": {
+          "type": "string",
+          "description": "Code that describes Escaped Liquid Fuel Coverage for Liability."
+        },
+        "OrdinanceOrLawCoverage": {
+          "type": "string",
+          "description": "Code that describesthe Ordinance or Law Coverage."
+        },
+        "TheftDeductibleAmount": {
+          "type": "string",
+          "description": "Deductible for theft coverage."
+        },
+        "SecondaryPropertyAmountOfInsurance": {
+          "type": "number",
+          "description": "The secondary amount for which the home is insured"
+        },
+        "NCProgramEnhancement": {
+          "type": "string",
+          "description": "Indicates if this is enhanced for NC"
+        },
+        "MoldDamageCoverage": {
+          "type": "string",
+          "description": "Code that describes the Mold Damage Coverage."
+        },
+        "Pool": {
+          "type": "string",
+          "description": "Code that describes the Pool."
+        }
+      },
+      "required": [
+        "CoverageCode",
+        "AmountOfInsurance",
+        "LiabilityLimit",
+        "MedicalPaymentsLimit",
+        "WindstormOrHailDeductibleAmount",
+        "EscapedLiquidFuelCoverageProperty",
+        "EscapedLiquidFuelCoverageLiability",
+        "OrdinanceOrLawCoverage",
+        "TheftDeductibleAmount",
+        "SecondaryPropertyAmountOfInsurance",
+        "NCProgramEnhancement",
+        "MoldDamageCoverage",
+        "Pool"
+      ]
+    }
+  }
+}
