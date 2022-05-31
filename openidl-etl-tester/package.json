@@ -10,10 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.51.0",
-    "aws-sdk": "^2.1073.0"
+    "aws-sdk": "^2.1143.0"
   },
   "devDependencies": {
     "jest": "^27.5.1",
-    "jsonschema": "^1.4.0"
+    "jsonschema": "^1.4.1"
   }
 }
