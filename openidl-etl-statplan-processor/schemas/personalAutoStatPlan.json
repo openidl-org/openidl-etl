@@ -118,13 +118,13 @@
         },
         "premiumAmount": {
             "name": "premiumAmount",
-            "type": "string",
+            "type": "number",
             "start": 16,
             "length": 10
         },
         "lossAmount": {
             "name": "lossAmount",
-            "type": "string",
+            "type": "number",
             "start": 16,
             "length": 10
         },
