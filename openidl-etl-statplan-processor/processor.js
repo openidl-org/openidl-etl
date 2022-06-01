@@ -1,7 +1,6 @@
 const schema = require("./schemas/personalAutoStatPlan.json");
 const converter = require("./converters/autoConverter").converter;
 
-
 function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
@@ -29,17 +28,15 @@ function convertTextRecordToJsonUsingSchema(record, schema) {
     var end = start + field.length;
     var type = field.type;
     var acted = false;
-    //console.log('type: '+type)
+
     if (record.length > start) {
       var value = record.substring(start, end).trim();
-      //console.log(' type: '+ type +' fieldname: '+fieldName+" value: "+value)
       if (type == "number") {
-        console.log('number: '+fieldName+ ' value: '+value)
+        console.log("number: " + fieldName + " value: " + value);
         result[field.name] = Number(value);
         acted = true;
-        // sleep(100000)
       }
-      if ((type == "string")) {
+      if (type == "string") {
         result[field.name] = value;
         acted = true;
       }
@@ -48,8 +45,7 @@ function convertTextRecordToJsonUsingSchema(record, schema) {
       }
     }
   }
-  console.table(result)
-  sleep(100000)
+  console.table(result);
   return result;
 }
 
