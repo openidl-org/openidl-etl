@@ -6,6 +6,8 @@ const fs = require('fs')
 const config = require('./config/config.json')
 
 module.exports.buildPayload = function (records) {
+    console.log('load-insurance-data: build payload: '+records.length)
+
     let payload = {
         "records": [],
         "sourceId": config.sourceId,

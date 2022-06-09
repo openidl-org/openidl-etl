@@ -1,4 +1,4 @@
-const schema = require("./schemas/personalAutoStatPlan.json");
+const schema = require("./schemas/personalAutoStatPlan-premium.json");
 const converter = require("./converters/autoConverter").converter;
 
 function sleep(ms) {
@@ -13,10 +13,14 @@ module.exports.convertTextRecordsToJson = function (recordsText) {
 
 function convertTextRecordsToJsonUsingSchema(recordsText, schema) {
   let results = [];
-  let records = recordsText.split("\n");
+  
+  let records = recordsText.split("\n")
+  records.pop() //remove end object
   for (record of records) {
-    if (record)
-      results.push(convertTextRecordToJsonUsingSchema(record, schema));
+    //if (record)  
+      lcl_result = convertTextRecordToJsonUsingSchema(record, schema)
+      results.push(lcl_result)
+      
   }
   return results;
 }
@@ -32,8 +36,17 @@ function convertTextRecordToJsonUsingSchema(record, schema) {
     if (record.length > start) {
       var value = record.substring(start, end).trim();
       if (type == "number") {
-        console.log("number: " + fieldName + " value: " + value);
-        result[field.name] = Number(value);
+        postive = 1
+        if (value.charAt(value.length-1) == '}'){
+          value = value.slice(0,-1)
+          postive=postive*-1
+        }
+        if (value.charAt(value.length-1) == '{'){
+          value = value.slice(0,-1)
+        }
+
+        result[field.name] = Number(value)*postive;
+        console.log('number: '+value)
         acted = true;
       }
       if (type == "string") {
@@ -45,20 +58,20 @@ function convertTextRecordToJsonUsingSchema(record, schema) {
       }
     }
   }
-  console.table(result);
   return result;
 }
 
 exports.process = async function (records) {
   let resultRecords = [];
+
   // each record is a whole file with many actual individual text records in it.
   records.forEach((inputRecord) => {
     let record = inputRecord.body;
-    // console.log("We have a new submission");
-    // console.log(record)
+    //console.log("We have a new submission");
+    //console.log(record)
     let jsonRecords = convertTextRecordsToJsonUsingSchema(record, schema);
     for (jsonRecord of jsonRecords) {
-      console.log(jsonRecord);
+      //console.log(jsonRecord);
       resultRecords.push(converter(jsonRecord));
     }
   });
