@@ -32,6 +32,10 @@ function convertTextRecordToJsonUsingSchema(record, schema) {
     var end = start + field.length;
     var type = field.type;
     var acted = false;
+    if (type == 'date') {
+      console.log('type: '+type)
+    }
+
 
     if (record.length > start) {
       var value = record.substring(start, end).trim();
@@ -46,11 +50,18 @@ function convertTextRecordToJsonUsingSchema(record, schema) {
         }
 
         result[field.name] = Number(value)*postive;
-        console.log('number: '+value)
         acted = true;
       }
       if (type == "string") {
         result[field.name] = value;
+        acted = true;
+      }
+      if (type =="date"){
+        const dateStr = value
+        const date = new Date(dateStr)
+        const iso = date.toISOString()
+        result[field.name] = iso;
+        console.log('iso: '+iso)
         acted = true;
       }
       if (!acted) {

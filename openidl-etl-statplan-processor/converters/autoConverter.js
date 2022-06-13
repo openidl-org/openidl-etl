@@ -89,9 +89,6 @@ function decodeStateException(outputObject, inputRecord, exceptionName, state) {
 }
 
 module.exports.converter = function (jsonRecord) {
-  console.log("auto converter hello world");
-  console.table(jsonRecord);
-  console.log(" ");
   let convertedRecord = {
     Policy: {},
     Coverage: {},

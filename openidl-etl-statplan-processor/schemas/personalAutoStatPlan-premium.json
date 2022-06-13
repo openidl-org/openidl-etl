@@ -16,7 +16,7 @@
         },
         "accountingDate": {
             "name": "accountingDate",
-            "type": "string",
+            "type": "date",
             "start": 2,
             "length": 3
         },
