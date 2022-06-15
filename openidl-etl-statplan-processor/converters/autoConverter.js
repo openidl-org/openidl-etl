@@ -30,6 +30,7 @@ const experienceRatingModificationFactorCodes = require("./reference/experienced
 const stateExceptionCodes = require("./reference/stateExceptionCodes.json");
 const causeOfLossCodes = require("./reference/causeOfLossCodes.json");
 const limitedCodingLossTransactionCodes = require("./reference/limitedCodingLossTransactionCodes.json");
+const { syncBuiltinESMExports } = require("module");
 
 const NOT_PROVIDED = "Not Provided";
 
@@ -134,6 +135,7 @@ module.exports.converter = function (jsonRecord) {
   let coverageCodesState = coverageCodes[policy.State];
   if (!coverageCodesState) coverageCodesState = coverageCodes["MU"];
   coverage.CoverageCategory = coverageCodesState[jsonRecord.coverage].category;
+  coverage.CoverageCode = jsonRecord.coverage
   coverage.Coverage = coverageCodesState[jsonRecord.coverage].name;
   driver.OperatorAge = operatorAgeCodes[jsonRecord.operatorsAge];
   driver.Gender = jsonRecord.sexAndMaritalStatus.trim()

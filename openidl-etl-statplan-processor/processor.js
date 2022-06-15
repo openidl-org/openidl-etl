@@ -69,6 +69,8 @@ function convertTextRecordToJsonUsingSchema(record, schema) {
       }
     }
   }
+  console.table(result)
+  //sleep(1000000)
   return result;
 }
 

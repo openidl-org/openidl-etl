@@ -20,6 +20,7 @@ for (jsonPremiumRecord of jsonPremiumRecords) {
 let premiumPayload = buildPayload(hdsPremiumRecords)
 
 //fs.writeFileSync('./test/idmPremiumRecords.json', JSON.stringify(premiumPayload))
+
 fs.writeFileSync('../../con-data/auto.json', JSON.stringify(premiumPayload))
 
 

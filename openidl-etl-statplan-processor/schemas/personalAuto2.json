@@ -1,0 +1,51 @@
+{
+  "records": [
+    {
+      "_id": "923085hlkejweg",
+      "PolicyIdentifier": "A101 328",
+      "State": "CT",
+      "PersonalAuto": {
+        "ZipCode": "06705",
+        "ZipCodeSuffix": "",
+        "Coverages": {
+          "3": {
+            "CoverageCategory": "Liability",
+            "Coverage": "Bodily Injury and Property Damage Liability - Indivisible Premium",
+            "Records": [
+              {
+                "AccountingDate": "2020-01-01",
+                "LiabilityLimitsName": "Limits",
+                "LiabilityLimitsAmount": "$300,000/600,000",
+                "Exposure": 0,
+                "MonthsCovered": 12,
+                "SingleMultiCarRating": "Multi-Car Rated",
+                "Terrorism": "N/A",
+                "Packaging": "Auto coverage written as a separate policy and not an endorsement to another policy.",
+                "PoolAffiliation": "Preferred Risk",
+                "UMUIMStacking": "N/A",
+                "PassiveRestraintDiscount": "Not Applicable",
+                "AntiLockBrakesDiscount": "Program offers an Anti-Lock Braking System discount on this coverage, but the vehicle does not qualify for the discount.",
+                "DefensiveDriverDiscount": "Driver does not qualify for the defensive driver discount available on this coverage."
+              },
+              {
+                "AccountingDate": "2021-01-01",
+                "LiabilityLimitsName": "Limits",
+                "LiabilityLimitsAmount": "$300,000/600,000",
+                "Exposure": 0,
+                "MonthsCovered": 12,
+                "SingleMultiCarRating": "Multi-Car Rated",
+                "Terrorism": "N/A",
+                "Packaging": "Auto coverage written as a separate policy and not an endorsement to another policy.",
+                "PoolAffiliation": "Preferred Risk",
+                "UMUIMStacking": "N/A",
+                "PassiveRestraintDiscount": "Not Applicable",
+                "AntiLockBrakesDiscount": "Program offers an Anti-Lock Braking System discount on this coverage, but the vehicle does not qualify for the discount.",
+                "DefensiveDriverDiscount": "Driver does not qualify for the defensive driver discount available on this coverage."
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
