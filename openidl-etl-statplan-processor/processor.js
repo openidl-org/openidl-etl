@@ -26,6 +26,8 @@ function convertTextRecordsToJsonUsingSchema(recordsText, schema) {
 }
 function convertTextRecordToJsonUsingSchema(record, schema) {
   let result = {};
+  result['error'] = false
+  
   for (let fieldName in schema.properties) {
     let field = schema.properties[fieldName];
     var start = field.start;
@@ -43,7 +45,7 @@ function convertTextRecordToJsonUsingSchema(record, schema) {
         postive = 1
         if (value.charAt(value.length-1) == '}'){
           value = value.slice(0,-1)
-          postive=postive*-1
+          postive=postive*-10
         }
         if (value.charAt(value.length-1) == '{'){
           value = value.slice(0,-1)
@@ -57,15 +59,21 @@ function convertTextRecordToJsonUsingSchema(record, schema) {
         acted = true;
       }
       if (type =="date"){
-        const dateStr = value
-        const date = new Date(dateStr)
-        const iso = date.toISOString()
-        result[field.name] = iso;
-        console.log('iso: '+iso)
-        acted = true;
+        try{
+          const dateStr = value
+          const date = new Date(dateStr)
+          const iso = date.toISOString()
+          result[field.name] = iso;
+          console.log('iso: '+iso)
+          acted = true;
+        }
+        catch{
+          console.log('error on date string')
+        }
       }
       if (!acted) {
         result[field.name] = "Unhandled Data Type in processor.js";
+        result['error'] = true
       }
     }
   }

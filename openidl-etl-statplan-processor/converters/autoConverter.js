@@ -96,6 +96,7 @@ module.exports.converter = function (jsonRecord) {
     Driver: {},
     Vehicle: {},
     Claim: {},
+    Error: null
   };
   let policy = convertedRecord.Policy;
   let claim = convertedRecord.Claim;
@@ -104,12 +105,17 @@ module.exports.converter = function (jsonRecord) {
   let vehicle = convertedRecord.Vehicle;
   convertedRecord.createdTime = new Date().toISOString();
   policy.LineOfBusiness = "Auto";
+  try {
   policy.Subline = jsonRecord.subline.trim()
     ? sublineCodes[jsonRecord.subline].name
     : NOT_PROVIDED;
-  policy.SublineCategory = jsonRecord.subline.trim()
-    ? sublineCodes[jsonRecord.subline].category
-    : NOT_PROVIDED;
+    policy.SublineCategory = jsonRecord.subline.trim()
+       sublineCodes[jsonRecord.subline].category
+  }
+  catch {
+    convertedRecord.Error = true
+  }
+
   policy.AccountingDate = convertAccountingDate(jsonRecord.accountingDate);
   policy.CompanyCode = jsonRecord.companyCode;
   policy.CompanyID = jsonRecord.companyCode;
@@ -134,7 +140,15 @@ module.exports.converter = function (jsonRecord) {
     : NOT_PROVIDED;
   let coverageCodesState = coverageCodes[policy.State];
   if (!coverageCodesState) coverageCodesState = coverageCodes["MU"];
-  coverage.CoverageCategory = coverageCodesState[jsonRecord.coverage].category;
+  try {
+    coverage.CoverageCategory = coverageCodesState[jsonRecord.coverage].category;
+  }
+  catch{
+    convertedRecord.Error = true
+  }
+  
+  
+  
   coverage.CoverageCode = jsonRecord.coverage
   coverage.Coverage = coverageCodesState[jsonRecord.coverage].name;
   driver.OperatorAge = operatorAgeCodes[jsonRecord.operatorsAge];

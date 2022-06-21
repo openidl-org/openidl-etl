@@ -5,7 +5,7 @@ const autoConverter = require('../openidl-etl-statplan-processor/converters/auto
 const buildPayload = require('../openidl-etl-success-processor/load-insurance-data').buildPayload
 
 //let testPremiumRecordsText = fs.readFileSync('./test/PA_Premium_Output_v1.1.txt', 'utf-8')
-let testPremiumRecordsText = fs.readFileSync('../../con-data/Auto_6350ML204MFP-premium.txt', 'utf-8')
+let testPremiumRecordsText = fs.readFileSync('../../con-data/auto_6350.txt', 'utf-8')
 let jsonPremiumRecords = convertToJson(testPremiumRecordsText)
 //let jsonPremiumRecords = []
 console.log('idm converter| jsonpremium records length: '+jsonPremiumRecords.length)
