@@ -142,15 +142,13 @@ module.exports.converter = function (jsonRecord) {
   if (!coverageCodesState) coverageCodesState = coverageCodes["MU"];
   try {
     coverage.CoverageCategory = coverageCodesState[jsonRecord.coverage].category;
+    coverage.CoverageCode = jsonRecord.coverage
+    coverage.Coverage = coverageCodesState[jsonRecord.coverage].name;
   }
   catch{
     convertedRecord.Error = true
   }
-  
-  
-  
-  coverage.CoverageCode = jsonRecord.coverage
-  coverage.Coverage = coverageCodesState[jsonRecord.coverage].name;
+
   driver.OperatorAge = operatorAgeCodes[jsonRecord.operatorsAge];
   driver.Gender = jsonRecord.sexAndMaritalStatus.trim()
     ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].gender
