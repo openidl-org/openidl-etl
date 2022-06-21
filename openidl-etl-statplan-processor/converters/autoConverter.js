@@ -160,21 +160,27 @@ module.exports.converter = function (jsonRecord) {
     ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus]
         .principalSecondary
     : NOT_PROVIDED;
-  vehicle.VehicleUse = jsonRecord.vehicleUse.trim()
-    ? vehicleUseCodes[jsonRecord.vehicleUse].use
-    : NOT_PROVIDED;
-  vehicle.VehicleUseOperator = jsonRecord.vehicleUse.trim()
-    ? vehicleUseCodes[jsonRecord.vehicleUse].operator
-    : NOT_PROVIDED;
-  vehicle.CommuteDistance = jsonRecord.vehicleUse.trim()
-    ? vehicleUseCodes[jsonRecord.vehicleUse].commuteDistance
-    : NOT_PROVIDED;
-  vehicle.AnnualDistance = jsonRecord.vehicleUse.trim()
-    ? vehicleUseCodes[jsonRecord.vehicleUse].annualDistance
-    : NOT_PROVIDED;
-  vehicle.VehiclePerformance = jsonRecord.vehiclePerformance.trim()
-    ? vehiclePerformanceCodes[jsonRecord.vehiclePerformance]
-    : NOT_PROVIDED;
+    try{
+      vehicle.VehicleUse = jsonRecord.vehicleUse.trim()
+      ? vehicleUseCodes[jsonRecord.vehicleUse].use
+      : NOT_PROVIDED;
+    vehicle.VehicleUseOperator = jsonRecord.vehicleUse.trim()
+      ? vehicleUseCodes[jsonRecord.vehicleUse].operator
+      : NOT_PROVIDED;
+    vehicle.CommuteDistance = jsonRecord.vehicleUse.trim()
+      ? vehicleUseCodes[jsonRecord.vehicleUse].commuteDistance
+      : NOT_PROVIDED;
+    vehicle.AnnualDistance = jsonRecord.vehicleUse.trim()
+      ? vehicleUseCodes[jsonRecord.vehicleUse].annualDistance
+      : NOT_PROVIDED;
+    vehicle.VehiclePerformance = jsonRecord.vehiclePerformance.trim()
+      ? vehiclePerformanceCodes[jsonRecord.vehiclePerformance]
+      : NOT_PROVIDED;
+    }
+    catch{
+      convertedRecord.Error = true
+    }
+try{
   driver.DriversTraining =
     jsonRecord.privatePassengerDriversTrainingGoodStudent.trim()
       ? privatePassengerDriversTrainingGoodStudentCodes[
@@ -190,6 +196,12 @@ module.exports.converter = function (jsonRecord) {
   driver.PenaltyPoints = jsonRecord.privatePassengerPenaltyPoints.trim()
     ? penaltyPointsCodes[jsonRecord.privatePassengerPenaltyPoints]
     : NOT_PROVIDED;
+}
+catch {
+  convertedRecord.Error = true
+}
+
+try {
   let liabilityLimitState = liabilityLimitCodes.state[policy.State];
   if (!liabilityLimitState){
     liabilityLimitState = liabilityLimitCodes.state["MU"];}
@@ -198,6 +210,11 @@ module.exports.converter = function (jsonRecord) {
     coverage.LiabilityLimitsName =liabilityLimitState.coverage[jsonRecord.coverage].name;
     coverage.LiabilityLimitsAmount =liabilityLimitState.coverage[jsonRecord.coverage][jsonRecord.liabilityLimitsAmount];
   }
+}
+
+catch {
+  convertedRecord.Error = true
+}
 
   coverage.DeductibleAmount = deductibleCodes[jsonRecord.deductibleAmount];
   policy.EffectiveDate = convertDate(jsonRecord.effectiveDate);
