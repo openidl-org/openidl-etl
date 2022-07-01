@@ -12,3 +12,6 @@ build_success_processor:
 
 build_failure_processor:
 	cd openidl-etl-failure-processor; zip -r failure-processor.zip .; -x "failure-processor.zip"; cd ..
+
+build_intake_processor:
+	cd openidl-etl-intake-processor; zip -r intake-processor.zip .; -x "intake-processor.zip"; cd ..

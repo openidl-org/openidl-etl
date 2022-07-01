@@ -1,0 +1,11 @@
+{
+    "successBucket": {
+        "name": "openidl-{{node name}}-etl-success-bucket"
+    },
+    "failureBucket": {
+        "name": "openidl-{{node name}}-etl-failure-bucket"
+    },
+    "dynamoDB": {
+        "tableName": "openidl-{{node name}}-etl-control-table"
+    }
+}

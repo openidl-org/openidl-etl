@@ -2,6 +2,8 @@
 
 Holds ETL code for openidl
 
+![ND Architecture](/images/nd-architecture.png)
+
 ![Architecture](/images/architecture.png)
 
 # Backlog
@@ -21,6 +23,52 @@ Holds ETL code for openidl
 -   put the pojos into the openidl-etl-staging-processor src/java directory
 
 # setup aws recources
+
+## ND setup intake s3 buckets and lambda
+
+-   Create intake bucket
+    -   use aws console to create bucket
+    -   go to s3
+    -   create new bucket
+    -   bucket name is openidl-{{ org }}-etl-intake-bucket
+    -   leave all other defaults
+-   Create success bucket
+    -   use aws console to create bucket
+    -   go to s3
+    -   create new bucket
+    -   bucket name is openidl-{{ org }}-etl-success-bucket
+    -   leave all other defaults
+-   Create failure bucket
+    -   use aws console to create bucket
+    -   go to s3
+    -   create new bucket
+    -   bucket name is openidl-{{ org }}-etl-failure-bucket
+    -   leave all other defaults
+-   Create intake lambda
+    -   use aws console to create the lambda
+    -   go to lambda
+    -   create function using a blueprint
+    -   enter s3 in search
+    -   use s3-get-object (for Node.js)
+    -   choose configure
+    -   for function name enter openidl-{{ org }}-etl-intake-processor
+    -   for Execution role, choose Create a new role from AWS policy templates.
+    -   for role name, enter openidl-{{ org }}-etl-intake-role
+    -   the role needs access to read the intake bucket and write to the success and failure buckets
+    -   the role needs read, write and update for the dynamodb
+    -   in s3 trigger, select the s3 bucket
+    -   click create function
+-   Create success lambda
+
+-   Create control db
+    -   go to dynamodb
+    -   create table
+    -   name is openidl-{{ org }}-etl-control-table
+    -   key is `SubmissionFileName` of type string
+-   Create email notification
+    -   create the topics and subscriptions in SNS
+    -   topic name - etl-success and etl-failure with 'ETL Success' and 'ETL Failure' as the nice name
+    -   create subscription - select the topic arn, email and input the email address
 
 ## setup queues
 

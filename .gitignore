@@ -17,3 +17,5 @@ openidl-etl-tester/test/Data_Input_v1.1.xlsx
 openidl-etl-success-processor/config/config copy.json
 openidl-etl-tester/test/idmLossRecords.json
 openidl-etl-tester/test/idmPremiumRecords.json
+openidl-etl-intake-processor/intake-processor.zip
+openidl-etl-intake-processor/test/testS3Event.json
