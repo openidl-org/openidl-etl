@@ -69,6 +69,15 @@ Holds ETL code for openidl
     -   create the topics and subscriptions in SNS
     -   topic name - etl-success and etl-failure with 'ETL Success' and 'ETL Failure' as the nice name
     -   create subscription - select the topic arn, email and input the email address
+-   Setup Secrets
+    -   create secrets for:
+        -   region
+        -   intake bucket
+        -   success bucket
+        -   failure bucket
+        -   state if not providing in records
+-   Create config file at `config/config.json`
+    -   use config-template.json
 
 ## setup queues
 

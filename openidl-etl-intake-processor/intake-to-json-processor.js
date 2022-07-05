@@ -1,5 +1,6 @@
 const csv = require('csvtojson')
 const DateTime = require('luxon').DateTime
+const config = require('./config/config.json')
 
 async function convertToJson(recordsText) {
     // let textRecords = recordsText.split('\n')
@@ -23,7 +24,11 @@ async function convertToJson(recordsText) {
     for (outputRecord of outputRecords) {
         let resultRecord = {}
         let recordError = false
-        outputRecord.carrierNumber = outputRecord['Carrier Number']
+        resultRecord.carrierNumber = outputRecord['Carrier Number']
+        resultRecord.state = outputRecord['State']
+        if (!resultRecord.state) {
+            resultRecord.state = config.state
+        }
         resultRecord.vin = outputRecord['VIN']
         let txDate = DateTime.fromSQL(outputRecord['Transaction Date'])
         resultRecord.transactionDate = txDate.toISODate()
@@ -39,7 +44,7 @@ async function convertToJson(recordsText) {
             expDate = txDate.plus({ months: 1 })
         }
         resultRecord.expirationDate = expDate.toISODate()
-        if (!outputRecord.carrierNumber) {
+        if (!resultRecord.carrierNumber) {
             errors.push({ 'type': 'data', 'message': 'missing carrier number', 'record': outputRecord })
             recordError = true
         }

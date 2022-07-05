@@ -6,6 +6,7 @@ const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 const ddb = new aws.DynamoDB({ apiVersion: '2012-08-10' })
 
 const convertToJson = require('./intake-to-json-processor').convertToJson
+const SecretsManager = require('./SecretsManager.js');
 
 const config = require('./config/config.json')
 
