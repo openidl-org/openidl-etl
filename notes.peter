@@ -1,0 +1,29 @@
+where is IDM?
+
+how do i get my user credentails?
+
+s3://openidl-nd-{carrierID}-etl-sucess-bucket 
+
+do we want carrierID human readable or numeric?
+
+do we have a 'test' company set up?
+
+are all resources in us-east-1?
+
+who is the best person to walk me through a demo of existing resources in AWS?
+
+for the config.json for sucess processor, what is 'domain' & 'subdomain'
+
+
+since there is only one carrier do we need to sub divide sucess?
+
+is there more than collection in IDM?
+
+Where is IDM?
+
+WHere is Mongo?
+
+How do i access IDM/MONGO?
+
+why is PolicyNO, in payload, load-insurance-data
+
