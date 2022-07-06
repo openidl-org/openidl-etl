@@ -1,3 +1,11 @@
+/**
+ * index.js
+ * 
+ * Process csv files from the s3 bucket that is the trigger
+ * Put failures into the failure bucket described in the config.json file
+ * Put successes into the idm loader bucket also described in the config.json file
+ * @author Ken Sayers
+ */
 console.log('Loading function');
 
 const aws = require('aws-sdk');
@@ -10,6 +18,7 @@ const SecretsManager = require('./SecretsManager.js');
 
 const config = require('./config/config.json')
 
+// Handle the s3.putObject event
 exports.handler = async (event, context) => {
     //console.log('Received event:', JSON.stringify(event, null, 2));
 
@@ -21,6 +30,7 @@ exports.handler = async (event, context) => {
         Key: key,
     };
 
+    // Setup SNS parameters for success and failure
     try {
         var sns = new aws.SNS();
         var snsFailureParams = {
@@ -40,7 +50,8 @@ exports.handler = async (event, context) => {
             Key: { 'SubmissionFileName': { S: key } }
         }
         const item = await ddb.getItem(dbParams).promise()
-        console.log(item)
+
+        // if the status is already success, fail gracefully
         let result
         if (item && item.Item && (item.Item.IntakeStatus.S === 'success')) {
             snsFailureParams.Message = `the file ${key} has already been processed successfully`
@@ -48,18 +59,22 @@ exports.handler = async (event, context) => {
             console.log(snsResponse)
             throw new Error('file has already been processed successfully')
         }
+
+        // setup an initial item for the file in the control db
         dbParams = {
             TableName: config.dynamoDB.tableName,
             Item: { 'SubmissionFileName': { S: key }, 'IntakeStatus': { S: 'submitted' } }
         }
         const insertResult = await ddb.putItem(dbParams).promise()
         const data = await s3.getObject(params).promise();
-        // console.log("Raw text:\n" + data.Body.toString('ascii'));
+
+        // get the csv data and convert it into a json file
         if (!result) result = await convertToJson(data.Body.toString())
         if (result.valid) {
-            console.log(`Calling s3.putObject ${config.successBucket.name} ${key}.json`)
+
+            // register success in control db, put result into s3 and send message
             let s3Result = await s3.putObject({ Bucket: config.successBucket.name, Key: key + '.json', Body: JSON.stringify(result.records) }).promise();
-            // console.log(s3Result)
+
             dbParams = {
                 TableName: config.dynamoDB.tableName,
                 Key: { 'SubmissionFileName': { S: key } },
@@ -74,9 +89,10 @@ exports.handler = async (event, context) => {
             let snsResponse = await sns.publish(snsSuccessParams).promise();
             return JSON.stringify(s3Result)
         } else {
-            console.log(`Calling s3.putObject ${config.failureBucket.name} ${key}-failure.json`)
+
+            // register failure in control db, put result into failure s3 and send message
             let s3Result = await s3.putObject({ Bucket: config.failureBucket.name, Key: key + '-failure.json', Body: JSON.stringify(result) }).promise();
-            // console.log(s3Result)
+
             dbParams = {
                 TableName: config.dynamoDB.tableName,
                 Key: { 'SubmissionFileName': { S: key } },
