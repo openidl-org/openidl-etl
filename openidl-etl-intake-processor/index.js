@@ -25,13 +25,13 @@ exports.handler = async (event, context) => {
         var sns = new aws.SNS();
         var snsFailureParams = {
             Message: 'unknown',
-            Subject: "ETL Has Failed",
-            TopicArn: "arn:aws:sns:us-east-1:832381807300:etl-failure"
+            Subject: "ETL Intake Processing Has Failed",
+            TopicArn: config.sns.failureTopicARN
         };
         var snsSuccessParams = {
             Message: 'unkknown',
-            Subject: "ETL Has Succeeded",
-            TopicArn: "arn:aws:sns:us-east-1:832381807300:etl-success"
+            Subject: "ETL Intake Processing Has Succeeded",
+            TopicArn: config.sns.successTopicARN
         };
 
         // check if already succeeded.  fail if so
@@ -42,7 +42,7 @@ exports.handler = async (event, context) => {
         const item = await ddb.getItem(dbParams).promise()
         console.log(item)
         let result
-        if (item && item.Item && item.Item.SubmissionStatus.S === 'success') {
+        if (item && item.Item && (item.Item.IntakeStatus.S === 'success')) {
             snsFailureParams.Message = `the file ${key} has already been processed successfully`
             let snsResponse = await sns.publish(snsFailureParams).promise();
             console.log(snsResponse)
@@ -50,7 +50,7 @@ exports.handler = async (event, context) => {
         }
         dbParams = {
             TableName: config.dynamoDB.tableName,
-            Item: { 'SubmissionFileName': { S: key }, 'SubmissionStatus': { S: 'submitted' } }
+            Item: { 'SubmissionFileName': { S: key }, 'IntakeStatus': { S: 'submitted' } }
         }
         const insertResult = await ddb.putItem(dbParams).promise()
         const data = await s3.getObject(params).promise();
@@ -63,7 +63,7 @@ exports.handler = async (event, context) => {
             dbParams = {
                 TableName: config.dynamoDB.tableName,
                 Key: { 'SubmissionFileName': { S: key } },
-                UpdateExpression: "set SubmissionStatus = :st",
+                UpdateExpression: "set IntakeStatus = :st",
                 ExpressionAttributeValues: {
                     ":st": { S: 'success' }
                 },
@@ -80,7 +80,7 @@ exports.handler = async (event, context) => {
             dbParams = {
                 TableName: config.dynamoDB.tableName,
                 Key: { 'SubmissionFileName': { S: key } },
-                UpdateExpression: "set SubmissionStatus = :st",
+                UpdateExpression: "set IntakeStatus = :st",
                 ExpressionAttributeValues: {
                     ":st": { S: 'failure' }
                 },

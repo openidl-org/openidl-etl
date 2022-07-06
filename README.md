@@ -2,7 +2,19 @@
 
 Holds ETL code for openidl
 
-![ND Architecture](/images/nd-architecture.png)
+## ND HDS Loader
+
+![HDS Loader](/images/HDS-loader.png)
+
+## ND Registered VIN Loader
+
+![Registered VIN Loader](/images/registered-vin-loader.png)
+
+## ND Analytics Node
+
+![Analytics Node](/images/analytics-node.png)
+
+## openidl POC ETL Architecture
 
 ![Architecture](/images/architecture.png)
 
@@ -30,19 +42,20 @@ Holds ETL code for openidl
     -   use aws console to create bucket
     -   go to s3
     -   create new bucket
-    -   bucket name is openidl-{{ org }}-etl-intake-bucket
+    -   bucket name is {{ org name }}-{{ env }}-openidl-etl-intake-bucket
+    -   make sure it is in the same region as the rest of the node resources
     -   leave all other defaults
 -   Create success bucket
     -   use aws console to create bucket
     -   go to s3
     -   create new bucket
-    -   bucket name is openidl-{{ org }}-etl-success-bucket
+    -   bucket name is {{ org name }}-{{ env }}-openidl-etl-success-bucket
     -   leave all other defaults
 -   Create failure bucket
     -   use aws console to create bucket
     -   go to s3
     -   create new bucket
-    -   bucket name is openidl-{{ org }}-etl-failure-bucket
+    -   bucket name is {{ org name }}-{{ env }}-openidl-etl-failure-bucket
     -   leave all other defaults
 -   Create intake lambda
     -   use aws console to create the lambda
@@ -51,9 +64,9 @@ Holds ETL code for openidl
     -   enter s3 in search
     -   use s3-get-object (for Node.js)
     -   choose configure
-    -   for function name enter openidl-{{ org }}-etl-intake-processor
+    -   for function name enter {{ org name }}-{{ env }}-openidl-etl-intake-processor
     -   for Execution role, choose Create a new role from AWS policy templates.
-    -   for role name, enter openidl-{{ org }}-etl-intake-role
+    -   for role name, enter openidl-etl-intake-role
     -   the role needs access to read the intake bucket and write to the success and failure buckets
     -   the role needs read, write and update for the dynamodb
     -   in s3 trigger, select the s3 bucket
@@ -63,11 +76,11 @@ Holds ETL code for openidl
 -   Create control db
     -   go to dynamodb
     -   create table
-    -   name is openidl-{{ org }}-etl-control-table
+    -   name is {{ org name }}-{{ env }}-openidl-etl-control-table
     -   key is `SubmissionFileName` of type string
 -   Create email notification
     -   create the topics and subscriptions in SNS
-    -   topic name - etl-success and etl-failure with 'ETL Success' and 'ETL Failure' as the nice name
+    -   topic name - {{ org name }}-{{ env }}-openidl-etl-success and {{ org name }}-{{ env }}-openidl-etl-failure with 'ETL Success' and 'ETL Failure' as the nice name
     -   create subscription - select the topic arn, email and input the email address
 -   Setup Secrets
     -   create secrets for:
