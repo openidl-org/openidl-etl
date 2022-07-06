@@ -9,8 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.121.0",
     "@aws-sdk/client-secrets-manager": "^3.49.0",
-    "aws-sdk": "^2.1066.0",
+    "aws-sdk": "^2.1168.0",
     "node-fetch": "^2.3.0"
   }
 }
