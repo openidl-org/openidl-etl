@@ -1,6 +1,9 @@
+
 const handleInput = require('../openidl-etl-success-processor/index').handler
 
-const messages = require('./test/samplevalidmessages.json')
+const testMessage = require('../openidl-etl-success-processor/test/sample-data-9001.json')
+
+const messages = [testMessage]
 
 async function processMessages() {
     let wrappedMessages = []
@@ -12,3 +15,8 @@ async function processMessages() {
 }
 
 processMessages()
+
+
+
+
+
