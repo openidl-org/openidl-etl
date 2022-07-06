@@ -1,7 +1,6 @@
 cd ..;
-./zip.sh;
+./compile.sh;
 cd test;
-./deploy.sh;
-sleep 30s
+./zip.sh;
 ./delete.sh;
 ./trigger.sh
