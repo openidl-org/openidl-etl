@@ -41,9 +41,9 @@ async function setUp(eventParams) {
     TableName: config["Dynamo"]["etl-control-table"],
     Key: { SubmissionFileName: eventParams.Key },
   };
-  console.log("params2");
-  console.log(params2);
-  console.log("get item");
+  // console.log("params2");
+  // console.log(params2);
+  // console.log("get item");
   let item = await ddb.get(params2).promise();
   console.log("item next");
   console.log(item.Item);
@@ -106,10 +106,19 @@ exports.handler = async function (event, context) {
     let records = await getRecords(eventParams);
     console.log("records: " + records.length);
     console.log(records)
-    await processRecords(recordsToLoad)
-    // for (let record of records) {
-    //   console.log(record);
-    // }
+    let response = await processRecords(recordsToLoad)
+    const status = response[todo]['status']
+
+    if (status == '200'){
+      //success
+      await updateStatus(eventParams.Key,'success')
+    }
+    else(
+      //failure
+      await updateStatus(eventParams.Key,'failure')
+    )
+    
+
   } else {
     console.log(' This file has sucess or a record mid processing')
   }

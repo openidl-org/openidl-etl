@@ -1,10 +1,13 @@
 // const config = require("./config/config.json");
 const source = require("./test/sample-data-9001.json")
 const processRecords = require("./processor").process;
-console.log(source)
+//console.log(source)
 
+console.log('start')
 async function process(){
-    processRecords(source)
+    let response = await processRecords(source)
+    
+    
 }
 
 process()

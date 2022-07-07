@@ -75,6 +75,6 @@ module.exports.loadInsuranceData = async function (records) {
     baseURL = buildURL(config, 'carrier', 'insurance-data-manager')
     // console.log(JSON.stringify(dataToLoad))
     let payload = module.exports.buildPayload(records)
-    await callAPI(baseURL, payload, userToken)
-    todo() //return message, update dynamo status
+    let response = await callAPI(baseURL, payload, userToken)
+    return response
 }
