@@ -26,6 +26,19 @@ async function testCSVLoad() {
     console.log(results)
 }
 
-if (testname === 'testConversion') testConversion()
-if (testname === 'testProcessS3File') testProcessS3File()
-if (testname === 'testCSVLoad') testCSVLoad()
+switch (testname) {
+    case 'testConversion':
+        testConversion()
+        break
+    case 'testProcessS3File':
+        testProcessS3File()
+        break
+    case 'testCSVLoad':
+        testCSVLoad()
+        break
+    default:
+        console.log("===========================================================")
+        console.log("usage: node test-intake.js <testname>")
+        console.log("testname = testConversion | testProcessS3File | testCSVLoad")
+        console.log("===========================================================")
+}
