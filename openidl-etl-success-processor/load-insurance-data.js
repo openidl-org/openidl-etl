@@ -3,7 +3,8 @@ const login = require('./api-helper').login
 const buildURL = require('./api-helper').buildURL
 const fetch = require('node-fetch');
 const fs = require('fs')
-const config = require('./config/config.json')
+const config = require('./config/config.json');
+const { toUnicode } = require('punycode');
 
 module.exports.buildPayload = function (records) {
     let payload = {
@@ -75,4 +76,5 @@ module.exports.loadInsuranceData = async function (records) {
     // console.log(JSON.stringify(dataToLoad))
     let payload = module.exports.buildPayload(records)
     await callAPI(baseURL, payload, userToken)
+    todo() //return message, update dynamo status
 }

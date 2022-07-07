@@ -106,6 +106,7 @@ exports.handler = async function (event, context) {
     let records = await getRecords(eventParams);
     console.log("records: " + records.length);
     console.log(records)
+    await processRecords(recordsToLoad)
     // for (let record of records) {
     //   console.log(record);
     // }
