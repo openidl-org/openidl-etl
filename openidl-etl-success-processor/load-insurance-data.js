@@ -12,7 +12,8 @@ module.exports.buildPayload = function (records) {
         "sourceId": config.sourceId,
         "batchId": config.batchId,
         "chunkId": config.chunkId,
-        "carrierId": records[0].Policy.CompanyID,
+        //"carrierId": records[0].Policy.CompanyID,
+        "carrierId": 5,
         "policyNo": "91111111",
         "errFlg": false,
         "errrLst": [],
@@ -31,21 +32,24 @@ module.exports.buildPayload = function (records) {
 async function callAPI(apiUrl, payload, token) {
     try {
         console.log("Calling API with batch: ", payload.batchId)
+        console.log('token: '+token)
+        console.log('api url: '+apiUrl)
         let response = await fetch(apiUrl + "openidl/api/load-insurance-data", {
             method: "POST",
             headers: {
-                Accept: "application/json",
+                "Accept": "application/json",
                 "Content-Type": "application/json",
-                authorization: "Bearer " + token,
+                "Authorization": "Bearer " + token,
             },
             body: JSON.stringify(payload),
         });
-        if (response.status !== 200) {
-            console.log(response)
-            if (response.status !== 504) {
-                process.exit(0)
-            }
-        }
+        // if (response.status !== 200) {
+        //     console.log(response)
+        //     if (response.status !== 504) {
+        //         process.exit(0)
+        //     }
+        // }
+        return response
     } catch (error) {
         console.log("Error with post of insurance data " + error);
         return;
@@ -70,11 +74,15 @@ module.exports.loadInsuranceData = async function (records) {
     console.log(`Logging in`)
     // let credentials = await getCredentials()
     let userToken = await login(baseURL, config.username, config.password)
-    // console.log(userToken)
-    // console.log(`Token: ${userToken}`)
-    baseURL = buildURL(config, 'carrier', 'insurance-data-manager')
-    // console.log(JSON.stringify(dataToLoad))
-    let payload = module.exports.buildPayload(records)
-    let response = await callAPI(baseURL, payload, userToken)
-    return response
+    console.log(`Status: ${userToken.status}`)
+    if (userToken.status == 200){
+        baseURL = buildURL(config, 'carrier', 'insurance-data-manager')
+        // console.log(JSON.stringify(dataToLoad))
+        let payload = module.exports.buildPayload(records)
+        console.log('load insurance 79')
+        let response = await callAPI(baseURL, payload, userToken.token)
+        return response
+    }
+    
+
 }
