@@ -13,7 +13,7 @@ module.exports.buildPayload = function (records) {
         "batchId": config.batchId,
         "chunkId": config.chunkId,
         //"carrierId": records[0].Policy.CompanyID,
-        "carrierId": 5,
+        "carrierId": '5',
         "policyNo": "91111111",
         "errFlg": false,
         "errrLst": [],
@@ -34,6 +34,7 @@ async function callAPI(apiUrl, payload, token) {
         console.log("Calling API with batch: ", payload.batchId)
         console.log('token: '+token)
         console.log('api url: '+apiUrl)
+        console.log(payload)
         let response = await fetch(apiUrl + "openidl/api/load-insurance-data", {
             method: "POST",
             headers: {

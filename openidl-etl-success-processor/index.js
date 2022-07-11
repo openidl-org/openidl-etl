@@ -22,6 +22,7 @@ function getParams(event) {
 }
 
 async function updateStatus(key, status) {
+  console.log('   Update Status: '+key+' status: '+status)
   let start = {
     TableName: config.Dynamo["etl-control-table"],
     Key: { SubmissionFileName: { S: key } },
@@ -38,7 +39,7 @@ async function updateStatus(key, status) {
 async function setUp(eventParams) {
   let run = true;
   const params2 = {
-    TableName: config["Dynamo"]["etl-control-table"],
+    TableName: config.Dynamo.etlControlTable,
     Key: { SubmissionFileName: eventParams.Key },
   };
   // console.log("params2");
@@ -60,13 +61,28 @@ async function setUp(eventParams) {
       console.log('file found status: submitted')
     }
 
+    if (item.Item.IDMLoaderStatus === "failure") {
+      run = false;
+      console.log('file found status: submitted')
+    }
+
+    if (item.Item.IntakeStatus === "success") {
+      run = true;
+      console.log('file found status: submitted')
+    }
+
+
     //updateStatus(eventParams.Key,'submitted')
   }
   if (!item.Item.SubmissionFileName===eventParams.Key) {
-    console.log("file DNE in control");
+    console.log("file DNE in control"); //file is not ready to be processed
+    run = false
+  }
+
     //add submitted record
+  if (run) {
     let insertParams = {
-      TableName: config.dynamoDB.tableName,
+      TableName: config.Dynamo.etlControlTable,
       Item: {
         SubmissionFileName: eventParams.Key ,
         IDMLoaderStatus: "submitted" },
@@ -99,11 +115,12 @@ exports.handler = async function (event, context) {
   //get file name
 
   let eventParams = getParams(event);
-  //console.log("bucket: " + eventParams.Bucket + " key: " + eventParams.Key);
+  console.log("bucket: " + eventParams.Bucket + " key: " + eventParams.Key);
 
   let run = await setUp(eventParams);
+  console.log('Send Payload: '+run)
   if (run) {
-    let records = await getRecords(eventParams);
+    let recordsToLoad = await getRecords(eventParams);
     console.log("records: " + records.length);
     console.log(records)
     let response = await processRecords(recordsToLoad)
