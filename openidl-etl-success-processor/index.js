@@ -5,6 +5,7 @@ var aws = require("aws-sdk");
 aws.config.update({ region: "us-east-2" });
 const s3 = new aws.S3({ apiVersion: "2006-03-01" });
 const ddb = new aws.DynamoDB.DocumentClient();
+var sns = new aws.SNS();
 
 function getParams(event) {
   // Get the object from the event and show its content type
@@ -21,20 +22,6 @@ function getParams(event) {
   return params;
 }
 
-async function updateStatus(key, status) {
-  console.log('   Update Status: '+key+' status: '+status)
-  let start = {
-    TableName: config.Dynamo.etlControlTable,
-    Key: { SubmissionFileName: { S: key } },
-    UpdateExpression: "set IDMLoader = :st",
-    ExpressionAttributeValues: {
-      ":st": { S: status },
-    },
-    ReturnValues: "ALL_NEW",
-  };
-
-  await ddb.updateItem(start).promise();
-}
 
 async function setUp(eventParams) {
   let run = false;
@@ -54,11 +41,27 @@ async function setUp(eventParams) {
     if (item.Item.IDMLoaderStatus === "success") {
       run = false;
       console.log('file found status: sucesss')
+      //sns file has already been loaded
+      var snsFailureParams = {
+        Message: eventParams.Key+' has already been loaded to IDM',
+        Subject: "ETL Intake Processing Has Failed",
+        TopicArn: config.sns.failureETLARN
+    };
+    await sns.publish(snsFailureParams).promise();
     }
 
     if (item.Item.IDMLoaderStatus === "submitted") {
       run = false; 
       console.log('file found status: submitted')
+      //sns file is already processing
+
+      var snsFailureParams = {
+        Message: eventParams.Key+' is already processing/hung',
+        Subject: "ETL Intake Processing Has Failed",
+        TopicArn: config.sns.failureETLARN
+    };
+    await sns.publish(snsFailureParams).promise();
+
     }
 
     if (item.Item.IDMLoaderStatus === "error") {
@@ -76,9 +79,6 @@ async function setUp(eventParams) {
       console.log('No Loader Record found')
     }
 
-
-
-    //updateStatus(eventParams.Key,'submitted')
   }
 
   if (!item.Item.IntakeStatus === "success") {
@@ -128,6 +128,7 @@ exports.handler = async function (event, context) {
 
   let run = await setUp(eventParams);
   console.log('Send Payload: '+run)
+
   if (run) {
     let recordsToLoad = await getRecords(eventParams);
     console.log("records length: " + recordsToLoad.length);
@@ -147,6 +148,13 @@ exports.handler = async function (event, context) {
           },
         }
       await ddb.put(insertParams).promise();
+      var snsSuccessParams = {
+        Message: eventParams.Key+' is loaded to IDM',
+        Subject: "ETL Intake Processing Has Succeeded",
+        TopicArn: config.sns.successETLARN
+    };
+    await sns.publish(snsSuccessParams).promise();
+
     }
     else{
       let insertParams = {
@@ -158,6 +166,13 @@ exports.handler = async function (event, context) {
           },
         }
       await ddb.put(insertParams).promise();
+      var snsFailureParams = {
+        Message: eventParams.Key+' failed to load IDM',
+        Subject: "ETL Intake Processing Has Failed",
+        TopicArn: config.sns.failureETLARN
+    };
+    await sns.publish(snsFailureParams).promise();
+            
     }
     
 
