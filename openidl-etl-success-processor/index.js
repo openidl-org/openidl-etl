@@ -24,9 +24,9 @@ function getParams(event) {
 async function updateStatus(key, status) {
   console.log('   Update Status: '+key+' status: '+status)
   let start = {
-    TableName: config.Dynamo["etl-control-table"],
+    TableName: config.Dynamo.etlControlTable,
     Key: { SubmissionFileName: { S: key } },
-    UpdateExpression: "set idmLoader = :st",
+    UpdateExpression: "set IDMLoader = :st",
     ExpressionAttributeValues: {
       ":st": { S: status },
     },
@@ -37,7 +37,7 @@ async function updateStatus(key, status) {
 }
 
 async function setUp(eventParams) {
-  let run = true;
+  let run = false;
   const params2 = {
     TableName: config.Dynamo.etlControlTable,
     Key: { SubmissionFileName: eventParams.Key },
@@ -57,26 +57,33 @@ async function setUp(eventParams) {
     }
 
     if (item.Item.IDMLoaderStatus === "submitted") {
-      run = false;
+      run = false; 
       console.log('file found status: submitted')
     }
 
-    if (item.Item.IDMLoaderStatus === "failure") {
-      run = false;
-      console.log('file found status: submitted')
-    }
-
-    if (item.Item.IntakeStatus === "success") {
+    if (item.Item.IDMLoaderStatus === "error") {
       run = true;
-      console.log('file found status: submitted')
+      console.log('file found status: error')
     }
+
+    if (item.Item.IDMLoaderStatus === "") {
+      run = true;
+      console.log('file found status: blank')
+    }
+
+    if (!item.Item.IDMLoaderStatus){
+      run = true
+      console.log('No Loader Record found')
+    }
+
 
 
     //updateStatus(eventParams.Key,'submitted')
   }
-  if (!item.Item.SubmissionFileName===eventParams.Key) {
-    console.log("file DNE in control"); //file is not ready to be processed
-    run = false
+
+  if (!item.Item.IntakeStatus === "success") {
+    run = false;
+    console.log('file found, intake error')
   }
 
     //add submitted record
@@ -85,9 +92,11 @@ async function setUp(eventParams) {
       TableName: config.Dynamo.etlControlTable,
       Item: {
         SubmissionFileName: eventParams.Key ,
-        IDMLoaderStatus: "submitted" },
+        IntakeStatus: "success",
+        IDMLoaderStatus: "submitted"
+        },
       }
-    await ddb.putItem(insertParams).promise();
+    await ddb.put(insertParams).promise();
   }
   return run;
 }
@@ -96,7 +105,7 @@ async function getRecords(eventParams) {
   // console.log('get records, params: ')
   // console.log(eventParams)
   const raw = await s3.getObject(eventParams).promise();
-  const data = raw.Body.toString("utf-8");
+  const data = JSON.parse(raw.Body.toString('utf-8'))
   // console.log('data: ')
   // console.log(data)
   return data;
@@ -121,23 +130,39 @@ exports.handler = async function (event, context) {
   console.log('Send Payload: '+run)
   if (run) {
     let recordsToLoad = await getRecords(eventParams);
-    console.log("records: " + records.length);
-    console.log(records)
+    console.log("records length: " + recordsToLoad.length);
+    console.log(recordsToLoad)
     let response = await processRecords(recordsToLoad)
-    const status = response[todo]['status']
+    const status = response['status']
+    console.log('response status: '+status)
 
     if (status == '200'){
       //success
-      await updateStatus(eventParams.Key,'success')
+      let insertParams = {
+        TableName: config.Dynamo.etlControlTable,
+        Item: {
+          SubmissionFileName: eventParams.Key ,
+          IntakeStatus: "success",
+          IDMLoaderStatus: "success"
+          },
+        }
+      await ddb.put(insertParams).promise();
     }
-    else(
-      //failure
-      await updateStatus(eventParams.Key,'failure')
-    )
+    else{
+      let insertParams = {
+        TableName: config.Dynamo.etlControlTable,
+        Item: {
+          SubmissionFileName: eventParams.Key ,
+          IntakeStatus: "success",
+          IDMLoaderStatus: "error"
+          },
+        }
+      await ddb.put(insertParams).promise();
+    }
     
 
   } else {
-    console.log(' This file has sucess or a record mid processing')
+    console.log(' This file has success or a record mid processing')
   }
 
   //make payload

@@ -30,11 +30,12 @@ module.exports.buildPayload = function (records) {
     return payload;
 }
 async function callAPI(apiUrl, payload, token) {
+    console.log('call api for IDM')
     try {
-        console.log("Calling API with batch: ", payload.batchId)
-        console.log('token: '+token)
-        console.log('api url: '+apiUrl)
-        console.log(payload)
+        //console.log("Calling API with batch: ", payload.batchId)
+        //console.log('token: '+token)
+        //console.log('api url: '+apiUrl)
+        //console.log(payload)
         let response = await fetch(apiUrl + "openidl/api/load-insurance-data", {
             method: "POST",
             headers: {
@@ -50,6 +51,8 @@ async function callAPI(apiUrl, payload, token) {
         //         process.exit(0)
         //     }
         // }
+        console.log('after idm response')
+        console.log(response)
         return response
     } catch (error) {
         console.log("Error with post of insurance data " + error);
@@ -84,6 +87,8 @@ module.exports.loadInsuranceData = async function (records) {
         let response = await callAPI(baseURL, payload, userToken.token)
         return response
     }
+    const status = {'status': userToken.status}
+    return status
     
 
 }
