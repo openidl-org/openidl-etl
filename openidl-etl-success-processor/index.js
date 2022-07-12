@@ -44,7 +44,7 @@ async function setUp(eventParams) {
       //sns file has already been loaded
       var snsFailureParams = {
         Message: eventParams.Key+' has already been loaded to IDM',
-        Subject: "ETL Intake Processing Has Failed",
+        Subject: "ETL Loader Processing Has Failed",
         TopicArn: config.sns.failureETLARN
     };
     await sns.publish(snsFailureParams).promise();
@@ -57,7 +57,7 @@ async function setUp(eventParams) {
 
       var snsFailureParams = {
         Message: eventParams.Key+' is already processing/hung',
-        Subject: "ETL Intake Processing Has Failed",
+        Subject: "ETL Loader Processing Has Failed",
         TopicArn: config.sns.failureETLARN
     };
     await sns.publish(snsFailureParams).promise();
@@ -83,7 +83,7 @@ async function setUp(eventParams) {
 
   if (!item.Item.IntakeStatus === "success") {
     run = false;
-    console.log('file found, intake error')
+    console.log('Loader error: File Has already been loaded')
   }
 
     //add submitted record
@@ -150,7 +150,7 @@ exports.handler = async function (event, context) {
       await ddb.put(insertParams).promise();
       var snsSuccessParams = {
         Message: eventParams.Key+' is loaded to IDM',
-        Subject: "ETL Intake Processing Has Succeeded",
+        Subject: "ETL Loader Processing Has Succeeded",
         TopicArn: config.sns.successETLARN
     };
     await sns.publish(snsSuccessParams).promise();
@@ -161,14 +161,14 @@ exports.handler = async function (event, context) {
         TableName: config.Dynamo.etlControlTable,
         Item: {
           SubmissionFileName: eventParams.Key ,
-          IntakeStatus: "success",
+          IntakeStatus: "error on IDM load",
           IDMLoaderStatus: "error"
           },
         }
       await ddb.put(insertParams).promise();
       var snsFailureParams = {
         Message: eventParams.Key+' failed to load IDM',
-        Subject: "ETL Intake Processing Has Failed",
+        Subject: "ETL Loader Processing Has Failed",
         TopicArn: config.sns.failureETLARN
     };
     await sns.publish(snsFailureParams).promise();
