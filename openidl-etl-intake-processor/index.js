@@ -24,7 +24,9 @@ exports.handler = async (event, context) => {
 
     // Get the object from the event and show its content type
     const bucket = event.Records[0].s3.bucket.name;
-    const key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
+    const key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' ')).split('.')[0];
+    const file_ext = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' ')).split('.')[1];
+
     const params = {
         Bucket: bucket,
         Key: key,
@@ -66,7 +68,9 @@ exports.handler = async (event, context) => {
             Item: { 'SubmissionFileName': { S: key }, 'IntakeStatus': { S: 'submitted' } }
         }
         const insertResult = await ddb.putItem(dbParams).promise()
-        const data = await s3.getObject(params).promise();
+        const getParams = {'Bucket': params.Bucket, 'Key': params.Key+'.'+file_ext}
+        console.log('get params: '+getParams)
+        const data = await s3.getObject(getParams).promise();
 
         // get the csv data and convert it into a json file
         if (!result) result = await convertToJson(data.Body.toString())
@@ -103,7 +107,7 @@ exports.handler = async (event, context) => {
                 ReturnValues: "ALL_NEW"
             }
             const updateResult = await ddb.updateItem(dbParams).promise()
-            snsFailureParams.Message = `The file ${key} has failed processing`
+            snsFailureParams.Message = `The file ${key}.${file_ext} has failed processing`
             let snsResponse = await sns.publish(snsFailureParams).promise();
             return JSON.stringify(s3Result)
         }
