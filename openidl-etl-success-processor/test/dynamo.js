@@ -1,4 +1,4 @@
-const config = require("./config/config.json");
+const config = require("../config/config.json");
 var aws = require("aws-sdk");
 aws.config.update({ region: "us-east-2" });
 //const client = new DynamoDBClient({ region: "us-east-2" });
@@ -72,7 +72,7 @@ let fail = {
   ExpressionAttributeValues: {
       ":st": { S: 'idmLoader-start' }
   },
-  ReturnValues: "ALL_NEW"
+  ReturnValues: "ALL_NEW"}
 
   const updateResult4 = await ddb.updateItem(params4).promise()
 }

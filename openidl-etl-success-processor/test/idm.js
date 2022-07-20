@@ -1,6 +1,6 @@
 // const config = require("./config/config.json");
-const source = require("./test/sample-data-9001.json")
-const processRecords = require("./processor").process;
+const source = require("./sample-data-9001.json")
+const processRecords = require("../processor").process;
 //console.log(source)
 
 console.log('start')
