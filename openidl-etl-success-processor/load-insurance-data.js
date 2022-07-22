@@ -13,7 +13,7 @@ module.exports.buildPayload = function (records) {
         "batchId": config.batchId,
         "chunkId": config.chunkId,
         //"carrierId": records[0].Policy.CompanyID,
-        "carrierId": '5',
+        "carrierId": config.carrierId,
         "policyNo": "91111111",
         "errFlg": false,
         "errrLst": [],
