@@ -83,7 +83,7 @@ module.exports.loadInsuranceData = async function (records) {
         baseURL = buildURL(config, 'carrier', 'insurance-data-manager')
         // console.log(JSON.stringify(dataToLoad))
         let payload = module.exports.buildPayload(records)
-        console.log('load insurance 79')
+        //console.log('load insurance 79')
         let response = await callAPI(baseURL, payload, userToken.token)
         return response
     }

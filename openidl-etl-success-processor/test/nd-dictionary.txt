@@ -1,0 +1,11 @@
+Header: Organization ID,VIN,State,Transaction Date,Transaction Month
+
+Column Definitions
+    Organization ID: A provided org identifier. Used to load data into private org HDS.
+    VIN: Vehicle Identification Number.
+    State: State Abbreviation 2 capital letters.
+    Transaction Date: Date the data was extracted from org.
+    Transaction Month: Format YYYY-MM, MM required. The month that is asserted to have coverage.
+
+
+Coverage: A vehicle is expected to be insured for at least 15 days of the coming month. 

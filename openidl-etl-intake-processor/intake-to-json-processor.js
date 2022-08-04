@@ -22,30 +22,21 @@ async function convertToJson(recordsText) {
     }
     let resultRecords = []
     for (outputRecord of outputRecords) {
+        console.log(outputRecord)
         let resultRecord = {}
         let recordError = false
-        resultRecord.carrierNumber = outputRecord['Carrier Number']
+        resultRecord.organizationID = outputRecord['Organization ID']
         resultRecord.state = outputRecord['State']
         if (!resultRecord.state) {
             resultRecord.state = config.state
         }
         resultRecord.vin = outputRecord['VIN']
-        let txDate = DateTime.fromSQL(outputRecord['Transaction Date'])
-        resultRecord.transactionDate = txDate.toISODate()
-        // console.log(`Transaction Date ${txDate}`)
-        let effDate = DateTime.fromSQL(outputRecord['Effective Date'])
-        if (!effDate.isValid) {
-            effDate = txDate
-        }
-        resultRecord.effectiveDate = effDate.toISODate()
-        // console.log(`Effective Date ${effDate}`)
-        let expDate = DateTime.fromSQL(outputRecord['Expiration Date'])
-        if (!expDate.isValid) {
-            expDate = txDate.plus({ months: 1 })
-        }
-        resultRecord.expirationDate = expDate.toISODate()
-        if (!resultRecord.carrierNumber) {
-            errors.push({ 'type': 'data', 'message': 'missing carrier number', 'record': outputRecord })
+        resultRecord.transactionDate = outputRecord['Transaction Date']
+        resultRecord.transactionMonth = outputRecord['Transaction Month']
+        
+
+        if (!resultRecord.organizationID) {
+            errors.push({ 'type': 'data', 'message': 'missing organizationID', 'record': outputRecord })
             recordError = true
         }
         if (!resultRecord.vin) {
@@ -56,14 +47,15 @@ async function convertToJson(recordsText) {
             errors.push({ 'type': 'data', 'message': 'missing transaction date', 'record': outputRecord })
             recordError = true
         }
-        if (!resultRecord.effectiveDate) {
-            errors.push({ 'type': 'data', 'message': 'missing effective date', 'record': outputRecord })
+        if (!resultRecord.transactionMonth) {
+            errors.push({ 'type': 'data', 'message': 'missing transaction month', 'record': outputRecord })
             recordError = true
         }
-        if (!resultRecord.expirationDate) {
-            errors.push({ 'type': 'data', 'message': 'missing expiration date', 'record': outputRecord })
-            recordError = true
-        }
+        console.log('result: ')
+        console.log(resultRecord)
+        console.log('errors')
+        console.log(errors)
+        console.log('record error: '+recordError)
         if (!recordError) resultRecords.push(resultRecord)
     }
     if (errors.length > 0) {

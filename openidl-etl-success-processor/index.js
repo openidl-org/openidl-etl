@@ -33,19 +33,19 @@ async function setUp(eventParams) {
     TableName: config.Dynamo.etlControlTable,
     Key: { SubmissionFileName: eventParams.Key },
   };
-  console.log("params2");
-  console.log(params2);
-  console.log("get item");
+  // console.log("params2");
+  // console.log(params2);
+  // console.log("get item");
   let item = await ddb.get(params2).promise();
-  console.log("item next");
-  console.log(item.Item);
+  // console.log("item next");
+  // console.log(item.Item);
   if (item.Item) {
     if (item.Item.SubmissionFileName === eventParams.Key) {
       console.log("file exists in control");
 
       if (item.Item.IDMLoaderStatus === "success") {
         run = false;
-        console.log("file found status: sucesss");
+        console.log("file found status: success");
         //sns file has already been loaded
         var snsFailureParams = {
           Message: eventParams.Key + " has already been loaded to IDM",

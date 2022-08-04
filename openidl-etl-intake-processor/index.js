@@ -41,7 +41,7 @@ exports.handler = async (event, context) => {
             TopicArn: config.sns.failureTopicARN
         };
         var snsSuccessParams = {
-            Message: 'unkknown',
+            Message: 'unknown',
             Subject: "ETL Intake Processing Has Succeeded",
             TopicArn: config.sns.successTopicARN
         };
