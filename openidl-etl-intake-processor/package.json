@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1165.0",
+    "crypto": "^1.0.1",
     "csvtojson": "^2.0.10",
     "jsonschema": "^1.4.0",
     "luxon": "^2.4.0"

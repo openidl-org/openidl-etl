@@ -21,8 +21,10 @@ module.exports.buildPayload = function (records) {
         "_id": "9sample"
     }
     for (record of records) {
+        //TODO: understand why chunkid is here, also isnt chunkId above?
         record.chunkId = config.chunkId
         record.chunkid = config.chunkId
+        
         // console.log('new record')
         // console.log(JSON.stringify(record))
         payload.records.push(record)

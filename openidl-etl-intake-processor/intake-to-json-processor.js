@@ -1,7 +1,7 @@
 const csv = require('csvtojson')
 const DateTime = require('luxon').DateTime
 const config = require('./config/config.json')
-
+const crypto = require('crypto')
 async function convertToJson(recordsText) {
     // let textRecords = recordsText.split('\n')
     let errors = []
@@ -33,7 +33,7 @@ async function convertToJson(recordsText) {
         resultRecord.vin = outputRecord['VIN']
         resultRecord.transactionDate = outputRecord['Transaction Date']
         resultRecord.transactionMonth = outputRecord['Transaction Month']
-        
+        resultRecord.vinHash = crypto.createHash('sha256').update(resultRecord.vin).digest('hex')
 
         if (!resultRecord.organizationID) {
             errors.push({ 'type': 'data', 'message': 'missing organizationID', 'record': outputRecord })
