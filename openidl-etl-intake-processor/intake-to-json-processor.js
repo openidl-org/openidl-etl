@@ -53,8 +53,8 @@ async function convertToJson(recordsText) {
         }
         console.log('result: ')
         console.log(resultRecord)
-        console.log('errors')
-        console.log(errors)
+       // console.log('errors')
+       // console.log(errors)
         console.log('record error: '+recordError)
         if (!recordError) resultRecords.push(resultRecord)
     }
