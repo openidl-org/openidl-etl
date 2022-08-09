@@ -8,7 +8,8 @@
  */
 console.log('Loading function');
 
-const aws = require('aws-sdk');
+let aws = require('aws-sdk');
+aws.config({region: config.region})
 
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 const ddb = new aws.DynamoDB({ apiVersion: '2012-08-10' })
