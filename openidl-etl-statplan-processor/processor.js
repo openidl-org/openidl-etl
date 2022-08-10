@@ -1,86 +1,101 @@
-const schema = require("./schemas/personalAutoStatPlan-premium.json");
+const premiumSchema = require("./schemas/personalAutoStatPlan-premium.json");
+const lossSchema = require("./schemas/personalStatPlan-loss.json");
 const converter = require("./converters/autoConverter").converter;
 
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
+
 
 module.exports.convertTextRecordsToJson = function (recordsText) {
-  return convertTextRecordsToJsonUsingSchema(recordsText, schema);
+  return convertTextRecordsToJsonUsingSchema(recordsText,premiumSchema,lossSchema);
 };
 
-function convertTextRecordsToJsonUsingSchema(recordsText, schema) {
+function convertTextRecordsToJsonUsingSchema(recordsText, premiumSchema,lossSchema) {
   let results = [];
-  
-  let records = recordsText.split("\n")
-  records.pop() //remove end object
+
+  let records = recordsText.split("\n");
+  records.pop(); //remove end object
   for (record of records) {
-    //if (record)  
-      lcl_result = convertTextRecordToJsonUsingSchema(record, schema)
-      results.push(lcl_result)
-      
+    //if (record)
+    lcl_result = convertTextRecordToJsonUsingSchema(record, premiumSchema,lossSchema);
+    results.push(lcl_result);
   }
   return results;
 }
-function convertTextRecordToJsonUsingSchema(record, schema) {
+
+function getTransactionCode(record, schema) {
+  var start = schema.properties["transactionCode"].start;
+  var end = start + 1;
+  var transactionCode = record.substring(start, end).trim();
+  return transactionCode;
+}
+
+function convertTextRecordToJsonUsingSchema(record, premiumSchema,lossSchema) {
   let result = {};
-  result['error'] = false
-  
-  for (let fieldName in schema.properties) {
-    let field = schema.properties[fieldName];
-    var start = field.start;
-    var end = start + field.length;
-    var type = field.type;
-    var acted = false;
-    if (type == 'date') {
-      console.log('type: '+type)
-    }
+  var transactionCode = getTransactionCode(record,premiumSchema)
+  var premium = false;
+  let schema = null
+  let loss = null
 
+  console.log('transaction code: '+transactionCode)
 
-    if (record.length > start) {
-      var value = record.substring(start, end).trim();
-      if (type == "number") {
-        postive = 1
-        if (value.charAt(value.length-1) == '}'){
-          value = value.slice(0,-1)
-          postive=postive*-10
-        }
-        if (value.charAt(value.length-1) == '{'){
-          value = value.slice(0,-1)
-        }
+  if (transactionCode == '1' || transactionCode == '8'){
+    premium = true
+    schema = premiumSchema
+  }
 
-        result[field.name] = Number(value)*postive;
-        acted = true;
-      }
-      if (type == "string") {
-        result[field.name] = value;
-        acted = true;
-      }
-      if (type =="date"){
-        try{
-          const dateStr = value
-          const date = new Date(dateStr)
-          const iso = date.toISOString()
-          result[field.name] = iso;
-          console.log('iso: '+iso)
+  if (transactionCode =="2" || transactionCode =="3" || transactionCode =="6" || transactionCode =="7") {
+    schema = lossSchema
+    console.log('loss record found')
+    console.log(record)
+    loss=true
+
+  }
+
+    for (let fieldName in schema.properties) {
+      let field = schema.properties[fieldName];
+      var start = field.start;
+      var end = start + field.length;
+      var type = field.type;
+      var acted = false;
+      // if (type == 'date') {
+      //   console.log('type: '+type)
+      // }
+
+      if (record.length > start) {
+        var value = record.substring(start, end).trim();
+        if (type == "number") {
+          positive = 1;
+          if (value.charAt(value.length - 1) == "}") {
+            value = value.slice(0, -1);
+            positive = positive * -10;
+          }
+          if (value.charAt(value.length - 1) == "{") {
+            value = value.slice(0, -1);
+          }
+
+          result[field.name] = Number(value) * positive;
           acted = true;
         }
-        catch{
-          console.log('error on date string')
+        if (type == "string") {
+          result[field.name] = value;
+          acted = true;
+        }
+        if (type == "date") {
+          result[field.name] = value;
+          acted = true;
+        }
+        if (!acted) {
+          result[field.name] = "Unhandled Data Type in processor.js";
+          result["error"] = true;
         }
       }
-      if (!acted) {
-        result[field.name] = "Unhandled Data Type in processor.js";
-        result['error'] = true
-      }
     }
+    // console.table(result)
+    // if (loss){
+    //   tree()
+    // }
+    return result
   }
-  console.table(result)
-  //sleep(1000000)
-  return result;
-}
+
 
 exports.process = async function (records) {
   let resultRecords = [];
@@ -90,7 +105,7 @@ exports.process = async function (records) {
     let record = inputRecord.body;
     //console.log("We have a new submission");
     //console.log(record)
-    let jsonRecords = convertTextRecordsToJsonUsingSchema(record, schema);
+    let jsonRecords = convertTextRecordsToJsonUsingSchema(record, premiumSchema, lossSchema);
     for (jsonRecord of jsonRecords) {
       //console.log(jsonRecord);
       resultRecords.push(converter(jsonRecord));

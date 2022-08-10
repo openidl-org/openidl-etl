@@ -16,7 +16,7 @@
         },
         "accountingDate": {
             "name": "accountingDate",
-            "type": "date",
+            "type": "string",
             "start": 2,
             "length": 3
         },
@@ -116,8 +116,8 @@
                 "8"
             ]
         },
-        "premiumAmount": {
-            "name": "premiumAmount",
+        "lossAmount": {
+            "name": "lossAmount",
             "type": "number",
             "start": 16,
             "length": 10
@@ -331,57 +331,6 @@
             "start": 37,
             "length": 3
         },
-        "bodyStyle": {
-            "name": "bodyStyle",
-            "type": "string",
-            "start": 37,
-            "length": 2,
-            "enum": [
-                "01",
-                "02",
-                "03",
-                "04",
-                "05",
-                "06",
-                "07",
-                "08",
-                "09",
-                "10",
-                "11",
-                "12",
-                "13",
-                "14",
-                "15",
-                "16",
-                "17",
-                "18",
-                "19",
-                "20",
-                "21",
-                "22",
-                "23",
-                "24",
-                "25",
-                "30",
-                "99"
-            ]
-        },
-        "bodySize": {
-            "name": "bodySize",
-            "type": "string",
-            "start": 39,
-            "length": 1,
-            "enum": [
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "9"
-            ]
-        },
         "modelYear": {
             "name": "modelYear",
             "type": "string",
@@ -402,17 +351,30 @@
                 "6"
             ]
         },
-        "exposure": {
-            "name": "exposure",
+        "claimCount": {
+            "name": "claimCount",
             "type": "string",
             "start": 43,
             "length": 5
         },
-        "monthsCovered": {
-            "name": "monthsCovered",
+        "causeOfLoss": {
+            "name": "causeOfLoss",
             "type": "string",
             "start": 48,
-            "length": 2
+            "length": 1,
+            "enum": [
+                " ",
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9"
+            ]
         },
         "terrorismIndicator": {
             "name": "terrorismIndicator",
@@ -423,17 +385,6 @@
                 " ",
                 "7",
                 "8"
-            ]
-        },
-        "singleMultiCar": {
-            "name": "singleMultiCar",
-            "type": "string",
-            "start": 55,
-            "length": 1,
-            "enum": [
-                "1",
-                "2",
-                "9"
             ]
         },
         "accidentDate": {
@@ -467,11 +418,17 @@
                 "8"
             ]
         },
-        "policyIdentification": {
-            "name": "policyIdentification",
+        "occurrenceIdentification": {
+            "name": "occurrenceIdentification",
             "type": "string",
             "start": 65,
-            "length": 14
+            "length": 12
+        },
+        "claimIdentifier": {
+            "name": "claimIdentifier",
+            "type": "string",
+            "start": 77,
+            "length": 2
         },
         "ncProgramEnhancementIndicator": {
             "name": "ncProgramEnhancementIndicator",
@@ -618,7 +575,7 @@
         "newJerseyPIPLimitsDeductibleCode": {
             "name": "newJerseyPIPLimitsDeductibleCode",
             "type": "string",
-            "start": 97,
+            "start": 98,
             "length": 2,
             "enum": [
                 "1 ",
@@ -688,26 +645,14 @@
         "rateClassCode": {
             "name": "rateClassCode",
             "type": "string",
-            "start": 103,
-            "length": 4
-        },
-        "penaltyPointsPercentOfSurcharge": {
-            "name": "penaltyPointsPercentOfSurcharge",
-            "type": "string",
-            "start": 107,
-            "length": 2
+            "start": 100,
+            "length": 3
         },
         "classificationCodesAssignedRisks": {
             "name": "classificationCodesAssignedRisks",
             "type": "string",
             "start": 103,
             "length": 6
-        },
-        "experienceRatingModificationFactor": {
-            "name": "experienceRatingModificationFactor",
-            "type": "string",
-            "start": 109,
-            "length": 3
         },
         "limitedCodingLossTransaction": {
             "name": "limitedCodingLossTransaction",
@@ -721,284 +666,10 @@
             "start": 113,
             "length": 2
         },
-        "tortLimitation": {
-            "name": "tortLimitation",
-            "type": "string",
-            "start": 113,
-            "length": 2,
-            "enum": [
-                "  ",
-                "01",
-                "02",
-                "03",
-                "04",
-                "05",
-                "06",
-                "07",
-                "08",
-                "09",
-                "99"
-            ]
-        },
-        "intrastateInterstateCode": {
-            "name": "intrastateInterstateCode",
-            "type": "string",
-            "start": 113,
-            "length": 2,
-            "enum": [
-                "  ",
-                "01",
-                "02",
-                "03",
-                "04",
-                "05",
-                "06",
-                "07",
-                "08",
-                "09",
-                "99"
-            ]
-        },
-        "thresholdTortLimitation": {
-            "name": "thresholdTortLimitation",
-            "type": "string",
-            "start": 113,
-            "length": 2,
-            "enum": [
-                "  ",
-                "01",
-                "02",
-                "03",
-                "04",
-                "05",
-                "06",
-                "07",
-                "08",
-                "09",
-                "99"
-            ]
-        },
-        "accidentPreventionCredit": {
-            "name": "accidentPreventionCredit",
-            "type": "string",
-            "start": 113,
-            "length": 2,
-            "enum": [
-                "  ",
-                "01",
-                "02",
-                "03",
-                "04",
-                "05",
-                "06",
-                "07",
-                "08",
-                "09",
-                "99"
-            ]
-        },
-        "scReinsuranceFacility": {
-            "name": "scReinsuranceFacility",
-            "type": "string",
-            "start": 113,
-            "length": 2,
-            "enum": [
-                "  ",
-                "01",
-                "02",
-                "03",
-                "04",
-                "05",
-                "06",
-                "07",
-                "08",
-                "09",
-                "99"
-            ]
-        },
         "stateExceptionB": {
             "name": "stateExceptionB",
             "type": "string",
             "start": 115,
-            "length": 2
-        },
-        "multiCarRisks": {
-            "name": "multiCarRisks",
-            "type": "string",
-            "start": 115,
-            "length": 2,
-            "enum": [
-                "  ",
-                "17",
-                "27",
-                "47",
-                "37",
-                "00",
-                "01",
-                "02",
-                "03",
-                "04",
-                "05",
-                "09",
-                "99"
-            ]
-        },
-        "primaryNoFaultHealthPlan": {
-            "name": "primaryNoFaultHealthPlan",
-            "type": "string",
-            "start": 115,
-            "length": 2,
-            "enum": [
-                "  ",
-                "17",
-                "27",
-                "47",
-                "37",
-                "00",
-                "01",
-                "02",
-                "03",
-                "04",
-                "05",
-                "09",
-                "99"
-            ]
-        },
-        "55AndOverDiscount": {
-            "name": "55AndOverDiscount",
-            "type": "string",
-            "start": 115,
-            "length": 2,
-            "enum": [
-                "  ",
-                "17",
-                "27",
-                "47",
-                "37",
-                "00",
-                "01",
-                "02",
-                "03",
-                "04",
-                "05",
-                "09",
-                "99"
-            ]
-        },
-        "stateExceptionC": {
-            "name": "stateExceptionC",
-            "type": "string",
-            "start": 117,
-            "length": 2
-        },
-        "engineSize": {
-            "name": "engineSize",
-            "type": "string",
-            "start": 117,
-            "length": 2,
-            "enum": [
-                "  ",
-                "01",
-                "02",
-                "03",
-                "04",
-                "05",
-                "06",
-                "07",
-                "08",
-                "09",
-                "11",
-                "12",
-                "13",
-                "14",
-                "15",
-                "19",
-                "21",
-                "22",
-                "23",
-                "24",
-                "25",
-                "29",
-                "31",
-                "32",
-                "33",
-                "34",
-                "35",
-                "39",
-                "41",
-                "42",
-                "43",
-                "44",
-                "45",
-                "49",
-                "51",
-                "52",
-                "53",
-                "54",
-                "55",
-                "56",
-                "59"
-            ]
-        },
-        "combinedFirstPartyBenefitsIndivisiblePremiumPolicies": {
-            "name": "combinedFirstPartyBenefitsIndivisiblePremiumPolicies",
-            "type": "string",
-            "start": 117,
-            "length": 2,
-            "enum": [
-                "  ",
-                "01",
-                "02",
-                "03",
-                "04",
-                "05",
-                "06",
-                "07",
-                "08",
-                "09",
-                "11",
-                "12",
-                "13",
-                "14",
-                "15",
-                "19",
-                "21",
-                "22",
-                "23",
-                "24",
-                "25",
-                "29",
-                "31",
-                "32",
-                "33",
-                "34",
-                "35",
-                "39",
-                "41",
-                "42",
-                "43",
-                "44",
-                "45",
-                "49",
-                "51",
-                "52",
-                "53",
-                "54",
-                "55",
-                "56",
-                "59"
-            ]
-        },
-        "stateExceptionD": {
-            "name": "stateExceptionC",
-            "type": "string",
-            "start": 119,
-            "length": 2
-        },
-        "newYorkTaxicabsUPublicLivery": {
-            "name": "newYorkTaxicabsUPublicLivery",
-            "type": "string",
-            "start": 119,
             "length": 2
         },
         "companyUse": {
@@ -1012,18 +683,6 @@
             "type": "string",
             "start": 150,
             "length": 17
-        },
-        "effectiveDate": {
-            "name": "effectiveDate",
-            "type": "string",
-            "start": 167,
-            "length": 8
-        },
-        "expirationDate": {
-            "name": "expirationDate",
-            "type": "string",
-            "start": 175,
-            "length": 8
         }
     }
 }

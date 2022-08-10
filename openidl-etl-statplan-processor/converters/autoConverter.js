@@ -96,8 +96,9 @@ module.exports.converter = function (jsonRecord) {
     Driver: {},
     Vehicle: {},
     Claim: {},
-    Error: null
   };
+  console.log('auto converter record')
+  console.table(jsonRecord)
   let policy = convertedRecord.Policy;
   let claim = convertedRecord.Claim;
   let coverage = convertedRecord.Coverage;
@@ -105,17 +106,12 @@ module.exports.converter = function (jsonRecord) {
   let vehicle = convertedRecord.Vehicle;
   convertedRecord.createdTime = new Date().toISOString();
   policy.LineOfBusiness = "Auto";
-  try {
   policy.Subline = jsonRecord.subline.trim()
     ? sublineCodes[jsonRecord.subline].name
     : NOT_PROVIDED;
-    policy.SublineCategory = jsonRecord.subline.trim()
-       sublineCodes[jsonRecord.subline].category
-  }
-  catch {
-    convertedRecord.Error = true
-  }
-
+  policy.SublineCategory = jsonRecord.subline.trim()
+    ? sublineCodes[jsonRecord.subline].category
+    : NOT_PROVIDED;
   policy.AccountingDate = convertAccountingDate(jsonRecord.accountingDate);
   policy.CompanyCode = jsonRecord.companyCode;
   policy.CompanyID = jsonRecord.companyCode;
@@ -139,14 +135,16 @@ module.exports.converter = function (jsonRecord) {
     ? programCodes[jsonRecord.program]
     : NOT_PROVIDED;
   let coverageCodesState = coverageCodes[policy.State];
+  
   if (!coverageCodesState) coverageCodesState = coverageCodes["MU"];
-  try {
+  
+  // //delete at some time...
+  // console.log('coverage codes: '+jsonRecord.coverage)
+  // console.table(coverageCodesState)
+
+  if (jsonRecord.coverage){
     coverage.CoverageCategory = coverageCodesState[jsonRecord.coverage].category;
-    coverage.CoverageCode = jsonRecord.coverage
     coverage.Coverage = coverageCodesState[jsonRecord.coverage].name;
-  }
-  catch{
-    convertedRecord.Error = true
   }
 
   driver.OperatorAge = operatorAgeCodes[jsonRecord.operatorsAge];
@@ -160,27 +158,21 @@ module.exports.converter = function (jsonRecord) {
     ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus]
         .principalSecondary
     : NOT_PROVIDED;
-    try{
-      vehicle.VehicleUse = jsonRecord.vehicleUse.trim()
-      ? vehicleUseCodes[jsonRecord.vehicleUse].use
-      : NOT_PROVIDED;
-    vehicle.VehicleUseOperator = jsonRecord.vehicleUse.trim()
-      ? vehicleUseCodes[jsonRecord.vehicleUse].operator
-      : NOT_PROVIDED;
-    vehicle.CommuteDistance = jsonRecord.vehicleUse.trim()
-      ? vehicleUseCodes[jsonRecord.vehicleUse].commuteDistance
-      : NOT_PROVIDED;
-    vehicle.AnnualDistance = jsonRecord.vehicleUse.trim()
-      ? vehicleUseCodes[jsonRecord.vehicleUse].annualDistance
-      : NOT_PROVIDED;
-    vehicle.VehiclePerformance = jsonRecord.vehiclePerformance.trim()
-      ? vehiclePerformanceCodes[jsonRecord.vehiclePerformance]
-      : NOT_PROVIDED;
-    }
-    catch{
-      convertedRecord.Error = true
-    }
-try{
+  vehicle.VehicleUse = jsonRecord.vehicleUse.trim()
+    ? vehicleUseCodes[jsonRecord.vehicleUse].use
+    : NOT_PROVIDED;
+  vehicle.VehicleUseOperator = jsonRecord.vehicleUse.trim()
+    ? vehicleUseCodes[jsonRecord.vehicleUse].operator
+    : NOT_PROVIDED;
+  vehicle.CommuteDistance = jsonRecord.vehicleUse.trim()
+    ? vehicleUseCodes[jsonRecord.vehicleUse].commuteDistance
+    : NOT_PROVIDED;
+  vehicle.AnnualDistance = jsonRecord.vehicleUse.trim()
+    ? vehicleUseCodes[jsonRecord.vehicleUse].annualDistance
+    : NOT_PROVIDED;
+  vehicle.VehiclePerformance = jsonRecord.vehiclePerformance.trim()
+    ? vehiclePerformanceCodes[jsonRecord.vehiclePerformance]
+    : NOT_PROVIDED;
   driver.DriversTraining =
     jsonRecord.privatePassengerDriversTrainingGoodStudent.trim()
       ? privatePassengerDriversTrainingGoodStudentCodes[
@@ -196,12 +188,6 @@ try{
   driver.PenaltyPoints = jsonRecord.privatePassengerPenaltyPoints.trim()
     ? penaltyPointsCodes[jsonRecord.privatePassengerPenaltyPoints]
     : NOT_PROVIDED;
-}
-catch {
-  convertedRecord.Error = true
-}
-
-try {
   let liabilityLimitState = liabilityLimitCodes.state[policy.State];
   if (!liabilityLimitState){
     liabilityLimitState = liabilityLimitCodes.state["MU"];}
@@ -210,11 +196,6 @@ try {
     coverage.LiabilityLimitsName =liabilityLimitState.coverage[jsonRecord.coverage].name;
     coverage.LiabilityLimitsAmount =liabilityLimitState.coverage[jsonRecord.coverage][jsonRecord.liabilityLimitsAmount];
   }
-}
-
-catch {
-  convertedRecord.Error = true
-}
 
   coverage.DeductibleAmount = deductibleCodes[jsonRecord.deductibleAmount];
   policy.EffectiveDate = convertDate(jsonRecord.effectiveDate);
@@ -236,24 +217,30 @@ catch {
       experienceRatingModificationFactorCodes[
         jsonRecord.experienceRatingModificationFactor
       ];
-  } else {
+  } if(jsonRecord.occurrenceIdentification) {
     claim.ClaimCount = parseInt(jsonRecord.claimCount);
     claim.CauseOfLoss =
       causeOfLossCodes.coverage[jsonRecord.coverage][jsonRecord.causeOfLoss];
     claim.AccidentDate = convertAccidentDate(jsonRecord.accidentDate);
     claim.OccurrenceIdentifier = jsonRecord.occurrenceIdentification.trim();
     claim.ClaimIdentifier = jsonRecord.claimIdentifier.trim();
+    try {
     claim.LimitedCodingLossTransaction =
       jsonRecord.limitedCodingLossTransaction.trim()
         ? limitedCodingLossTransactionCodes[
             jsonRecord.limitedCodingLossTransaction
           ]
         : "N/A";
-  }
+        }
+      catch {
+        claim.LimitedCodingLossTransaction = ''
+      }
+      }
   coverage.Terrorism = !jsonRecord.terrorismIndicator.trim()
     ? "N/A"
     : terrorismIndicatorCodes[jsonRecord.terrorismIndicator];
   coverage.Packaging = packageCodes[jsonRecord.packageCode];
+  coverage.CoverageCode = jsonRecord.coverage
   coverage.PoolAffiliation = poolAffiliationCodes[jsonRecord.poolAffiliation];
   policy.NCProgramEnhancement = jsonRecord.ncProgramEnhancementIndicator.trim()
     ? ncProgramEnhancementCodes[jsonRecord.ncProgramEnhancementIndicator]
@@ -300,6 +287,6 @@ catch {
     vehicle.VINHash = hashString(jsonRecord.vehicleIdentificationVIN);
   } 
 
-  //console.table(convertedRecord);
+  //console.table(convertedRecord['Coverage']);
   return convertedRecord;
 };

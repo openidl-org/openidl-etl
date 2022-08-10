@@ -17,8 +17,13 @@ let jsonPremiumRecords = convertToJson(testPremiumRecordsText);
 let hdsPremiumRecords = [];
 let errorRecords = []
 for (let jsonPremiumRecord of jsonPremiumRecords) {
-  //console.table(jsonPremiumRecord)
-  console.log('id: '+jsonPremiumRecord.policyIdentification+' transactionCode: '+jsonPremiumRecord.transactionCode)
+  console.table(jsonPremiumRecord)
+
+  let id;
+  if ("policyIdentification" in jsonPremiumRecord){id = jsonPremiumRecord.policyIdentification}
+  if ("occurrenceIdentification" in jsonPremiumRecord) {id = jsonPremiumRecord.occurrenceIdentification}
+
+  console.log('id: '+id+' transactionCode: '+jsonPremiumRecord.transactionCode)
   //transaction code 8,1 = premium
 
   hdsPremiumRecords.push(autoConverter(jsonPremiumRecord));
