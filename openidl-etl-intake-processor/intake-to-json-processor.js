@@ -25,34 +25,42 @@ async function convertToJson(recordsText) {
         console.log(outputRecord)
         let resultRecord = {}
         let recordError = false
-        resultRecord.organizationID = outputRecord['Organization ID']
-        resultRecord.state = outputRecord['State']
-        if (!resultRecord.state) {
+        
+        
+        if (outputRecord['Organization ID']){
+            resultRecord.organizationID = outputRecord['Organization ID']
+        }
+
+        if (outputRecord['State']){
+            resultRecord.state = outputRecord['State']
+        }else {
             resultRecord.state = config.state
         }
-        resultRecord.vin = outputRecord['VIN']
-        resultRecord.transactionDate = outputRecord['Transaction Date']
-        resultRecord.transactionMonth = outputRecord['Transaction Month']
-        resultRecord.vinHash = crypto.createHash('sha256').update(resultRecord.vin).digest('hex')
+        
+        if (outputRecord['VIN']){
+            resultRecord.vin = outputRecord['VIN']
+            resultRecord.vinHash = crypto.createHash('sha256').update(resultRecord.vin).digest('hex')
+        }
 
+        if (outputRecord['Transaction Date']){
+            resultRecord.transactionDate = outputRecord['Transaction Date']
+        }
+        
         if (!resultRecord.organizationID) {
-            errors.push({ 'type': 'data', 'message': 'missing organizationID', 'record': outputRecord })
+            errors.push({ 'type': 'data', 'message': 'missing "Organization ID"', 'record': outputRecord })
             recordError = true
         }
         if (!resultRecord.vin) {
-            errors.push({ 'type': 'data', 'message': 'missing vin', 'record': outputRecord })
+            errors.push({ 'type': 'data', 'message': 'missing "VIN"', 'record': outputRecord })
             recordError = true
         }
         if (!resultRecord.transactionDate) {
-            errors.push({ 'type': 'data', 'message': 'missing transaction date', 'record': outputRecord })
+            errors.push({ 'type': 'data', 'message': 'missing "Transaction Date"', 'record': outputRecord })
             recordError = true
         }
-        if (!resultRecord.transactionMonth) {
-            errors.push({ 'type': 'data', 'message': 'missing transaction month', 'record': outputRecord })
-            recordError = true
-        }
+
         console.log('result: ')
-        console.log(resultRecord)
+        console.table(resultRecord)
        // console.log('errors')
        // console.log(errors)
         console.log('record error: '+recordError)
