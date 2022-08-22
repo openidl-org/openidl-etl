@@ -1,0 +1,114 @@
+Description: "Microservice API and Auth settings"
+Transform: "AWS::Serverless-2016-10-31"
+
+Parameters:
+  YourEmail:
+    Type: String
+
+Globals:
+  Function:
+    Runtime: nodejs14.x
+    MemorySize: 128
+    Timeout: 60
+    Tracing: Active
+
+Resources:
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: false
+      UserPoolName: OpenIdlPrototype
+      UsernameAttributes:
+        - email
+      AutoVerifiedAttributes:
+        - email
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 6
+          RequireLowercase: true
+          RequireNumbers: false
+          RequireSymbols: false
+          RequireUppercase: true
+  UserPoolTokenClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      UserPoolId: !Ref UserPool
+      GenerateSecret: false
+      ExplicitAuthFlows:
+        - USER_PASSWORD_AUTH
+  UserPoolUser:
+    Type: AWS::Cognito::UserPoolUser
+    Properties:
+      DesiredDeliveryMediums:
+        - EMAIL
+      Username: !Ref YourEmail
+      UserPoolId: !Ref UserPool
+
+  FileUploadsBucket:
+    Type: AWS::S3::Bucket
+    Metadata:
+      Comments: This bucket has all file uploads
+    Properties:
+      AccessControl: Private
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins:
+              - "*"
+            AllowedMethods:
+              - GET
+              - HEAD
+              - POST
+
+  ServiceApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: v1
+      Cors:
+        AllowMethods: "'*'"
+        AllowHeaders: "'*'"
+        AllowOrigin: "'*'"
+      Auth:
+        Authorizers:
+          CognitoAuthorizer:
+            UserPoolArn: !GetAtt "UserPool.Arn"
+
+  LambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Handles the basic request
+      Handler: src/getSignedUrl.handler
+      Policies:
+        - S3FullAccessPolicy:
+            BucketName: 
+              !Ref FileUploadsBucket
+      Environment:
+        Variables:
+          FILE_UPLOAD_BUCKET: !Ref FileUploadsBucket
+      Events:
+        Get:
+          Type: Api
+          Properties:
+            Path: "/getSignedUrl"
+            RestApiId: !Ref ServiceApi
+            Method: post
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+Outputs:
+  CognitoID:
+    Description: The Cognito UserPool ID
+    Value: !Ref UserPool
+  CognitoClientID:
+    Description: The Cognito UserPool Client ID
+    Value: !Ref UserPoolTokenClient
+  ApiUrl:
+    Description: The API URL
+    Value: !Sub "https://${ServiceApi}.execute-api.${AWS::Region}.amazonaws.com/v1"

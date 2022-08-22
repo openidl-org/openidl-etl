@@ -1,0 +1,11 @@
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "openidl-upload-ui"
+s3_bucket = "openidl-intake"
+s3_prefix = "openidl-upload-ui"
+region = "us-east-2"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "YourEmail=\"rajeshsanjeevi@gmail.com\""
+image_repositories = []

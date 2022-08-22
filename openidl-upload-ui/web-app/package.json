@@ -1,0 +1,128 @@
+{
+  "name": "open-idl-test-upload-test-app",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Open IDL upload test app",
+  "main": "index.html",
+  "bugs": {
+    "email": "softwaredevelopment@aaisonline.com"
+  },
+  "scripts": {
+    "start": "react-scripts start"
+  },
+  "author": {
+    "name": "AAIS Development Team",
+    "email": "softwaredevelopment@aaisonline.com",
+    "url": "https://aaisonline.atlassian.net/wiki/spaces/DEV/overview"
+  },
+  "contributers": [
+    {
+      "name": "Findlay Clarke Jr.",
+      "email": "findlayc@aaisonline.com",
+      "url": "https://aaisonline.atlassian.net/wiki/spaces/~439835659/overview"
+    }
+  ],
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "aws-amplify": "^2.3.0",
+    "aws-amplify-react": "^3.1.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-react": "^7.13.13",
+    "docdash": "^1.2.0",
+    "eslint": "^7.23.0",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.8",
+    "jsdoc": "^3.6.6",
+    "prettier": "^2.2.1"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 11,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "extends": [
+      "react-app",
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "globals": {
+      "cy": true,
+      "Cypress": true
+    },
+    "plugins": [
+      "react-hooks",
+      "react"
+    ],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error",
+      "no-console": "off",
+      "no-unused-vars": [
+        "warn",
+        {
+          "args": "none",
+          "caughtErrors": "all",
+          "ignoreRestSiblings": true
+        }
+      ],
+      "semi": "error",
+      "eqeqeq": "error",
+      "no-await-in-loop": "error",
+      "no-else-return": "error",
+      "require-await": "error",
+      "no-undef-init": "error",
+      "global-require": "error",
+      "no-var": "error",
+      "prefer-const": "error",
+      "no-use-before-define": "error",
+      "no-redeclare": "error",
+      "no-array-constructor": "error",
+      "no-eval": "error",
+      "no-useless-escape": "error",
+      "no-loop-func": "error",
+      "prefer-rest-params": "error",
+      "no-new-func": "error",
+      "no-param-reassign": "error",
+      "prefer-arrow-callback": "error",
+      "arrow-spacing": "error",
+      "react/prop-types": "off"
+    }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "IE 11",
+    "not op_mini all"
+  ],
+  "engines": {
+    "node": ">=14",
+    "npm": ">=6"
+  },
+  "license": "Copyright AAIS. All rights reserved",
+  "prettier": {
+    "trailingComma": "es5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm version --force --no-git-tag-version patch && git add package.json package-lock.json"
+    }
+  }
+}

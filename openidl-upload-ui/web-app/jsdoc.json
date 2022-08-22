@@ -1,0 +1,55 @@
+{
+  "tags": {
+    "allowUnknownTags": false
+  },
+  "source": {
+    "include": "./src",
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|docs)"
+  },
+  "plugins": ["plugins/markdown"],
+  "opts": {
+    "template": "node_modules/docdash",
+    "encoding": "utf8",
+    "destination": "docs/",
+    "recurse": true,
+    "verbose": true
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  },
+  "docdash": {
+    "static": true,
+    "sort": true,
+    "disqus": "",
+    "openGraph": {
+      "title": "Docdash",
+      "type": "website",
+      "image": "https://cloud.githubusercontent.com/assets/447956/13398144/4dde7f36-defd-11e5-8909-1a9013302cb9.png",
+      "site_name": "Docdash",
+      "url": "http://clenemt.github.io/docdash/"
+    },
+    "meta": {
+      "title": "AAIS Member Self Service UI Docs",
+      "description": "Member Self Service documentation for the web application.",
+      "keyword": "AAIS, MSS, docs"
+    },
+    "search": true,
+    "collapse": true,
+    "wrap": "false",
+    "navLevel": 2,
+    "private": true,
+    "typedefs": true,
+    "removeQuotes": "none",
+    "scripts": [],
+    "menu": {
+      "MSS Gitlab": {
+        "href": "http://build.dev.aaisdirect.com:3000/member-self-service/web-app",
+        "target": "_blank",
+        "class": "menu-item",
+        "id": "repository"
+      }
+    }
+  }
+}
