@@ -7,13 +7,14 @@ const buildPayload =
   require("../openidl-etl-success-processor/load-insurance-data").buildPayload;
 
 //let testPremiumRecordsText = fs.readFileSync('../../con-data/auto_6350.txt', 'utf-8')
-let testPremiumRecordsText = fs.readFileSync("../../con-data/auto_6.txt","utf-8");
+//let testPremiumRecordsText = fs.readFileSync('../../con-data/single-policy.txt', 'utf-8')
+let testPremiumRecordsText = fs.readFileSync("../../con-data/auto_1000.txt","utf-8");
 
 let jsonPremiumRecords = convertToJson(testPremiumRecordsText);
-
 // console.log(
 //   "idm converter| jsonpremium records length: " + jsonPremiumRecords.length
 // );
+//cat()
 let hdsPremiumRecords = [];
 let errorRecords = []
 for (let jsonPremiumRecord of jsonPremiumRecords) {

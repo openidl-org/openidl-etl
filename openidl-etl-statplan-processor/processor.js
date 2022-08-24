@@ -10,14 +10,17 @@ module.exports.convertTextRecordsToJson = function (recordsText) {
 
 function convertTextRecordsToJsonUsingSchema(recordsText, premiumSchema,lossSchema) {
   let results = [];
-
+  let uniqueExposures = new Set()
   let records = recordsText.split("\n");
   records.pop(); //remove end object
-  for (record of records) {
+  for (let record of records) {
     //if (record)
     lcl_result = convertTextRecordToJsonUsingSchema(record, premiumSchema,lossSchema);
+    uniqueExposures.add(lcl_result.exposure)
+    //uniqueExposures.add(lcl_result.policyIdentification)
     results.push(lcl_result);
   }
+  console.log(uniqueExposures)
   return results;
 }
 
@@ -28,14 +31,15 @@ function getTransactionCode(record, schema) {
   return transactionCode;
 }
 
+
 function convertTextRecordToJsonUsingSchema(record, premiumSchema,lossSchema) {
   let result = {};
   var transactionCode = getTransactionCode(record,premiumSchema)
   var premium = false;
   let schema = null
   let loss = null
-
-  console.log('transaction code: '+transactionCode)
+  
+  //console.log('transaction code: '+transactionCode)
 
   if (transactionCode == '1' || transactionCode == '8'){
     premium = true
@@ -60,6 +64,8 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema,lossSchema) {
       //   console.log('type: '+type)
       // }
 
+
+
       if (record.length > start) {
         var value = record.substring(start, end).trim();
         if (type == "number") {
@@ -78,6 +84,12 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema,lossSchema) {
         if (type == "string") {
           result[field.name] = value;
           acted = true;
+
+          // if(fieldName == "exposure"){
+          //     console.log('     exposure: '+value)
+          //     uniqueExposures.add(value)
+          // }
+
         }
         if (type == "date") {
           result[field.name] = value;
@@ -93,6 +105,7 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema,lossSchema) {
     // if (loss){
     //   tree()
     // }
+    
     return result
   }
 

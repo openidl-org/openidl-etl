@@ -41,7 +41,7 @@ function hashString(text) {
 }
 
 function convertAccountingDate(dateString) {
-  return `202${dateString.substring(2, 3)}-${dateString.substring(0, 2)}-01`;
+  return `202${dateString.substring(2, 3)}-${dateString.substring(0, 2)}-15`;
 }
 
 function convertAccidentDate(dateString) {
@@ -88,6 +88,43 @@ function decodeStateException(outputObject, inputRecord, exceptionName, state) {
   if (stateException.type === "copy")
     object[stateException.hdsName] = inputRecord[stateException.statPlanName];
 }
+function addMonths(date, months) {
+  //var d = date.getDate();
+  date.setMonth(date.getMonth() +months);
+date.setDate(date.getDay() -2 )
+  return date;
+}
+
+function makeDate(datestr){
+  console.log(datestr)
+	let date_array = datestr.split("-")
+	let year = parseInt(date_array[0])
+	let month = parseInt(date_array[1])-1 //make date is zero indexed
+	let day = parseInt(date_array[2])
+	let date = new Date (year, month, day)
+	return date
+}
+
+function addTerm(datestr, term){
+	let date = makeDate(datestr)
+	let rv_date = addMonths(date, term)
+	let rv_year = rv_date.getFullYear()
+	let rv_month = rv_date.getMonth() +2
+	if (rv_month < 10){
+		rv_month= '0'+rv_month.toString()
+	}
+	if (rv_month =='00'){
+		rv_month = '01'
+	}
+
+
+
+	let rv_string = rv_year+'-'+rv_month+'-25'
+	console.log(datestr+' term: '+term+' new date:'+rv_string)
+	return rv_string
+	
+}
+
 
 module.exports.converter = function (jsonRecord) {
   let convertedRecord = {
@@ -97,7 +134,7 @@ module.exports.converter = function (jsonRecord) {
     Vehicle: {},
     Claim: {},
   };
-  console.log('auto converter record')
+  //console.log('auto converter record')
   console.table(jsonRecord)
   let policy = convertedRecord.Policy;
   let claim = convertedRecord.Claim;
@@ -113,6 +150,7 @@ module.exports.converter = function (jsonRecord) {
     ? sublineCodes[jsonRecord.subline].category
     : NOT_PROVIDED;
   policy.AccountingDate = convertAccountingDate(jsonRecord.accountingDate);
+  
   policy.CompanyCode = jsonRecord.companyCode;
   policy.CompanyID = jsonRecord.companyCode;
   policy.State = stateCodes.codes[jsonRecord.stateCode];
@@ -124,6 +162,7 @@ module.exports.converter = function (jsonRecord) {
   convertedRecord.TransactionType = jsonRecord.transactionCode.trim()
     ? transactionCodes[jsonRecord.transactionCode].name
     : NOT_PROVIDED;
+  convertedRecord.TransactionCode = jsonRecord.transactionCode
   if (jsonRecord.transactionCode.trim()) {
     if (convertedRecord.RecordType === "Premium") {
       policy.PremiumAmount = convertStringToFloat(jsonRecord.premiumAmount);
@@ -145,15 +184,18 @@ module.exports.converter = function (jsonRecord) {
   if (jsonRecord.coverage){
     coverage.CoverageCategory = coverageCodesState[jsonRecord.coverage].category;
     coverage.Coverage = coverageCodesState[jsonRecord.coverage].name;
+    coverage.CoverageCode = jsonRecord.coverage
   }
 
   driver.OperatorAge = operatorAgeCodes[jsonRecord.operatorsAge];
+  driver.OperatorAgeCode = jsonRecord.operatorsAge
   driver.Gender = jsonRecord.sexAndMaritalStatus.trim()
     ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].gender
     : NOT_PROVIDED;
   driver.MaritalStatus = jsonRecord.sexAndMaritalStatus.trim()
     ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].maritalStatus
     : NOT_PROVIDED;
+  driver.MaritalStatusCode = jsonRecord.sexAndMaritalStatus
   driver.PrincipalSecondary = jsonRecord.sexAndMaritalStatus.trim()
     ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus]
         .principalSecondary
@@ -203,21 +245,44 @@ module.exports.converter = function (jsonRecord) {
   vehicle.BodyStyle = vehicleClassCodes.bodyStyle[jsonRecord.bodyStyle];
   vehicle.BodySize = vehicleClassCodes.bodySize[jsonRecord.bodySize];
   vehicle.ModelYear = jsonRecord.modelYear;
+
+  let lclExposurePresent = true
+  if (typeof jsonRecord.exposure =="undefined"){
+    //console.log('undefined true')
+    lclExposurePresent = false
+  }
+
+  if (lclExposurePresent){
+    let digit = parseInt(numberTypeCodes[jsonRecord.exposure.slice(-1)].digit)
+    let multiplier =  numberTypeCodes[jsonRecord.exposure.slice(-1)].multiplier
+    let recordLead = parseInt(jsonRecord.exposure.slice(0,-1))
+    if (!recordLead==0){
+      coverage.Exposure = parsInt(recordLead.toString()+(digit * multiplier).toString())
+    } else{
+      coverage.Exposure = digit * multiplier
+    }
+    
+  }
+
   let umUimState = umUimCodes.state[policy.State];
   if (!umUimState) { umuimState = umUimCodes.state["MU"];}
   coverage.UninsuredUnderinsuredMotorist =
   umuimState[jsonRecord.uninsuredUnderinsuredMotorist];
   if (convertedRecord.RecordType === "Premium") {
-    coverage.Exposure = parseInt(jsonRecord.exposure);
+    
     coverage.MonthsCovered = parseInt(jsonRecord.monthsCovered);
     coverage.SingleMultiCarRating =
       singleMultiCarCodes[jsonRecord.singleMultiCar];
     policy.PolicyIdentifier = jsonRecord.policyIdentification.trim();
+    console.log('policy identifier: '+policy.PolicyIdentifier)
     coverage.ExperienceRatingModificationFactor =
       experienceRatingModificationFactorCodes[
         jsonRecord.experienceRatingModificationFactor
       ];
-  } if(jsonRecord.occurrenceIdentification) {
+     console.log(policy)
+     policy.AccountingTermExpiration = addTerm(policy.AccountingDate, coverage.MonthsCovered)  
+  
+    } if(jsonRecord.occurrenceIdentification) {
     claim.ClaimCount = parseInt(jsonRecord.claimCount);
     claim.CauseOfLoss =
       causeOfLossCodes.coverage[jsonRecord.coverage][jsonRecord.causeOfLoss];
