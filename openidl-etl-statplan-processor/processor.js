@@ -85,11 +85,6 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema,lossSchema) {
           result[field.name] = value;
           acted = true;
 
-          // if(fieldName == "exposure"){
-          //     console.log('     exposure: '+value)
-          //     uniqueExposures.add(value)
-          // }
-
         }
         if (type == "date") {
           result[field.name] = value;
@@ -101,10 +96,7 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema,lossSchema) {
         }
       }
     }
-    // console.table(result)
-    // if (loss){
-    //   tree()
-    // }
+
     
     return result
   }
