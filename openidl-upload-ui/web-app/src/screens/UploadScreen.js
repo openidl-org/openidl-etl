@@ -19,11 +19,6 @@ const DEFAULT_TIMEOUT = 1000 * 5;
 export default function BucketScreen(props) {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
-  // const { bucketId } = useParams();
-  // const [bucket, setBucket] = useState();
-  // const [bucketFiles, setBucketFiles] = useState();
-  // const [createdUser, setCreatedUser] = useState();
-  // const [updatedUser, setUpdatedUser] = useState();
   const uploadRef = useRef();
 
   //used for the polling of the file status
@@ -128,6 +123,7 @@ export default function BucketScreen(props) {
     <React.Fragment>
       <Container className={classes.container} maxWidth={false}>
         {loading && <LinearProgress />}
+        <Typography variant="h1">Upload</Typography>
       </Container>
       <Container className={classes.container} maxWidth={false}>
         <Paper className={classes.paper} elevation={3}>
