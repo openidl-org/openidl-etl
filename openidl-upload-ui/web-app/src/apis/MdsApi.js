@@ -25,3 +25,16 @@ export async function getPresignedURL(filename) {
     console.log(error);
   }
 }
+
+export async function getUploadStatus() {
+  const path = `/uploadStatus`;
+  const body = {};
+
+  const init = { body };
+
+  try {
+    return await API.get("MDS", path, init);
+  } catch (error) {
+    console.log(error);
+  }
+}
