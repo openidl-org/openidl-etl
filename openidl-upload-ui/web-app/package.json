@@ -1,6 +1,6 @@
 {
   "name": "open-idl-test-upload-test-app",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "private": true,
   "description": "Open IDL upload test app",
   "main": "index.html",

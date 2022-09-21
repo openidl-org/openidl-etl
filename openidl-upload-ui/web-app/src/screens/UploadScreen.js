@@ -13,18 +13,59 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import Container from "@material-ui/core/Container";
 import { Button, Paper, Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
 
 const DEFAULT_TIMEOUT = 1000 * 5;
+
+const columns = [
+  { id: "name", label: "File", minWidth: 170 },
+  { id: "code", label: "Status", minWidth: 100 },
+  {
+    id: "population",
+    label: "Date",
+    minWidth: 170,
+    align: "right",
+    format: (value) => {
+      const date = new Date(value);
+      return value;
+    },
+  },
+];
+
+function createData(name, code, population) {
+  return { name, code, population };
+}
+
+const rows = [
+  createData("Test.txt", "Uploading...", new Date().toISOString()),
+  createData("Data.csv", "Failed", new Date().toISOString()),
+  createData("Foo.txt", "Uploaded", new Date().toISOString()),
+  createData("Test.csv", "Uploading...", new Date().toISOString()),
+  createData("Test.doc", "Uploaded", new Date().toISOString()),
+  createData("Test.pdf", "Uploaded", new Date().toISOString()),
+  createData("Data.pdf", "Uploaded", new Date().toISOString()),
+  createData("Data.csv", "Uploaded", new Date().toISOString()),
+  createData("Foo.pdf", "Failed", new Date().toISOString()),
+  createData("Foo.dat", "Uploaded", new Date().toISOString()),
+  createData("Test.xls", "Uploaded", new Date().toISOString()),
+  createData("Foo.xls", "Failed", new Date().toISOString()),
+  createData("Foo.txt", "Uploaded", new Date().toISOString()),
+  createData("NewFile.dat", "Uploaded", new Date().toISOString()),
+  createData("OldFile.csv", "Uploaded", new Date().toISOString()),
+];
 
 export default function BucketScreen(props) {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
-  // const { bucketId } = useParams();
-  // const [bucket, setBucket] = useState();
-  // const [bucketFiles, setBucketFiles] = useState();
-  // const [createdUser, setCreatedUser] = useState();
-  // const [updatedUser, setUpdatedUser] = useState();
   const uploadRef = useRef();
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   //used for the polling of the file status
   const timeout = useRef(DEFAULT_TIMEOUT);
@@ -39,6 +80,15 @@ export default function BucketScreen(props) {
 
     return () => clearTimeout(timer);
   }, [randomNumber]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   function handleStartLoading(turnOn) {
     if (turnOn) setLoading(true);
@@ -128,6 +178,7 @@ export default function BucketScreen(props) {
     <React.Fragment>
       <Container className={classes.container} maxWidth={false}>
         {loading && <LinearProgress />}
+        <Typography variant="h1">Upload</Typography>
       </Container>
       <Container className={classes.container} maxWidth={false}>
         <Paper className={classes.paper} elevation={3}>
@@ -145,6 +196,59 @@ export default function BucketScreen(props) {
               </Button>
             </Grid>
           </Grid>
+        </Paper>
+        <Paper className={classes.root}>
+          <TableContainer className={classes.container}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.code}
+                      >
+                        {columns.map((column) => {
+                          const value = row[column.id];
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
         </Paper>
       </Container>
 
