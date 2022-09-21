@@ -22,7 +22,8 @@ async function convertToJson(recordsText) {
     }
     let resultRecords = []
     for (outputRecord of outputRecords) {
-        console.log(outputRecord)
+        console.log('output record')
+        console.table(outputRecord)
         let resultRecord = {}
         let recordError = false
         
@@ -37,10 +38,20 @@ async function convertToJson(recordsText) {
             resultRecord.state = config.state
         }
         
-        if (outputRecord['VIN']){
-            resultRecord.vin = outputRecord['VIN']
-            resultRecord.vinHash = crypto.createHash('sha256').update(resultRecord.vin).digest('hex')
+
+        if (outputRecord['VIN Hash']){
+            resultRecord.VINHash= outputRecord['VIN Hash']
         }
+
+        if (!outputRecord['VINHash'])
+            if (!outputRecord.VIN){
+                errors.push({ 'type': 'data', 'message': 'missing "VIN"', 'record': outputRecord })
+            }
+            else {
+            
+            salt = outputRecord.VIN.substring(1,9)
+            resultRecord.VINHash = crypto.createHash('sha512',salt).update(outputRecord.VIN).digest('hex')
+            }
 
         if (outputRecord['Transaction Date']){
             resultRecord.transactionDate = outputRecord['Transaction Date']
@@ -48,14 +59,21 @@ async function convertToJson(recordsText) {
         
         if (!resultRecord.organizationID) {
             errors.push({ 'type': 'data', 'message': 'missing "Organization ID"', 'record': outputRecord })
+            console.log('error on org')
             recordError = true
         }
-        if (!resultRecord.vin) {
-            errors.push({ 'type': 'data', 'message': 'missing "VIN"', 'record': outputRecord })
-            recordError = true
-        }
+        // console.log(outputRecord.VIN)
+        if (!outputRecord.VIN) {
+            if (!outputRecord['VIN Hash'])
+                {
+                    errors.push({ 'type': 'data', 'message': 'missing "VIN/Vin Hash"', 'record': outputRecord })
+                    console.log('error on vin')
+                    recordError = true
+                }
+            }
         if (!resultRecord.transactionDate) {
             errors.push({ 'type': 'data', 'message': 'missing "Transaction Date"', 'record': outputRecord })
+            console.log('error on org')
             recordError = true
         }
 
