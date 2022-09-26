@@ -7,13 +7,8 @@ const buildPayload =
   require("../openidl-etl-success-processor/load-insurance-data").buildPayload;
 
 const config = require("./config/config.json")
-//let testPremiumRecordsText = fs.readFileSync('../../con-data/auto_6350.txt', 'utf-8')
 let testPremiumRecordsText = fs.readFileSync(config.inbound, 'utf-8')
-//let testPremiumRecordsText = fs.readFileSync("../../con-data/auto_1000.txt","utf-8");
 
-// if (testPremiumRecordsText.length > 10000){
-
-// }
 
 let jsonPremiumRecords = convertToJson(testPremiumRecordsText);
 // console.log(
