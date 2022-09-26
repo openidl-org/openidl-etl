@@ -6,39 +6,33 @@ const autoConverter =
 const buildPayload =
   require("../openidl-etl-success-processor/load-insurance-data").buildPayload;
 
-const config = require("./config/config.json")
-let testPremiumRecordsText = fs.readFileSync(config.inbound, 'utf-8')
-
+const config = require("./config/config.json");
+let testPremiumRecordsText = fs.readFileSync(config.inbound, "utf-8");
 
 let jsonPremiumRecords = convertToJson(testPremiumRecordsText);
 
 let hdsPremiumRecords = [];
-let errorRecords = []
+let errorRecords = [];
 for (let jsonPremiumRecord of jsonPremiumRecords) {
-  console.table(jsonPremiumRecord)
+  console.table(jsonPremiumRecord);
 
   let id;
-  if ("policyIdentification" in jsonPremiumRecord){id = jsonPremiumRecord.policyIdentification}
-  if ("occurrenceIdentification" in jsonPremiumRecord) {id = jsonPremiumRecord.occurrenceIdentification}
+  if ("policyIdentification" in jsonPremiumRecord) {
+    id = jsonPremiumRecord.policyIdentification;
+  }
+  if ("occurrenceIdentification" in jsonPremiumRecord) {
+    id = jsonPremiumRecord.occurrenceIdentification;
+  }
 
-  console.log('id: '+id+' transactionCode: '+jsonPremiumRecord.transactionCode)
-
+  console.log(
+    "id: " + id + " transactionCode: " + jsonPremiumRecord.transactionCode
+  );
 
   hdsPremiumRecords.push(autoConverter(jsonPremiumRecord));
-
-
 }
-console.log('hdsPremium length: '+hdsPremiumRecords.length)
+console.log("hdsPremium length: " + hdsPremiumRecords.length);
 if (hdsPremiumRecords.length > 0) {
   let premiumPayload = buildPayload(hdsPremiumRecords);
   fs.writeFileSync("../../con-data/auto.json", JSON.stringify(premiumPayload));
 }
 fs.writeFileSync("../../con-data/error.json", JSON.stringify(errorRecords));
-
-
-
-
-
-
-
-
