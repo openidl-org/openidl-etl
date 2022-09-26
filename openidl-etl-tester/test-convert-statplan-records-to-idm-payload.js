@@ -11,10 +11,7 @@ let testPremiumRecordsText = fs.readFileSync(config.inbound, 'utf-8')
 
 
 let jsonPremiumRecords = convertToJson(testPremiumRecordsText);
-// console.log(
-//   "idm converter| jsonpremium records length: " + jsonPremiumRecords.length
-// );
-//cat()
+
 let hdsPremiumRecords = [];
 let errorRecords = []
 for (let jsonPremiumRecord of jsonPremiumRecords) {
@@ -25,24 +22,11 @@ for (let jsonPremiumRecord of jsonPremiumRecords) {
   if ("occurrenceIdentification" in jsonPremiumRecord) {id = jsonPremiumRecord.occurrenceIdentification}
 
   console.log('id: '+id+' transactionCode: '+jsonPremiumRecord.transactionCode)
-  //transaction code 8,1 = premium
+
 
   hdsPremiumRecords.push(autoConverter(jsonPremiumRecord));
 
-  // if (1==1){
-       
 
-  //     try {
-            
-  //             hdsPremiumRecords.push(autoConverter(jsonPremiumRecord));
-            
-  //         } catch (error) {
-  //           //console.table(jsonPremiumRecords)
-  //           console.log("UnLogged Error on: " + jsonPremiumRecord.policyIdentification);
-  //           errorRecords.push(jsonPremiumRecord)
-  //           console.log(error);
-  //         }
-  // }
 }
 console.log('hdsPremium length: '+hdsPremiumRecords.length)
 if (hdsPremiumRecords.length > 0) {
@@ -58,15 +42,3 @@ fs.writeFileSync("../../con-data/error.json", JSON.stringify(errorRecords));
 
 
 
-
-//fs.writeFileSync('./test/idmPremiumRecords.json', JSON.stringify(premiumPayload))
-// let testLossRecordsText = fs.readFileSync('./test/PA_Loss_Output_v1.1.txt', 'utf-8')
-// let jsonLossRecords = convertToJson(testLossRecordsText)
-// let hdsLossRecords = []
-// for (jsonLossRecord of jsonLossRecords) {
-//     hdsLossRecords.push(autoConverter(jsonLossRecord))
-// }
-
-// let lossPayload = buildPayload(hdsLossRecords)
-
-// fs.writeFileSync('./test/idmLossRecords.json', JSON.stringify(lossPayload))
