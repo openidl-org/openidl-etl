@@ -41,11 +41,14 @@ function hashString(text) {
 }
 
 function convertAccountingDate(dateString) {
-  return `202${dateString.substring(2, 3)}-${dateString.substring(0, 2)}-15`;
+  //return `202${dateString.substring(2, 3)}-${dateString.substring(0, 2)}-15`; //correct
+  return `200${dateString.substring(2, 3)}-${dateString.substring(0, 2)}-15`; //for old export
 }
 
 function convertAccidentDate(dateString) {
   let year = parseInt(dateString.substring(2, 4)) + 2000;
+  //console.log(dateString)
+  
   let thisYear = new Date().getFullYear();
   let century = thisYear < year ? "19" : "20";
   return `${century}${dateString.substring(2, 4)}-${dateString.substring(
@@ -119,7 +122,7 @@ function addTerm(datestr, term){
 
 
 
-	let rv_string = rv_year+'-'+rv_month+'-25'
+	let rv_string = rv_year+'-'+rv_month+'-15'
 	console.log(datestr+' term: '+term+' new date:'+rv_string)
 	return rv_string
 	
@@ -166,6 +169,7 @@ module.exports.converter = function (jsonRecord) {
   if (jsonRecord.transactionCode.trim()) {
     if (convertedRecord.RecordType === "Premium") {
       policy.PremiumAmount = convertStringToFloat(jsonRecord.premiumAmount);
+      coverage.MonthlyPremiumAmount = parseFloat((policy.PremiumAmount / jsonRecord.monthsCovered).toFixed(4))
     } else {
       claim.LossAmount = convertStringToFloat(jsonRecord.lossAmount);
     }
@@ -215,19 +219,26 @@ module.exports.converter = function (jsonRecord) {
   vehicle.VehiclePerformance = jsonRecord.vehiclePerformance.trim()
     ? vehiclePerformanceCodes[jsonRecord.vehiclePerformance]
     : NOT_PROVIDED;
-  driver.DriversTraining =
-    jsonRecord.privatePassengerDriversTrainingGoodStudent.trim()
-      ? privatePassengerDriversTrainingGoodStudentCodes[
-          jsonRecord.privatePassengerDriversTrainingGoodStudent
-        ].driversTraining
-      : NOT_PROVIDED;
-  driver.GoodStudentDiscount =
-    jsonRecord.privatePassengerDriversTrainingGoodStudent.trim()
-      ? privatePassengerDriversTrainingGoodStudentCodes[
-          jsonRecord.privatePassengerDriversTrainingGoodStudent
-        ].goodStudentDiscount
-      : NOT_PROVIDED;
-  driver.PenaltyPoints = jsonRecord.privatePassengerPenaltyPoints.trim()
+  console.log('good student: '+jsonRecord.privatePassengerDriversTrainingGoodStudent.trim())
+  try {
+    console.log('try')
+    let tmpCode=jsonRecord.privatePassengerDriversTrainingGoodStudent.trim()
+    driver.DriversTraining = privatePassengerDriversTrainingGoodStudentCodes[tempCode].driversTraining
+  
+  }
+  catch {driver.DriversTraining = "No"}
+
+  try {
+    let tempCode=jsonRecord.privatePassengerDriversTrainingGoodStudent.trim()
+    driver.GoodStudentDiscount=privatePassengerDriversTrainingGoodStudentCodes[tempCode].goodStudentDiscount
+  }
+
+  catch {
+    driver.GoodStudentDiscount = "No"
+  }
+
+  
+      driver.PenaltyPoints = jsonRecord.privatePassengerPenaltyPoints.trim()
     ? penaltyPointsCodes[jsonRecord.privatePassengerPenaltyPoints]
     : NOT_PROVIDED;
   let liabilityLimitState = liabilityLimitCodes.state[policy.State];
@@ -240,6 +251,7 @@ module.exports.converter = function (jsonRecord) {
   }
 
   coverage.DeductibleAmount = deductibleCodes[jsonRecord.deductibleAmount];
+  coverage.DeductibleCode = jsonRecord.deductibleAmount
   policy.EffectiveDate = convertDate(jsonRecord.effectiveDate);
   policy.ExpirationDate = convertDate(jsonRecord.expirationDate);
   vehicle.BodyStyle = vehicleClassCodes.bodyStyle[jsonRecord.bodyStyle];
@@ -257,7 +269,7 @@ module.exports.converter = function (jsonRecord) {
     let multiplier =  numberTypeCodes[jsonRecord.exposure.slice(-1)].multiplier
     let recordLead = parseInt(jsonRecord.exposure.slice(0,-1))
     if (!recordLead==0){
-      coverage.Exposure = parsInt(recordLead.toString()+(digit * multiplier).toString())
+      coverage.Exposure = parseInt(recordLead.toString()+(digit * multiplier).toString())
     } else{
       coverage.Exposure = digit * multiplier
     }
@@ -284,9 +296,9 @@ module.exports.converter = function (jsonRecord) {
   
     } if(jsonRecord.occurrenceIdentification) {
     claim.ClaimCount = parseInt(jsonRecord.claimCount);
-    claim.CauseOfLoss =
-      causeOfLossCodes.coverage[jsonRecord.coverage][jsonRecord.causeOfLoss];
+    claim.CauseOfLoss = causeOfLossCodes.coverage[jsonRecord.coverage][jsonRecord.causeOfLoss];
     claim.AccidentDate = convertAccidentDate(jsonRecord.accidentDate);
+    
     claim.OccurrenceIdentifier = jsonRecord.occurrenceIdentification.trim();
     claim.ClaimIdentifier = jsonRecord.claimIdentifier.trim();
     try {
