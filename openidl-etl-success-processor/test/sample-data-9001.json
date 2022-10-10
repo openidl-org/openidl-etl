@@ -3,36 +3,47 @@
     "vin": "12345678901234567",
     "transactionDate": "2022-06-01",
     "effectiveDate": "2022-06-01",
-    "expirationDate": "2022-07-01"
+    "expirationDate": "2022-07-01",
+    "transactionMonth": "2022-06"
   },
   {
     "vin": "12345678901234568",
+    "vinHash": "BBBBB",
     "transactionDate": "2022-06-21",
     "effectiveDate": "2022-06-01",
-    "expirationDate": "2022-07-21"
+    "expirationDate": "2022-07-21",
+    "transactionMonth": "2022-06"
   },
   {
     "vin": "12345678901234569",
+    "vinHash": "CCCCC",
     "transactionDate": "2022-06-21",
     "effectiveDate": "2022-05-21",
-    "expirationDate": "2022-07-04"
+    "expirationDate": "2022-07-04",
+    "transactionMonth": "2022-06"
   },
   {
     "vin": "1234567890123456A",
+    "vinHash": "DDDDD",
     "transactionDate": "2022-06-21",
     "effectiveDate": "2022-06-01",
-    "expirationDate": "2022-06-02"
+    "expirationDate": "2022-06-02",
+    "transactionMonth": "2022-06"
   },
   {
     "vin": "1234567890123456B",
+    "vinHash": "EEEEE",
     "transactionDate": "2022-06-30",
     "effectiveDate": "2022-06-30",
-    "expirationDate": "2022-07-30"
+    "expirationDate": "2022-07-30",
+    "transactionMonth": "2022-06"
   },
   {
     "vin": "1234567890123456C",
+    "vinHash": "AAAAA",
     "transactionDate": "2022-08-31",
     "effectiveDate": "2022-08-31",
-    "expirationDate": "2022-09-30"
+    "expirationDate": "2022-09-30",
+    "transactionMonth": "2022-06"
   }
 ]
