@@ -1,16 +1,24 @@
 {
-    "username": "email address",
-    "password": "password",
+    "Dynamo": { 
+        "etlControlTable": "<control-table-name>" 
+    },
+    "sns": {
+      "successETLARN": "<success etl topic arn>",
+      "failureETLARN": "<failure etl topic arn>"
+    },
+    "username": "<email address>",
+    "password": "<password>",
     "batchId": "1",
     "chunkId": "1",
     "sourceId": "1",
     "carrierId": "<org id>",
+    "region": "<region>",
     "carrier": {
         "utilities": {
-            "url": "utilities-service.dev.<subdomain>.<domain>"
+            "url": "<utilities-service.dev.<subdomain>.<domain>>"
         },
         "insurance-data-manager": {
-            "url": "insurance-data-manager-service.dev.<subdomain>.<domain>"
+            "url": "<insurance-data-manager-service.dev.<subdomain>.<domain>>"
         }
     }
 }

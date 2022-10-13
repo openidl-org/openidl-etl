@@ -2,11 +2,12 @@
 
 const AWSXRay = require("aws-xray-sdk-core");
 const AWS = AWSXRay.captureAWS(require("aws-sdk"));
-
+AWS.config.update({region: process.env.REGION});
 const validator = require("./helpers/validators");
 const responders = require("./helpers/responders");
-
-const s3 = new AWS.S3();
+const region = process.env.REGION;
+const ep = new AWS.Endpoint('https://s3.'+region+'.amazonaws.com');
+const s3 = new AWS.S3({endpoint: ep});
 
 /**
  * @since 1.0.0
@@ -43,7 +44,7 @@ exports.handler = async (event, context, callback) => {
       //https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
       Conditions: [
         ["content-length-range", 1, 5 * 1024 * 1000 * 1000], // 1 byte - 5GB
-        ["starts-with", "$Content-Type", "text/plain"],
+        ["starts-with", "$Content-Type", "text/csv"],
         ["eq", "$key", objectKey],
         ["eq", "$x-amz-meta-filename", body.filename],
       ],

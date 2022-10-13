@@ -49,9 +49,9 @@ async function convertToJson(recordsText) {
           record: outputRecord,
         });
       } else {
-        salt = outputRecord.VIN.substring(1, 9);
+        
         resultRecord.VINHash = crypto
-          .createHash("sha512", salt)
+          .createHash("sha256")
           .update(outputRecord.VIN)
           .digest("hex");
       }
