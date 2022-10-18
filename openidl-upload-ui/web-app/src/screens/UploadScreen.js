@@ -177,10 +177,6 @@ export default function BucketScreen(props) {
   return (
     <React.Fragment>
       <Container className={classes.container} maxWidth={false}>
-        {loading && <LinearProgress />}
-        <Typography variant="h1">Upload</Typography>
-      </Container>
-      <Container className={classes.container} maxWidth={false}>
         <Paper className={classes.paper} elevation={3}>
           <Grid container justify="space-between" alignItems="center">
             <Grid item>
