@@ -9,6 +9,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import SearchIcon from "@material-ui/icons/Search";
 import UploadIcon from "@material-ui/icons/Publish";
 import MenuIcon from "@material-ui/icons/Menu";
+import SignOutIcon from "@material-ui/icons/ExitToApp";
 
 export default function NavigationBar(props) {
   const classes = useStyles();
@@ -79,10 +80,21 @@ export default function NavigationBar(props) {
                 component={RouterLink}
                 to="/upload"
                 onClick={handleClose}
+                divider={true}
               >
                 <UploadIcon color="primary"></UploadIcon>
                 <Typography color="primary" className={classes.menuTitle}>
                   Upload
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleSignOut}>
+                <SignOutIcon></SignOutIcon>
+                <Typography
+                  color="secondary"
+                  data-test="signOut"
+                  className={classes.menuTitle}
+                >
+                  Sign Out
                 </Typography>
               </MenuItem>
             </Menu>
