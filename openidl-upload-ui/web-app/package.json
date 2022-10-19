@@ -1,6 +1,6 @@
 {
   "name": "open-idl-test-upload-test-app",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "private": true,
   "description": "Open IDL upload test app",
   "main": "index.html",
@@ -8,7 +8,8 @@
     "email": "softwaredevelopment@aaisonline.com"
   },
   "scripts": {
-    "start": "react-scripts start"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "author": {
     "name": "AAIS Development Team",
