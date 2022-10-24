@@ -2,12 +2,10 @@
 
 const AWSXRay = require("aws-xray-sdk-core");
 const AWS = AWSXRay.captureAWS(require("aws-sdk"));
-AWS.config.update({region: process.env.REGION});
 const validator = require("./helpers/validators");
 const responders = require("./helpers/responders");
-const region = process.env.REGION;
-const ep = new AWS.Endpoint('https://s3.'+region+'.amazonaws.com');
-const s3 = new AWS.S3({endpoint: ep});
+
+const s3 = new AWS.S3();
 
 /**
  * @since 1.0.0
