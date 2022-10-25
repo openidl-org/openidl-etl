@@ -112,13 +112,17 @@ function addTerm(datestr, term){
 	let date = makeDate(datestr)
 	let rv_date = addMonths(date, term)
 	let rv_year = rv_date.getFullYear()
-	let rv_month = rv_date.getMonth() +2
+	let rv_month = rv_date.getMonth()+1
 	if (rv_month < 10){
 		rv_month= '0'+rv_month.toString()
 	}
+  if (rv_month ==13){
+    rv_month = -1
+  }
 	if (rv_month =='00'){
 		rv_month = '01'
 	}
+  
 
 
 
@@ -237,7 +241,7 @@ module.exports.converter = function (jsonRecord) {
     driver.GoodStudentDiscount = "No"
   }
 
-  
+      driver.PenaltyPointsCode = jsonRecord.privatePassengerPenaltyPoints
       driver.PenaltyPoints = jsonRecord.privatePassengerPenaltyPoints.trim()
     ? penaltyPointsCodes[jsonRecord.privatePassengerPenaltyPoints]
     : NOT_PROVIDED;
