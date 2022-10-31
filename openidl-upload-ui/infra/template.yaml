@@ -4,6 +4,8 @@ Transform: "AWS::Serverless-2016-10-31"
 Parameters:
   YourEmail:
     Type: String
+  ControlTable:
+    Type: String
 
 Globals:
   Function:
@@ -80,10 +82,10 @@ Resources:
           CognitoAuthorizer:
             UserPoolArn: !GetAtt "UserPool.Arn"
 
-  LambdaFunction:
+  GetSignedUrlFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Description: Handles the basic request
+      Description: Gets a signed URL for upload to S3
       Handler: src/getSignedUrl.handler
       Policies:
         - S3FullAccessPolicy:
@@ -99,6 +101,28 @@ Resources:
             Path: "/getSignedUrl"
             RestApiId: !Ref ServiceApi
             Method: post
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  GetControlTableContents:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Gets The contents of the DynamoDb
+      Handler: src/control-table/read.handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: 
+              !Ref ControlTable
+      Environment:
+        Variables:
+          ETL_CONTROL_TABLE: !Ref ControlTable
+      Events:
+        Get:
+          Type: Api
+          Properties:
+            Path: "/control-table"
+            RestApiId: !Ref ServiceApi
+            Method: get
             Auth:
               Authorizer: CognitoAuthorizer
 
