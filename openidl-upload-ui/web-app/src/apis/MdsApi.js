@@ -7,7 +7,7 @@
  * @public
  */
 
-import { API } from "aws-amplify";
+import Amplify, { Auth, API } from "aws-amplify";
 
 export async function getPresignedURL(filename) {
   if (!filename) throw Error("filename is required");
@@ -27,14 +27,60 @@ export async function getPresignedURL(filename) {
 }
 
 export async function getUploadStatus() {
-  const path = `/uploadStatus`;
+  const path = `/control-table`;
   const body = {};
 
   const init = { body };
 
   try {
-    return await API.get("MDS", path, init);
+    await API.get("MDS", path, init);
   } catch (error) {
     console.log(error);
+  }
+}
+
+/**
+ * Gets the user token and stores it for future calls
+ * @returns jwt token
+ */
+export async function getUserToken() {
+  const path = `/app-user-login`;
+
+  const username = prompt("username");
+  const password = prompt("password");
+
+  const body = {
+    username,
+    password,
+  };
+
+  const init = { body };
+
+  try {
+    const token = (await API.post("IDL_UTIL", path, init)).result.userToken;
+    localStorage.setItem("userToken", token);
+    return token;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getDataByCriteria(orgId, month) {
+  const path = `/get-insurance-data-by-criteria?organizationId=${orgId}&transactionMonth=${month}`;
+
+  const body = {};
+
+  const init = {
+    body,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+    },
+  };
+
+  try {
+    return await API.get("IDL_IDM", path, init);
+  } catch (error) {
+    console.log(error);
+    getUserToken();
   }
 }
