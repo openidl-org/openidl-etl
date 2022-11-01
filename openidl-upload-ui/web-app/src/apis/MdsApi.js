@@ -33,7 +33,7 @@ export async function getUploadStatus() {
   const init = { body };
 
   try {
-    await API.get("MDS", path, init);
+    return await API.get("MDS", path, init);
   } catch (error) {
     console.log(error);
   }
