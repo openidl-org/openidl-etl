@@ -5,6 +5,7 @@ import { AaisTheme } from "./styles/AaisTheme";
 import { AmplifyTheme } from "./styles/AmplifyTheme";
 import { AmplifySignUpConfig } from "./config/AmplifySignupConfig";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
+import NavigationBar from "./components/NavigationBar";
 
 import UploadScreen from "./screens/UploadScreen";
 import SearchScreen from "./screens/SearchScreen";
@@ -14,6 +15,7 @@ function App(props) {
   return (
     <MuiThemeProvider theme={createMuiTheme(AaisTheme)}>
       <HashRouter>
+        <NavigationBar />
         <Switch>
           <Route exact path="/">
             <Redirect to="/search" component={SearchScreen} />

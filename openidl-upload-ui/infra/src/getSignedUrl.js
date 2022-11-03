@@ -2,7 +2,6 @@
 
 const AWSXRay = require("aws-xray-sdk-core");
 const AWS = AWSXRay.captureAWS(require("aws-sdk"));
-
 const validator = require("./helpers/validators");
 const responders = require("./helpers/responders");
 
@@ -43,7 +42,7 @@ exports.handler = async (event, context, callback) => {
       //https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
       Conditions: [
         ["content-length-range", 1, 5 * 1024 * 1000 * 1000], // 1 byte - 5GB
-        ["starts-with", "$Content-Type", "text/plain"],
+        ["starts-with", "$Content-Type", "text/csv"],
         ["eq", "$key", objectKey],
         ["eq", "$x-amz-meta-filename", body.filename],
       ],

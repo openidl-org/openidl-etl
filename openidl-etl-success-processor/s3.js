@@ -1,6 +1,6 @@
 const config = require("./config/config.json");
 var aws = require("aws-sdk");
-aws.config.update({ region: "us-east-2" });
+aws.config.update({ region: config.region });
 const s3 = new aws.S3({ apiVersion: "2006-03-01" });
 const ddb = new aws.DynamoDB({ apiVersion: "2012-08-10" });
 

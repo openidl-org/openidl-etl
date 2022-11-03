@@ -1,9 +1,9 @@
 /**
- * @description This is the Bucket detailes and record files screen.
+ * @description This checks the progress of the upload and allows uploading of
+ * files
  * @author Findlay Clarke <findlayc@aaisonline.com>
- * @author Reza Khazali <rezak@aaisonline.com>
  * @since 1.0.0
- * @module screens/BucketScreen
+ * @module screens/UploadScreen
  */
 import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,48 +24,21 @@ import TableRow from "@material-ui/core/TableRow";
 const DEFAULT_TIMEOUT = 1000 * 5;
 
 const columns = [
-  { id: "name", label: "File", minWidth: 170 },
-  { id: "code", label: "Status", minWidth: 100 },
+  { id: "SubmissionFileName", label: "Submission File Name", minWidth: 170 },
+  { id: "IDMLoaderStatus", label: "IDM Loader Status", minWidth: 100 },
   {
-    id: "population",
-    label: "Date",
-    minWidth: 170,
-    align: "right",
-    format: (value) => {
-      const date = new Date(value);
-      return value;
-    },
+    id: "InstakeStatus",
+    label: "Instake Status",
   },
 ];
 
-function createData(name, code, population) {
-  return { name, code, population };
-}
-
-const rows = [
-  createData("Test.txt", "Uploading...", new Date().toISOString()),
-  createData("Data.csv", "Failed", new Date().toISOString()),
-  createData("Foo.txt", "Uploaded", new Date().toISOString()),
-  createData("Test.csv", "Uploading...", new Date().toISOString()),
-  createData("Test.doc", "Uploaded", new Date().toISOString()),
-  createData("Test.pdf", "Uploaded", new Date().toISOString()),
-  createData("Data.pdf", "Uploaded", new Date().toISOString()),
-  createData("Data.csv", "Uploaded", new Date().toISOString()),
-  createData("Foo.pdf", "Failed", new Date().toISOString()),
-  createData("Foo.dat", "Uploaded", new Date().toISOString()),
-  createData("Test.xls", "Uploaded", new Date().toISOString()),
-  createData("Foo.xls", "Failed", new Date().toISOString()),
-  createData("Foo.txt", "Uploaded", new Date().toISOString()),
-  createData("NewFile.dat", "Uploaded", new Date().toISOString()),
-  createData("OldFile.csv", "Uploaded", new Date().toISOString()),
-];
-
-export default function BucketScreen(props) {
+export default function UploadScreen(props) {
   const classes = useStyles();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const uploadRef = useRef();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [results, setResults] = useState([]);
 
   //used for the polling of the file status
   const timeout = useRef(DEFAULT_TIMEOUT);
@@ -75,11 +48,18 @@ export default function BucketScreen(props) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setRandomNumber(Math.random());
-      // getBucketFiles();
+      getResults();
     }, timeout.current);
 
     return () => clearTimeout(timer);
   }, [randomNumber]);
+
+  async function getResults() {
+    setLoading(true);
+    const data = await MdsApi.getUploadStatus();
+    setResults(data);
+    setLoading(false);
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -177,10 +157,6 @@ export default function BucketScreen(props) {
   return (
     <React.Fragment>
       <Container className={classes.container} maxWidth={false}>
-        {loading && <LinearProgress />}
-        <Typography variant="h1">Upload</Typography>
-      </Container>
-      <Container className={classes.container} maxWidth={false}>
         <Paper className={classes.paper} elevation={3}>
           <Grid container justify="space-between" alignItems="center">
             <Grid item>
@@ -199,6 +175,7 @@ export default function BucketScreen(props) {
         </Paper>
         <Paper className={classes.root}>
           <TableContainer className={classes.container}>
+            {loading && <LinearProgress />}
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -214,7 +191,7 @@ export default function BucketScreen(props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
+                {results
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => {
                     return (
@@ -222,7 +199,7 @@ export default function BucketScreen(props) {
                         hover
                         role="checkbox"
                         tabIndex={-1}
-                        key={row.code}
+                        key={row.SubmissionFileName}
                       >
                         {columns.map((column) => {
                           const value = row[column.id];
@@ -243,7 +220,7 @@ export default function BucketScreen(props) {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
-            count={rows.length}
+            count={results.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}
