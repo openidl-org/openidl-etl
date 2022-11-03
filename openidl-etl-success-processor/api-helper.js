@@ -35,7 +35,7 @@ module.exports.login = async (baseURL, username, password) => {
 }
 
 module.exports.buildURL = (config, nodeName, service) => {
-    return `http://${config[nodeName][service].url}/`
+    return `https://${config[nodeName][service].url}/`
 
 }
 
