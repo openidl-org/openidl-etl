@@ -27,8 +27,8 @@ const columns = [
   { id: "SubmissionFileName", label: "Submission File Name", minWidth: 170 },
   { id: "IDMLoaderStatus", label: "IDM Loader Status", minWidth: 100 },
   {
-    id: "InstakeStatus",
-    label: "Instake Status",
+    id: "IntakeStatus",
+    label: "Intake Status",
   },
 ];
 
