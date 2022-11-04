@@ -6,7 +6,6 @@
  */
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useParams } from "react-router-dom";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
@@ -20,41 +19,34 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import * as IDLApi from "../apis/MdsApi";
+import LoginDialog from "../components/LoginDialog";
 
 const columns = [
-  { id: "organizationId", label: "Org ID", minWidth: 100 },
+  { id: "organizationID", label: "Org ID", minWidth: 100 },
   {
-    id: "VIN",
-    label: "VIN",
+    id: "VINHash",
+    label: "VINHash",
     minWidth: 170,
   },
   {
-    id: "VinHash",
-    label: "Vin Hash",
-    align: "right",
-  },
-  {
-    id: "State",
+    id: "state",
     label: "State",
   },
   {
-    id: "Transaction Date",
+    id: "transactionDate",
     label: "Transaction Date",
-  },
-  {
-    id: "transactionMonth",
-    label: "Trasaction Month",
   },
 ];
 
-export default function BucketScreen(props) {
+export default function SearchScreen(props) {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [orgId, setOrgId] = useState("");
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [results, setResults] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -71,13 +63,22 @@ export default function BucketScreen(props) {
       return;
     }
     setLoading(true);
-    const data = await IDLApi.getDataByCriteria(orgId, searchTerm);
-    setResults(data?.result);
-    setLoading(false);
+    try {
+      const data = await IDLApi.getDataByCriteria(orgId, searchTerm);
+      setResults(data?.result);
+    } catch (error) {
+      console.log(error);
+      setShowModal(true);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <React.Fragment>
+      {showModal && (
+        <LoginDialog handleClose={() => setShowModal(false)}></LoginDialog>
+      )}
       <Container className={classes.container} maxWidth={false}>
         {loading && <LinearProgress />}
       </Container>
