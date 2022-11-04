@@ -39,7 +39,7 @@ export default function NavigationBar(props) {
             aria-label="Menu"
             data-test="AAISlogo"
           >
-            <img src="/aais-logo-with-letters-32.png" alt="Home" />
+            <img src="/open-idl-with-letters-32.png" alt="Home" />
           </IconButton>
           <div className={classes.grow} />
           <React.Fragment>

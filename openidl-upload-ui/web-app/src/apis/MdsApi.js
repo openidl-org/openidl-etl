@@ -43,11 +43,8 @@ export async function getUploadStatus() {
  * Gets the user token and stores it for future calls
  * @returns jwt token
  */
-export async function getUserToken() {
+export async function getUserToken(username, password) {
   const path = `/app-user-login`;
-
-  const username = prompt("username");
-  const password = prompt("password");
 
   const body = {
     username,
@@ -81,6 +78,6 @@ export async function getDataByCriteria(orgId, month) {
     return await API.get("IDL_IDM", path, init);
   } catch (error) {
     console.log(error);
-    getUserToken();
+    throw new Error("Token Expired");
   }
 }
