@@ -25,13 +25,6 @@ Amplify.configure({
         name: "IDL_UTIL",
         region: process.env.REACT_APP_AMPLIFY_IDL_UTIL_API_ENDPOINT_REGION,
         endpoint: process.env.REACT_APP_AMPLIFY_IDL_UTIL_API_ENDPOINT_MDS_URL,
-        custom_header: async () => {
-          return {
-            Authorization: `Bearer ${
-              (await Auth.currentSession()).idToken.jwtToken
-            }`,
-          };
-        },
       },
       {
         name: "IDL_IDM",
