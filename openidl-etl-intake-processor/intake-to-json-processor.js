@@ -41,7 +41,7 @@ async function convertToJson(recordsText) {
       resultRecord.VINHash = outputRecord["VIN Hash"];
     }
 
-    if (!outputRecord["VINHash"]) {
+    if (!outputRecord["VINHash"])
       if (!outputRecord.VIN) {
         errors.push({
           type: "data",
@@ -56,56 +56,56 @@ async function convertToJson(recordsText) {
           .digest("hex");
       }
 
-      if (outputRecord["VIN"]) {
-        resultRecord.VIN = outputRecord.VIN
-      }
+    if (outputRecord["VIN"]) {
+      resultRecord.VIN = outputRecord.VIN
+    }
 
-      if (outputRecord["Transaction Date"]) {
-        resultRecord.transactionDate = outputRecord["Transaction Date"];
-      }
+    if (outputRecord["Transaction Date"]) {
+      resultRecord.transactionDate = outputRecord["Transaction Date"];
+    }
 
-      if (!resultRecord.organizationID) {
+    if (!resultRecord.organizationID) {
+      errors.push({
+        type: "data",
+        message: 'missing "Organization ID"',
+        record: outputRecord,
+      });
+      console.log("error on org");
+      recordError = true;
+    }
+    // console.log(outputRecord.VIN)
+    if (!outputRecord.VIN) {
+      if (!outputRecord["VIN Hash"]) {
         errors.push({
           type: "data",
-          message: 'missing "Organization ID"',
+          message: 'missing "VIN/Vin Hash"',
           record: outputRecord,
         });
-        console.log("error on org");
+        console.log("error on vin");
         recordError = true;
       }
-      // console.log(outputRecord.VIN)
-      if (!outputRecord.VIN) {
-        if (!outputRecord["VIN Hash"]) {
-          errors.push({
-            type: "data",
-            message: 'missing "VIN/Vin Hash"',
-            record: outputRecord,
-          });
-          console.log("error on vin");
-          recordError = true;
-        }
-      }
-      if (!resultRecord.transactionDate) {
-        errors.push({
-          type: "data",
-          message: 'missing "Transaction Date"',
-          record: outputRecord,
-        });
-        console.log("error on org");
-        recordError = true;
-      }
+    }
+    if (!resultRecord.transactionDate) {
+      errors.push({
+        type: "data",
+        message: 'missing "Transaction Date"',
+        record: outputRecord,
+      });
+      console.log("error on org");
+      recordError = true;
+    }
 
-      console.log("result: ");
-      console.table(resultRecord);
-      // console.log('errors')
-      // console.log(errors)
-      console.log("record error: " + recordError);
-      if (!recordError) resultRecords.push(resultRecord);
-    }
-    if (errors.length > 0) {
-      return { valid: false, errors: errors };
-    }
-    return { valid: true, records: resultRecords };
+    console.log("result: ");
+    console.table(resultRecord);
+    // console.log('errors')
+    // console.log(errors)
+    console.log("record error: " + recordError);
+    if (!recordError) resultRecords.push(resultRecord);
   }
+  if (errors.length > 0) {
+    return { valid: false, errors: errors };
+  }
+  return { valid: true, records: resultRecords };
+}
 
-  module.exports.convertToJson = convertToJson;
+module.exports.convertToJson = convertToJson;
