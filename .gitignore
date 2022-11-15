@@ -20,3 +20,4 @@ openidl-etl-tester/test/idmPremiumRecords.json
 openidl-etl-intake-processor/intake-processor.zip
 openidl-etl-intake-processor/test/testS3Event.json
 openidl-etl-intake-processor/config/config copy.json
+openidl-etl-staging-processor/.settings

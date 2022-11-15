@@ -55,6 +55,10 @@ async function convertToJson(recordsText) {
           .digest("hex");
       }
 
+    if (outputRecord["VIN"]) {
+      resultRecord.VIN = outputRecord.VIN
+    }
+
     if (outputRecord["Transaction Date"]) {
       resultRecord.transactionDate = outputRecord["Transaction Date"];
     }
