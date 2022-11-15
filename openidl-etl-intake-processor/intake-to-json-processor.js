@@ -74,7 +74,7 @@ async function convertToJson(recordsText) {
     }
     // console.log(outputRecord.VIN)
     if (!outputRecord.VIN) {
-      if (!outputRecord["VIN Hash"]) {
+      if (!resultRecord["VINHash"]) {
         errors.push({
           type: "data",
           message: 'missing "VIN/Vin Hash"',
