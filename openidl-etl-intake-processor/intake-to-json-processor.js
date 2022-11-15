@@ -41,7 +41,7 @@ async function convertToJson(recordsText) {
       resultRecord.VINHash = outputRecord["VIN Hash"];
     }
 
-    if (!outputRecord["VINHash"])
+    if (!outputRecord["VIN Hash"])
       if (!outputRecord.VIN) {
         errors.push({
           type: "data",
@@ -49,7 +49,6 @@ async function convertToJson(recordsText) {
           record: outputRecord,
         });
       } else {
-        
         resultRecord.VINHash = crypto
           .createHash("sha256")
           .update(outputRecord.VIN)
@@ -78,6 +77,7 @@ async function convertToJson(recordsText) {
           record: outputRecord,
         });
         console.log("error on vin");
+        console.log(outputRecord)
         recordError = true;
       }
     }
