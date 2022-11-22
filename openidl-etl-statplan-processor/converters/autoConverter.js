@@ -214,9 +214,9 @@ module.exports.converter = function (jsonRecord) {
   vehicle.VehiclePerformance = jsonRecord.vehiclePerformance.trim()
     ? vehiclePerformanceCodes[jsonRecord.vehiclePerformance]
     : NOT_PROVIDED;
-  console.log('good student: '+jsonRecord.privatePassengerDriversTrainingGoodStudent.trim())
+
   try {
-    console.log('try')
+
     let tmpCode=jsonRecord.privatePassengerDriversTrainingGoodStudent.trim()
     driver.DriversTraining = privatePassengerDriversTrainingGoodStudentCodes[tempCode].driversTraining
   
