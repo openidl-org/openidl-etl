@@ -16,7 +16,7 @@
         },
         "accountingDate": {
             "name": "accountingDate",
-            "type": "string",
+            "type": "date",
             "start": 2,
             "length": 3
         },
@@ -118,12 +118,6 @@
         },
         "premiumAmount": {
             "name": "premiumAmount",
-            "type": "number",
-            "start": 16,
-            "length": 10
-        },
-        "lossAmount": {
-            "name": "lossAmount",
             "type": "number",
             "start": 16,
             "length": 10
@@ -414,36 +408,11 @@
             "start": 43,
             "length": 5
         },
-        "claimCount": {
-            "name": "claimCount",
-            "type": "string",
-            "start": 43,
-            "length": 5
-        },
         "monthsCovered": {
             "name": "monthsCovered",
             "type": "string",
             "start": 48,
             "length": 2
-        },
-        "causeOfLoss": {
-            "name": "causeOfLoss",
-            "type": "string",
-            "start": 48,
-            "length": 1,
-            "enum": [
-                " ",
-                "0",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9"
-            ]
         },
         "terrorismIndicator": {
             "name": "terrorismIndicator",
@@ -503,18 +472,6 @@
             "type": "string",
             "start": 65,
             "length": 14
-        },
-        "occurrenceIdentification": {
-            "name": "occurrenceIdentification",
-            "type": "string",
-            "start": 65,
-            "length": 12
-        },
-        "claimIdentifier": {
-            "name": "claimIdentifier",
-            "type": "string",
-            "start": 77,
-            "length": 2
         },
         "ncProgramEnhancementIndicator": {
             "name": "ncProgramEnhancementIndicator",
