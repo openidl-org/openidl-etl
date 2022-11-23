@@ -68,10 +68,6 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema, lossSchema) {
       var end = start + field.length;
       var type = field.type;
       var acted = false;
-      // if (type == 'date') {
-      //   console.log('type: '+type)
-      // }
-
 
       // checks to make sure the field key exists, prevents out of bounds
       // error on parsing
