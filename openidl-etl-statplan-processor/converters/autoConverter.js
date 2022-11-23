@@ -47,8 +47,7 @@ function convertAccountingDate(dateString) {
 
 function convertAccidentDate(dateString) {
   let year = parseInt(dateString.substring(2, 4)) + 2000;
-  //console.log(dateString)
-  
+
   let thisYear = new Date().getFullYear();
   let century = thisYear < year ? "19" : "20";
   return `${century}${dateString.substring(2, 4)}-${dateString.substring(
@@ -93,36 +92,33 @@ function decodeStateException(outputObject, inputRecord, exceptionName, state) {
 }
 function addMonths(date, months) {
   //var d = date.getDate();
-  date.setMonth(date.getMonth() +months);
-date.setDate(date.getDay() -2 )
+  date.setMonth(date.getMonth() + months);
+  date.setDate(date.getDay() - 2);
   return date;
 }
 
-function makeDate(datestr){
-  console.log(datestr)
-	let date_array = datestr.split("-")
-	let year = parseInt(date_array[0])
-	let month = parseInt(date_array[1])-1 //make date is zero indexed
-	let day = parseInt(date_array[2])
-	let date = new Date (year, month, day)
-	return date
+function makeDate(datestr) {
+  let date_array = datestr.split("-");
+  let year = parseInt(date_array[0]);
+  let month = parseInt(date_array[1]) - 1; //make date is zero indexed
+  let day = parseInt(date_array[2]);
+  let date = new Date(year, month, day);
+  return date;
 }
 
-function addTerm(accountingDate, term){
-  let accountingArray=accountingDate.split('-')
-  let month = parseInt(accountingArray[1])
-  let newMonth = month+term
-  let newYear = parseInt(accountingArray[0])
-  if (newMonth > 12){
-    newMonth-=12
-    newYear+=1
+function addTerm(accountingDate, term) {
+  let accountingArray = accountingDate.split("-");
+  let month = parseInt(accountingArray[1]);
+  let newMonth = month + term;
+  let newYear = parseInt(accountingArray[0]);
+  if (newMonth > 12) {
+    newMonth -= 12;
+    newYear += 1;
   }
-  let newDate = `${newYear}-${newMonth}-15`
+  let newDate = `${newYear}-${newMonth}-15`;
 
-	return newDate
-	
+  return newDate;
 }
-
 
 module.exports.converter = function (jsonRecord) {
   let convertedRecord = {
@@ -132,8 +128,7 @@ module.exports.converter = function (jsonRecord) {
     Vehicle: {},
     Claim: {},
   };
-  //console.log('auto converter record')
-  console.table(jsonRecord)
+
   let policy = convertedRecord.Policy;
   let claim = convertedRecord.Claim;
   let coverage = convertedRecord.Coverage;
@@ -141,6 +136,7 @@ module.exports.converter = function (jsonRecord) {
   let vehicle = convertedRecord.Vehicle;
   convertedRecord.createdTime = new Date().toISOString();
   policy.LineOfBusiness = "Auto";
+  policy.LineOfBusinessCode = jsonRecord.lineOfInsurance;
   policy.Subline = jsonRecord.subline.trim()
     ? sublineCodes[jsonRecord.subline].name
     : NOT_PROVIDED;
@@ -148,7 +144,7 @@ module.exports.converter = function (jsonRecord) {
     ? sublineCodes[jsonRecord.subline].category
     : NOT_PROVIDED;
   policy.AccountingDate = convertAccountingDate(jsonRecord.accountingDate);
-  
+
   policy.CompanyCode = jsonRecord.companyCode;
   policy.CompanyID = jsonRecord.companyCode;
   policy.State = stateCodes.codes[jsonRecord.stateCode];
@@ -160,11 +156,13 @@ module.exports.converter = function (jsonRecord) {
   convertedRecord.TransactionType = jsonRecord.transactionCode.trim()
     ? transactionCodes[jsonRecord.transactionCode].name
     : NOT_PROVIDED;
-  convertedRecord.TransactionCode = jsonRecord.transactionCode
+  convertedRecord.TransactionCode = jsonRecord.transactionCode;
   if (jsonRecord.transactionCode.trim()) {
     if (convertedRecord.RecordType === "Premium") {
       policy.PremiumAmount = convertStringToFloat(jsonRecord.premiumAmount);
-      coverage.MonthlyPremiumAmount = parseFloat((policy.PremiumAmount / jsonRecord.monthsCovered).toFixed(4))
+      coverage.MonthlyPremiumAmount = parseFloat(
+        (policy.PremiumAmount / jsonRecord.monthsCovered).toFixed(4)
+      );
     } else {
       claim.LossAmount = convertStringToFloat(jsonRecord.lossAmount);
     }
@@ -173,28 +171,25 @@ module.exports.converter = function (jsonRecord) {
     ? programCodes[jsonRecord.program]
     : NOT_PROVIDED;
   let coverageCodesState = coverageCodes[policy.State];
-  
-  if (!coverageCodesState) coverageCodesState = coverageCodes["MU"];
-  
-  // //delete at some time...
-  // console.log('coverage codes: '+jsonRecord.coverage)
-  // console.table(coverageCodesState)
 
-  if (jsonRecord.coverage){
-    coverage.CoverageCategory = coverageCodesState[jsonRecord.coverage].category;
+  if (!coverageCodesState) coverageCodesState = coverageCodes["MU"];
+
+  if (jsonRecord.coverage) {
+    coverage.CoverageCategory =
+      coverageCodesState[jsonRecord.coverage].category;
     coverage.Coverage = coverageCodesState[jsonRecord.coverage].name;
-    coverage.CoverageCode = jsonRecord.coverage
+    coverage.CoverageCode = jsonRecord.coverage;
   }
 
   driver.OperatorAge = operatorAgeCodes[jsonRecord.operatorsAge];
-  driver.OperatorAgeCode = jsonRecord.operatorsAge
+  driver.OperatorAgeCode = jsonRecord.operatorsAge;
   driver.Gender = jsonRecord.sexAndMaritalStatus.trim()
     ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].gender
     : NOT_PROVIDED;
   driver.MaritalStatus = jsonRecord.sexAndMaritalStatus.trim()
     ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].maritalStatus
     : NOT_PROVIDED;
-  driver.MaritalStatusCode = jsonRecord.sexAndMaritalStatus
+  driver.MaritalStatusCode = jsonRecord.sexAndMaritalStatus;
   driver.PrincipalSecondary = jsonRecord.sexAndMaritalStatus.trim()
     ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus]
         .principalSecondary
@@ -216,103 +211,114 @@ module.exports.converter = function (jsonRecord) {
     : NOT_PROVIDED;
 
   try {
-
-    let tmpCode=jsonRecord.privatePassengerDriversTrainingGoodStudent.trim()
-    driver.DriversTraining = privatePassengerDriversTrainingGoodStudentCodes[tempCode].driversTraining
-  
+    let tmpCode = jsonRecord.privatePassengerDriversTrainingGoodStudent.trim();
+    driver.DriversTraining =
+      privatePassengerDriversTrainingGoodStudentCodes[tempCode].driversTraining;
+  } catch {
+    driver.DriversTraining = "No";
   }
-  catch {driver.DriversTraining = "No"}
 
   try {
-    let tempCode=jsonRecord.privatePassengerDriversTrainingGoodStudent.trim()
-    driver.GoodStudentDiscount=privatePassengerDriversTrainingGoodStudentCodes[tempCode].goodStudentDiscount
+    let tempCode = jsonRecord.privatePassengerDriversTrainingGoodStudent.trim();
+    driver.GoodStudentDiscount =
+      privatePassengerDriversTrainingGoodStudentCodes[
+        tempCode
+      ].goodStudentDiscount;
+  } catch {
+    driver.GoodStudentDiscount = "No";
   }
 
-  catch {
-    driver.GoodStudentDiscount = "No"
-  }
-
-      driver.PenaltyPointsCode = jsonRecord.privatePassengerPenaltyPoints
-      driver.PenaltyPoints = jsonRecord.privatePassengerPenaltyPoints.trim()
+  driver.PenaltyPointsCode = jsonRecord.privatePassengerPenaltyPoints;
+  driver.PenaltyPoints = jsonRecord.privatePassengerPenaltyPoints.trim()
     ? penaltyPointsCodes[jsonRecord.privatePassengerPenaltyPoints]
     : NOT_PROVIDED;
   let liabilityLimitState = liabilityLimitCodes.state[policy.State];
-  if (!liabilityLimitState){
-    liabilityLimitState = liabilityLimitCodes.state["MU"];}
+  if (!liabilityLimitState) {
+    liabilityLimitState = liabilityLimitCodes.state["MU"];
+  }
 
-  if ( coverage.LiabilityLimitsName =liabilityLimitState.coverage[jsonRecord.coverage]){
-    coverage.LiabilityLimitsName =liabilityLimitState.coverage[jsonRecord.coverage].name;
-    coverage.LiabilityLimitsAmount =liabilityLimitState.coverage[jsonRecord.coverage][jsonRecord.liabilityLimitsAmount];
+  if (
+    (coverage.LiabilityLimitsName =
+      liabilityLimitState.coverage[jsonRecord.coverage])
+  ) {
+    coverage.LiabilityLimitsName =
+      liabilityLimitState.coverage[jsonRecord.coverage].name;
+    coverage.LiabilityLimitsAmount =
+      liabilityLimitState.coverage[jsonRecord.coverage][
+        jsonRecord.liabilityLimitsAmount
+      ];
   }
 
   coverage.DeductibleAmount = deductibleCodes[jsonRecord.deductibleAmount];
-  coverage.DeductibleCode = jsonRecord.deductibleAmount
+  coverage.DeductibleCode = jsonRecord.deductibleAmount;
   policy.EffectiveDate = convertDate(jsonRecord.effectiveDate);
   policy.ExpirationDate = convertDate(jsonRecord.expirationDate);
   vehicle.BodyStyle = vehicleClassCodes.bodyStyle[jsonRecord.bodyStyle];
   vehicle.BodySize = vehicleClassCodes.bodySize[jsonRecord.bodySize];
   vehicle.ModelYear = jsonRecord.modelYear;
 
-  let lclExposurePresent = true
-  if (typeof jsonRecord.exposure =="undefined"){
-    //console.log('undefined true')
-    lclExposurePresent = false
+  let lclExposurePresent = true;
+  if (typeof jsonRecord.exposure == "undefined") {
+    lclExposurePresent = false;
   }
 
-  if (lclExposurePresent){
-    let digit = parseInt(numberTypeCodes[jsonRecord.exposure.slice(-1)].digit)
-    let multiplier =  numberTypeCodes[jsonRecord.exposure.slice(-1)].multiplier
-    let recordLead = parseInt(jsonRecord.exposure.slice(0,-1))
-    if (!recordLead==0){
-      coverage.Exposure = parseInt(recordLead.toString()+(digit * multiplier).toString())
-    } else{
-      coverage.Exposure = digit * multiplier
+  if (lclExposurePresent) {
+    let digit = parseInt(numberTypeCodes[jsonRecord.exposure.slice(-1)].digit);
+    let multiplier = numberTypeCodes[jsonRecord.exposure.slice(-1)].multiplier;
+    let recordLead = parseInt(jsonRecord.exposure.slice(0, -1));
+    if (!recordLead == 0) {
+      coverage.Exposure = parseInt(
+        recordLead.toString() + (digit * multiplier).toString()
+      );
+    } else {
+      coverage.Exposure = digit * multiplier;
     }
-    
   }
 
   let umUimState = umUimCodes.state[policy.State];
-  if (!umUimState) { umuimState = umUimCodes.state["MU"];}
+  if (!umUimState) {
+    umuimState = umUimCodes.state["MU"];
+  }
   coverage.UninsuredUnderinsuredMotorist =
-  umuimState[jsonRecord.uninsuredUnderinsuredMotorist];
+    umuimState[jsonRecord.uninsuredUnderinsuredMotorist];
   if (convertedRecord.RecordType === "Premium") {
-    
     coverage.MonthsCovered = parseInt(jsonRecord.monthsCovered);
     coverage.SingleMultiCarRating =
       singleMultiCarCodes[jsonRecord.singleMultiCar];
     policy.PolicyIdentifier = jsonRecord.policyIdentification.trim();
-    console.log('policy identifier: '+policy.PolicyIdentifier)
     coverage.ExperienceRatingModificationFactor =
       experienceRatingModificationFactorCodes[
         jsonRecord.experienceRatingModificationFactor
       ];
-     console.log(policy)
-     policy.AccountingTermExpiration = addTerm(policy.AccountingDate, coverage.MonthsCovered)  
-  
-    } if(jsonRecord.occurrenceIdentification) {
+    policy.AccountingTermExpiration = addTerm(
+      policy.AccountingDate,
+      coverage.MonthsCovered
+    );
+  }
+  if (jsonRecord.occurrenceIdentification) {
     claim.ClaimCount = parseInt(jsonRecord.claimCount);
-    claim.CauseOfLoss = causeOfLossCodes.coverage[jsonRecord.coverage][jsonRecord.causeOfLoss];
+    claim.CauseOfLoss =
+      causeOfLossCodes.coverage[jsonRecord.coverage][jsonRecord.causeOfLoss];
     claim.AccidentDate = convertAccidentDate(jsonRecord.accidentDate);
-    
+
     claim.OccurrenceIdentifier = jsonRecord.occurrenceIdentification.trim();
     claim.ClaimIdentifier = jsonRecord.claimIdentifier.trim();
     try {
-    claim.LimitedCodingLossTransaction =
-      jsonRecord.limitedCodingLossTransaction.trim()
-        ? limitedCodingLossTransactionCodes[
-            jsonRecord.limitedCodingLossTransaction
-          ]
-        : "N/A";
-        }
-      catch {
-        claim.LimitedCodingLossTransaction = ''
-      }
-      }
+      claim.LimitedCodingLossTransaction =
+        jsonRecord.limitedCodingLossTransaction.trim()
+          ? limitedCodingLossTransactionCodes[
+              jsonRecord.limitedCodingLossTransaction
+            ]
+          : "N/A";
+    } catch {
+      claim.LimitedCodingLossTransaction = "";
+    }
+  }
   coverage.Terrorism = !jsonRecord.terrorismIndicator.trim()
     ? "N/A"
     : terrorismIndicatorCodes[jsonRecord.terrorismIndicator];
   coverage.Packaging = packageCodes[jsonRecord.packageCode];
-  coverage.CoverageCode = jsonRecord.coverage
+  coverage.CoverageCode = jsonRecord.coverage;
   coverage.PoolAffiliation = poolAffiliationCodes[jsonRecord.poolAffiliation];
   policy.NCProgramEnhancement = jsonRecord.ncProgramEnhancementIndicator.trim()
     ? ncProgramEnhancementCodes[jsonRecord.ncProgramEnhancementIndicator]
@@ -340,8 +346,7 @@ module.exports.converter = function (jsonRecord) {
     pipLimitsDeductibleState = pipLimitsDeductibleCodes.state["MU"];
   coverage.PIPLimitsDeductible =
     pipLimitsDeductibleState[jsonRecord.pipLimitsDeductibleCode];
-  if (jsonRecord.rateClassCode){
-
+  if (jsonRecord.rateClassCode) {
     coverage.RateClassCode = jsonRecord.rateClassCode.trim();
   }
   decodeStateException(coverage, jsonRecord, "stateExceptionA", policy.State);
@@ -353,12 +358,12 @@ module.exports.converter = function (jsonRecord) {
   }
   if (jsonRecord.vehicleIdentificationVIN) {
     vehicle.VIN = jsonRecord.vehicleIdentificationVIN.trim();
-  } 
+  }
 
   if (jsonRecord.vehicleIdentificationVIN) {
     vehicle.VINHash = hashString(jsonRecord.vehicleIdentificationVIN);
-  } 
+  }
 
-  //console.table(convertedRecord['Coverage']);
+  console.table(convertedRecord.Policy);
   return convertedRecord;
 };

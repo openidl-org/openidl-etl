@@ -5,22 +5,33 @@ const converter = require("./converters/autoConverter").converter;
 
 
 module.exports.convertTextRecordsToJson = function (recordsText) {
-  return convertTextRecordsToJsonUsingSchema(recordsText,premiumSchema,lossSchema);
+  return convertTextRecordsToJsonUsingSchema(recordsText, premiumSchema, lossSchema);
 };
 
-function convertTextRecordsToJsonUsingSchema(recordsText, premiumSchema,lossSchema) {
+function last(anArray) {
+      return anArray [anArray.length - 1];
+    }
+// iterates through the list of records and converts it to JSON
+function convertTextRecordsToJsonUsingSchema(recordsText, premiumSchema, lossSchema) {
   let results = [];
-  let uniqueExposures = new Set()
-  let records = recordsText.split("\n");
-  records.pop(); //remove end object
+  let uniqueExposures = new Set();
+  let records = recordsText.split('\n');
+  let lastElement = last(records)
+
+  // removes last line if blank
+  if (lastElement.length == 0)
+      {
+        records.pop()
+      }
+    
+
   for (let record of records) {
-    //if (record)
+    //transform record
     lcl_result = convertTextRecordToJsonUsingSchema(record, premiumSchema,lossSchema);
     uniqueExposures.add(lcl_result.exposure)
-    //uniqueExposures.add(lcl_result.policyIdentification)
+    console.log(lcl_result);
     results.push(lcl_result);
   }
-  console.log(uniqueExposures)
   return results;
 }
 
@@ -31,26 +42,23 @@ function getTransactionCode(record, schema) {
   return transactionCode;
 }
 
-
-function convertTextRecordToJsonUsingSchema(record, premiumSchema,lossSchema) {
+// *** converts record to json, even a single record
+function convertTextRecordToJsonUsingSchema(record, premiumSchema, lossSchema) {
   let result = {};
-  var transactionCode = getTransactionCode(record,premiumSchema)
-  var premium = false;
+  var transactionCode = getTransactionCode(record, premiumSchema)
   let schema = null
-  let loss = null
   
   //console.log('transaction code: '+transactionCode)
 
   if (transactionCode == '1' || transactionCode == '8'){
-    premium = true
     schema = premiumSchema
+    console.log('premium record found')
   }
 
   if (transactionCode =="2" || transactionCode =="3" || transactionCode =="6" || transactionCode =="7") {
     schema = lossSchema
     console.log('loss record found')
     console.log(record)
-    loss=true
 
   }
 
@@ -65,14 +73,15 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema,lossSchema) {
       // }
 
 
-
+      // checks to make sure the field key exists, prevents out of bounds
+      // error on parsing
       if (record.length > start) {
         var value = record.substring(start, end).trim();
         if (type == "number") {
           positive = 1;
           if (value.charAt(value.length - 1) == "}") {
             value = value.slice(0, -1);
-            positive = positive * -10;
+            positive = positive * -1; 
           }
           if (value.charAt(value.length - 1) == "{") {
             value = value.slice(0, -1);
