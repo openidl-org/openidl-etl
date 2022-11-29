@@ -1,6 +1,6 @@
-const premiumSchema = require("./schemas/personalAutoStatPlan-premium.json");
+const premiumSchema = require("./schemas/homeownersStatPlan-premium.json");
 const lossSchema = require("./schemas/personalStatPlan-loss.json");
-const converter = require("./converters/autoConverter").converter;
+//const converter = require("./converters/autoConverter").converter;
 
 
 
@@ -34,7 +34,7 @@ function convertTextRecordsToJsonUsingSchema(recordsText, premiumSchema, lossSch
   }
   return results;
 }
-
+// see if similar/same to auto / review***
 function getTransactionCode(record, schema) {
   var start = schema.properties["transactionCode"].start;
   var end = start + 1;
