@@ -11,7 +11,7 @@
             "start": 0,
             "length": 2,
             "enum": [
-                "56"
+                "32"
             ]
         },
         "accountingDate": {
@@ -124,23 +124,11 @@
                 "8"
             ]
         },
-        "premiumAmount": {
-            "name": "premiumAmount",
-            "type": "string",
-            "start": 20,
-            "length": 10
-        },
         "lossAmount": {
             "name": "lossAmount",
             "type": "string",
             "start": 20,
             "length": 10
-        },
-        "exposure": {
-            "name": "exposure",
-            "type": "string",
-            "start": 30,
-            "length": 5
         },
         "claimCount": {
             "name": "claimCount",
@@ -771,12 +759,6 @@
                 "2"
             ]
         },
-        "monthsCovered": {
-            "name": "monthsCovered",
-            "type": "string",
-            "start": 92,
-            "length": 2
-        },
         "causeOfLoss": {
             "name": "causeOfLoss",
             "type": "string",
@@ -929,12 +911,6 @@
                 "3",
                 "4"
             ]
-        },
-        "policyNumber": {
-            "name": "policyNumber",
-            "type": "string",
-            "start": 126,
-            "length": 14
         },
         "claimNumber": {
             "name": "claimNumber",

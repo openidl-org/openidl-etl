@@ -1,0 +1,150 @@
+{
+  "01": {
+    "type": "AAIS - ML-1, ML-1R, ML 0001, Form 1, or HO 0001 / ISO - HO 00 01",
+    "category": "Basic Policy Forms"
+  },
+  "02": {
+    "type": "AAIS - ML-2, ML 0002, Form 2, or HO 0002 / ISO - HO 00 02",
+    "category": "Basic Policy Forms"
+  },
+  "03": {
+    "type": "AAIS - ML-3, ML 0003, Form 3, or HO 0003 / ISO - HO 00 03",
+    "category": "Basic Policy Forms"
+  },
+  "04": {
+    "type": "AAIS - ML-4, ML 0004, Form 4, or HO 0004 / ISO - HO 00 04",
+    "category": "Basic Policy Forms"
+  },
+  "84": {
+    "type": "AAIS - Form 4 w/ ML-430 or HO 0004 w/ HO 0430 or HO 0004 w/ HO 2730 / ISO - HO 00 04 w/ HO 05 24",
+    "category": "Basic Policy Forms"
+  },
+  "05": {
+    "type": "AAIS - Form 5 or HO 0005 / ISO - HO 00 05 and HO 00 03 w/ HO 00 15",
+    "category": "Basic Policy Forms"
+  },
+  "06": {
+    "type": "AAIS - ML 0006, Form6, or HO 0006 / ISO - HO 00 06",
+    "category": "Basic Policy Forms"
+  },
+  "86": {
+    "type": "AAIS - Form 6 w/ ML-429 or HO 0006 w/ HO 0429 or HO 0006 w/ HO 7029 / ISO - HO 00 06 w/ HO 17 31",
+    "category": "Basic Policy Forms"
+  },
+  "08": {
+    "type": "AAIS - ML-8, ML 0008, Form8, or HO 0008 / ISO - HO 00 08",
+    "category": "Basic Policy Forms"
+  },
+  "41": {
+    "type": "Care provided for others",
+    "category": "Liability Endorsements"
+  },
+  "42": {
+    "type": "Business Activities",
+    "category": "Liability Endorsements"
+  },
+  "43": {
+    "type": "Office, professional, private school or studio use",
+    "category": "Liability Endorsements"
+  },
+  "44": {
+    "type": "Personal injury",
+    "category": "Liability Endorsements"
+  },
+  "45": {
+    "type": "Watercraft",
+    "category": "Liability Endorsements"
+  },
+  "46": {
+    "type": "Snowmobile",
+    "category": "Liability Endorsements"
+  },
+  "47": {
+    "type": "Lead poisoning coverage",
+    "category": "Liability Endorsements"
+  },
+  "53": {
+    "type": "Golf cart liability",
+    "category": "Liability Endorsements"
+  },
+  "54": {
+    "type": "Fuel oil liability coverage",
+    "category": "Liability Endorsements"
+  },
+  "40": {
+    "type": "All other liability endorsements",
+    "category": "Liability Endorsements"
+  },
+  "61": {
+    "type": "Earthquake",
+    "category": "Property Endorsements"
+  },
+  "62": {
+    "type": "Water damage - Sewers, drains, and sumps",
+    "category": "Property Endorsements"
+  },
+  "63": {
+    "type": "Motorized golf cart - physical damage coverage",
+    "category": "Property Endorsements"
+  },
+  "64": {
+    "type": "Identity fraud expense coverage",
+    "category": "Property Endorsements"
+  },
+  "75": {
+    "type": "Equipment breakdown coverage",
+    "category": "Property Endorsements"
+  },
+  "60": {
+    "type": "All other property endorsements",
+    "category": "Property Endorsements"
+  },
+  "80": {
+    "type": "Resident of Assisted Living Facility",
+    "category": "Endorsements Providing Both Property and Liability Coverage"
+  },
+  "81": {
+    "type": "Student Living Away From the Described Location",
+    "category": "Endorsements Providing Both Property and Liability Coverage"
+  },
+  "19": {
+    "type": "Basic Coverage",
+    "category": "Home-Based Business (HBB) Coverage"
+  },
+  "51": {
+    "type": "Non-owned auto and hired auto liability",
+    "category": "HBB Liability Coverages"
+  },
+  "52": {
+    "type": "Cosmetologists' liability",
+    "category": "HBB Liability Coverages"
+  },
+  "40": {
+    "type": "All other HBB liability coverages",
+    "category": "HBB Liability Coverages"
+  },
+  "72": {
+    "type": "Spoilage coverage",
+    "category": "HBB Property Coverages"
+  },
+  "73": {
+    "type": "Related private structures used for HBB purposes",
+    "category": "HBB Property Coverages"
+  },
+  "74": {
+    "type": "Business property away from premises",
+    "category": "HBB Property Coverages"
+  },
+  "60": {
+    "type": "All other HBB property coverages",
+    "category": "HBB Property Coverages"
+  },
+  "96": {
+    "type": "Miscellaneous property/liability combined end. coverage",
+    "category": "Other"
+  },
+  "99": {
+    "type": "Minimum Premium record subject to SECTION I, PART C, Rule 3.b",
+    "category": "Other"
+  }
+}

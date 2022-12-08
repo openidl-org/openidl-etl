@@ -1,20 +1,21 @@
 const fs = require("fs");
 const convertToJson =
-  require("../openidl-etl-statplan-processor/processor").convertTextRecordsToJson;
-const autoConverter =
-  require("../openidl-etl-statplan-processor/converters/autoConverter").converter;
+  require("../openidl-etl-statplan-processor/ho-processor").convertTextRecordsToJson;
+const homeownerConverter =
+  require("../openidl-etl-statplan-processor/converters/homeownerConverter").converter;
 const buildPayload =
   require("../openidl-etl-success-processor/load-insurance-data").buildPayload;
 
 const config = require("./config/config.json");
 
 // open text file, read data into record string
-let testPremiumRecordsText = fs.readFileSync(config.inbound, "utf-8");
+// let testPremiumRecordsText = fs.readFileSync(config.inbound, "utf-8");
+let testPremiumRecordsText = fs.readFileSync(config.homeowner.inbound, "utf-8");
 
 // convert record string to JSON
 let jsonPremiumRecords = convertToJson(testPremiumRecordsText);
 
-let hdsAutoRecords = [];
+let hdsHomeownerRecords = [];
 let errorRecords = [];
 for (let jsonPremiumRecord of jsonPremiumRecords) {
   // establish id for log statement
@@ -30,11 +31,11 @@ for (let jsonPremiumRecord of jsonPremiumRecords) {
     "id: " + id + " transactionCode: " + jsonPremiumRecord.transactionCode
   );
 
-  hdsAutoRecords.push(autoConverter(jsonPremiumRecord));
+  hdsHomeownerRecords.push(homeownerConverter(jsonPremiumRecord));
 }
-console.log("hdsAuto length: " + hdsAutoRecords.length);
-if (hdsAutoRecords.length > 0) {
-  let premiumPayload = buildPayload(hdsAutoRecords);
+console.log("hdsAuto length: " + hdsHomeownerRecords.length);
+if (hdsHomeownerRecords.length > 0) {
+  let premiumPayload = buildPayload(hdsHomeownerRecords);
   fs.writeFileSync(config.outbound, JSON.stringify(premiumPayload));
 }
 fs.writeFileSync(config.error, JSON.stringify(errorRecords));
