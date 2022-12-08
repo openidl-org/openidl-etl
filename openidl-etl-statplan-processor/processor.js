@@ -48,14 +48,14 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema, lossSchema) {
   var transactionCode = getTransactionCode(record, premiumSchema)
   let schema = null
   
-  //console.log('transaction code: '+transactionCode)
+  console.log('transaction code: '+transactionCode)
 
   if (transactionCode == '1' || transactionCode == '8'){
     schema = premiumSchema
     console.log('premium record found')
   }
 
-  if (transactionCode =="2" || transactionCode =="3" || transactionCode =="6" || transactionCode =="7") {
+  if (transactionCode == "2" || transactionCode == "3" || transactionCode == "6" || transactionCode == "7") {
     schema = lossSchema
     console.log('loss record found')
     console.log(record)

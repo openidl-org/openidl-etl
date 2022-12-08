@@ -164,7 +164,7 @@
                 "270"
             ]
         },
-        "programCode": {
+        "program": {
             "name": "program",
             "type": "string",
             "start": 38,
@@ -179,7 +179,7 @@
             ]
         },
         "policyForm": {
-            "name": "program",
+            "name": "policy",
             "type": "string",
             "start": 39,
             "length": 2,
@@ -765,12 +765,6 @@
             "start": 92,
             "length": 2
         },
-        "accidentDate": {
-            "name": "accidentDate",
-            "type": "string",
-            "start": 95,
-            "length": 6
-        },
         "zipCode": {
             "name": "zipCode",
             "type": "string",
@@ -784,7 +778,7 @@
             "length": 4
         },
         "buildingCodeEffectivenessGrade": {
-            "name": "ncProgramEnhancementIndicator",
+            "name": "buildingCodeEffectivenessGrade",
             "type": "string",
             "start": 110,
             "length": 1,

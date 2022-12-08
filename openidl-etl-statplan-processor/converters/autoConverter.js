@@ -150,6 +150,8 @@ module.exports.converter = function (jsonRecord) {
   policy.State = stateCodes.codes[jsonRecord.stateCode];
   policy.Territory = jsonRecord.territory;
   policy.OptionalZipCodeIndicator = jsonRecord.optionalZipCodeIndicator;
+  
+  
   convertedRecord.RecordType = jsonRecord.transactionCode.trim()
     ? transactionCodes[jsonRecord.transactionCode].type
     : NOT_PROVIDED;
@@ -157,6 +159,8 @@ module.exports.converter = function (jsonRecord) {
     ? transactionCodes[jsonRecord.transactionCode].name
     : NOT_PROVIDED;
   convertedRecord.TransactionCode = jsonRecord.transactionCode;
+
+
   if (jsonRecord.transactionCode.trim()) {
     if (convertedRecord.RecordType === "Premium") {
       policy.PremiumAmount = convertStringToFloat(jsonRecord.premiumAmount);
@@ -167,6 +171,8 @@ module.exports.converter = function (jsonRecord) {
       claim.LossAmount = convertStringToFloat(jsonRecord.lossAmount);
     }
   }
+
+
   policy.Program = jsonRecord.program.trim()
     ? programCodes[jsonRecord.program]
     : NOT_PROVIDED;
@@ -175,8 +181,7 @@ module.exports.converter = function (jsonRecord) {
   if (!coverageCodesState) coverageCodesState = coverageCodes["MU"];
 
   if (jsonRecord.coverage) {
-    coverage.CoverageCategory =
-      coverageCodesState[jsonRecord.coverage].category;
+    coverage.CoverageCategory = coverageCodesState[jsonRecord.coverage].category;
     coverage.Coverage = coverageCodesState[jsonRecord.coverage].name;
     coverage.CoverageCode = jsonRecord.coverage;
   }

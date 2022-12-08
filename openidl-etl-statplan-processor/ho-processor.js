@@ -1,6 +1,6 @@
 const premiumSchema = require("./schemas/homeownersStatPlan-premium.json");
-const lossSchema = require("./schemas/personalStatPlan-loss.json");
-//const converter = require("./converters/autoConverter").converter;
+const lossSchema = require("./schemas/homeownersStatPlan-loss.json");
+const converter = require("./converters/homeownerConverter").converter;
 
 
 
@@ -34,7 +34,7 @@ function convertTextRecordsToJsonUsingSchema(recordsText, premiumSchema, lossSch
   }
   return results;
 }
-// see if similar/same to auto / review***
+// This uses the same codes as auto
 function getTransactionCode(record, schema) {
   var start = schema.properties["transactionCode"].start;
   var end = start + 1;
@@ -48,11 +48,12 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema, lossSchema) {
   var transactionCode = getTransactionCode(record, premiumSchema)
   let schema = null
   
-  //console.log('transaction code: '+transactionCode)
+  console.log('transaction code: '+transactionCode)
 
   if (transactionCode == '1' || transactionCode == '8'){
     schema = premiumSchema
     console.log('premium record found')
+    console.log(record)
   }
 
   if (transactionCode =="2" || transactionCode =="3" || transactionCode =="6" || transactionCode =="7") {
