@@ -1,103 +1,107 @@
-const csv = require("csvtojson");
-const DateTime = require("luxon").DateTime;
-const config = require("./config/config.json");
-const crypto = require("crypto");
+const csv = require('csvtojson');
+const config = require('./config/config.json');
+const crypto = require('crypto');
+const log4js = require('log4js');
+const logger = log4js.getLogger();
+logger.level = config.logLevel;
+
 async function convertToJson(recordsText) {
-  // let textRecords = recordsText.split('\n')
+  logger.info('Entering convertToJson()');
   let errors = [];
   await csv()
-    .on("error", (err) => {
-      errors.push({ type: "csv parsing", message: err });
+    .on('error', (err) => {
+      errors.push({ type: 'csv parsing', message: err });
     })
     .fromString(recordsText)
     .then((jsonObj) => {
       outputRecords = jsonObj;
     });
-
+  logger.debug('Successfully converted csv to json data');
   if (errors.length > 0) {
     return { valid: false, errors: errors };
   }
   if (outputRecords.length === 0) {
-    return { valid: false, errors: [{ type: "data", message: "empty data" }] };
+    return { valid: false, errors: [{ type: 'data', message: 'empty data' }] };
   }
   let resultRecords = [];
+  logger.debug('Updating outputRecords keys');
   for (outputRecord of outputRecords) {
     let resultRecord = {};
     let recordError = false;
 
-    if (outputRecord["Organization ID"]) {
-      resultRecord.organizationID = outputRecord["Organization ID"];
+    if (outputRecord['Organization ID']) {
+      resultRecord.organizationID = outputRecord['Organization ID'];
     }
 
-    if (outputRecord["State"]) {
-      resultRecord.state = outputRecord["State"];
+    if (outputRecord['State']) {
+      resultRecord.state = outputRecord['State'];
     } else {
       resultRecord.state = config.state;
     }
 
-    if (outputRecord["VIN Hash"]) {
-      resultRecord.VINHash = outputRecord["VIN Hash"];
+    if (outputRecord['VIN Hash']) {
+      resultRecord.VINHash = outputRecord['VIN Hash'];
     }
 
-    if (!outputRecord["VIN Hash"])
+    if (!outputRecord['VIN Hash'])
       if (!outputRecord.VIN) {
         errors.push({
-          type: "data",
-          message: 'missing "VIN"',
+          type: 'data',
+          message: 'missing VIN',
           record: outputRecord,
         });
       } else {
         resultRecord.VINHash = crypto
-          .createHash("sha256")
+          .createHash('sha256')
           .update(outputRecord.VIN)
-          .digest("hex");
+          .digest('hex');
       }
 
-    if (outputRecord["VIN"]) {
+    if (outputRecord['VIN']) {
       resultRecord.VIN = outputRecord.VIN
     }
 
-    if (outputRecord["Transaction Date"]) {
-      resultRecord.transactionDate = outputRecord["Transaction Date"];
+    if (outputRecord['Transaction Date']) {
+      resultRecord.transactionDate = outputRecord['Transaction Date'];
     }
 
     if (!resultRecord.organizationID) {
       errors.push({
-        type: "data",
-        message: 'missing "Organization ID"',
+        type: 'data',
+        message: 'missing Organization ID',
         record: outputRecord,
       });
-      console.log("error on org");
+      logger.error('error on org');
       recordError = true;
     }
-    // console.log(outputRecord.VIN)
     if (!outputRecord.VIN) {
-      if (!resultRecord["VINHash"]) {
+      if (!resultRecord['VINHash']) {
         errors.push({
-          type: "data",
-          message: 'missing "VIN/Vin Hash"',
+          type: 'data',
+          message: 'missing VIN/Vin Hash',
           record: outputRecord,
         });
-        console.log("error on vin");
-        console.log(outputRecord)
+        logger.error('error on vin');
         recordError = true;
       }
     }
     if (!resultRecord.transactionDate) {
       errors.push({
-        type: "data",
-        message: 'missing "Transaction Date"',
+        type: 'data',
+        message: 'missing Transaction Date',
         record: outputRecord,
       });
-      console.log("error on org");
+      logger.error('error on org');
       recordError = true;
     }
 
     if (!recordError) resultRecords.push(resultRecord);
   }
   if (errors.length > 0) {
+    logger.error('An error occured while updating the outputRecords keys', errors)
     return { valid: false, errors: errors };
   }
+  logger.debug('Successfully updated the outputRecords keys')
   return { valid: true, records: resultRecords };
 }
 
