@@ -22,8 +22,6 @@ async function convertToJson(recordsText) {
   }
   let resultRecords = [];
   for (outputRecord of outputRecords) {
-    console.log("output record");
-    console.table(outputRecord);
     let resultRecord = {};
     let recordError = false;
 
@@ -95,11 +93,6 @@ async function convertToJson(recordsText) {
       recordError = true;
     }
 
-    console.log("result: ");
-    console.table(resultRecord);
-    // console.log('errors')
-    // console.log(errors)
-    console.log("record error: " + recordError);
     if (!recordError) resultRecords.push(resultRecord);
   }
   if (errors.length > 0) {
