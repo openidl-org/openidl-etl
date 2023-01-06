@@ -286,6 +286,7 @@ module.exports.converter = function (jsonRecord) {
   }
   coverage.UninsuredUnderinsuredMotorist =
     umuimState[jsonRecord.uninsuredUnderinsuredMotorist];
+    
   if (convertedRecord.RecordType === "Premium") {
     coverage.MonthsCovered = parseInt(jsonRecord.monthsCovered);
     coverage.SingleMultiCarRating =

@@ -1,41 +1,40 @@
 const fs = require("fs");
 const convertToJson =
-  require("../openidl-etl-statplan-processor/ho-processor").convertTextRecordsToJson;
-const homeownerConverter =
-  require("../openidl-etl-statplan-processor/converters/homeownerConverter").converter;
+  require("../openidl-etl-statplan-processor/processor").convertTextRecordsToJson;
+const autoConverter =
+  require("../openidl-etl-statplan-processor/converters/autoConverter").converter;
 const buildPayload =
   require("../openidl-etl-success-processor/load-insurance-data").buildPayload;
 
 const config = require("./config/config.json");
 
 // open text file, read data into record string
-// let testPremiumRecordsText = fs.readFileSync(config.inbound, "utf-8");
 let testPremiumRecordsText = fs.readFileSync(config.homeowners.inbound, "utf-8");
 
 // convert record string to JSON
 let jsonPremiumRecords = convertToJson(testPremiumRecordsText);
 
-let hdsHomeownerRecords = [];
+let hdsAutoRecords = [];
 let errorRecords = [];
 for (let jsonPremiumRecord of jsonPremiumRecords) {
   // establish id for log statement
   let id;
-  if ("policyNumber" in jsonPremiumRecord) {
-    id = jsonPremiumRecord.policyNumber;
+  if ("policyIdentification" in jsonPremiumRecord) {
+    id = jsonPremiumRecord.policyIdentification;
   }
-  if ("claimNumber" in jsonPremiumRecord) {
-    id = jsonPremiumRecord.claimNumber;
+  if ("occurrenceIdentification" in jsonPremiumRecord) {
+    id = jsonPremiumRecord.occurrenceIdentification;
   }
 
   console.log(
     "id: " + id + " transactionCode: " + jsonPremiumRecord.transactionCode
   );
 
-  hdsHomeownerRecords.push(homeownerConverter(jsonPremiumRecord));
+  hdsAutoRecords.push(autoConverter(jsonPremiumRecord));
 }
-console.log("hdsHomeowner length: " + hdsHomeownerRecords.length);
-if (hdsHomeownerRecords.length > 0) {
-  let premiumPayload = buildPayload(hdsHomeownerRecords);
+console.log("hdsAuto length: " + hdsAutoRecords.length);
+if (hdsAutoRecords.length > 0) {
+  let premiumPayload = buildPayload(hdsAutoRecords);
   fs.writeFileSync(config.homeowners.outbound, JSON.stringify(premiumPayload));
 }
 fs.writeFileSync(config.error, JSON.stringify(errorRecords));
