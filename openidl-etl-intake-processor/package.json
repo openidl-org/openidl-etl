@@ -11,6 +11,7 @@
     "crypto": "^1.0.1",
     "csvtojson": "^2.0.10",
     "jsonschema": "^1.4.0",
+    "log4js": "^6.7.1",
     "luxon": "^2.4.0"
   },
   "author": "",

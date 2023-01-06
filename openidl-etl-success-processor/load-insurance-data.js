@@ -5,7 +5,9 @@ const fetch = require('node-fetch');
 const fs = require('fs')
 const config = require('./config/config.json');
 const { toUnicode } = require('punycode');
-
+const log4js = require("log4js");
+const logger = log4js.getLogger('load-insurance-data');
+logger.level = config.logLevel;
 module.exports.buildPayload = function (records) {
     let payload = {
         "records": [],
@@ -24,20 +26,13 @@ module.exports.buildPayload = function (records) {
         //TODO: understand why chunkid is here, also isnt chunkId above?
         record.chunkId = config.chunkId
         record.chunkid = config.chunkId
-        
-        // console.log('new record')
-        // console.log(JSON.stringify(record))
         payload.records.push(record)
     }
     return payload;
 }
 async function callAPI(apiUrl, payload, token) {
-    console.log('call api for IDM')
+    logger.info('call api for IDM')
     try {
-        //console.log("Calling API with batch: ", payload.batchId)
-        //console.log('token: '+token)
-        //console.log('api url: '+apiUrl)
-        //console.log(payload)
         let response = await fetch(apiUrl + "openidl/api/load-insurance-data", {
             method: "POST",
             headers: {
@@ -47,17 +42,11 @@ async function callAPI(apiUrl, payload, token) {
             },
             body: JSON.stringify(payload),
         });
-        // if (response.status !== 200) {
-        //     console.log(response)
-        //     if (response.status !== 504) {
-        //         process.exit(0)
-        //     }
-        // }
-        console.log('after idm response')
-        console.log(response)
+        logger.info('after idm response')
+        logger.debug(response)
         return response
     } catch (error) {
-        console.log("Error with post of insurance data " + error);
+        logger.error("Error with post of insurance data " + error);
         return;
     }
 }
@@ -71,26 +60,24 @@ let commandArgs = process.argv.slice(2)
 let dryRunArg = commandArgs[0]
 let dryRun = (dryRunArg && (dryRunArg === 'dry-run' || dryRunArg === 'true'))
 
-console.log(commandArgs)
-console.log('dryRun: ' + dryRun)
+logger.info(commandArgs)
+logger.info('dryRun: ' + dryRun)
 
 module.exports.loadInsuranceData = async function (records) {
-    console.log("Inside process records.  " + records.length + " records.")
+    logger.info("Inside process records.  " + records.length + " records.")
     let baseURL = buildURL(config, 'carrier', 'utilities')
-    console.log(`Logging in`)
+    logger.debug(`Logging in`)
     // let credentials = await getCredentials()
     let userToken = await login(baseURL, config.username, config.password)
-    console.log(`Status: ${userToken.status}`)
+    logger.info(`Status: ${userToken.status}`)
     if (userToken.status == 200){
         baseURL = buildURL(config, 'carrier', 'insurance-data-manager')
-        // console.log(JSON.stringify(dataToLoad))
+        // logger.info(JSON.stringify(dataToLoad))
         let payload = module.exports.buildPayload(records)
-        //console.log('load insurance 79')
+        //logger.info('load insurance 79')
         let response = await callAPI(baseURL, payload, userToken.token)
         return response
     }
     const status = {'status': userToken.status}
     return status
-    
-
 }
