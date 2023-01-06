@@ -20,5 +20,7 @@
         "insurance-data-manager": {
             "url": "<insurance-data-manager-service.dev.<subdomain>.<domain>>"
         }
-    }
+    },
+    "reqTimeOut": 200000,
+    "logLevel": "debug"
 }

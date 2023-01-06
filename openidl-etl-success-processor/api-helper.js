@@ -1,10 +1,13 @@
 const fetch = require('node-fetch').default;
-
+const config = require('./config/config.json');
+const log4js = require("log4js");
+const logger = log4js.getLogger('api-helpers');
+logger.level = config.logLevel;
 module.exports.login = async (baseURL, username, password) => {
-    console.log("Inside login")
+    logger.info("Inside login")
     try {
         let fullUrl = baseURL + "openidl/api/app-user-login"
-        console.log("About to send fetch from " + fullUrl)
+        logger.debug("About to send fetch from " + fullUrl)
         let response = await fetch(fullUrl, {
             method: "POST",
             headers: {
@@ -13,23 +16,16 @@ module.exports.login = async (baseURL, username, password) => {
             },
             body: JSON.stringify({ "username": username, "password": password }),
         });
-
-        console.log('Response Status: '+response.status)
+        logger.debug('Response Status: '+response.status)
         if (response.status !== 200) {
-            console.log('Error on login.')
-            //console.log(response)
-            // if (response.status !== 504) {
-            //     process.exit(0)
-            // }
-            
+            logger.error('Error on login.')
             return response
         }
         result = await response.json()
         let userToken = {"token": result.result.userToken, "status": 200}
-        //console.log('token: '+userToken)
         return userToken
     } catch (error) {
-        console.log("Error with login " + error);
+        logger.error("Error with login " + error);
         return;
     }
 }

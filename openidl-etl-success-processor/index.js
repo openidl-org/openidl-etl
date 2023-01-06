@@ -1,16 +1,19 @@
 const processRecords = require("./processor").process;
-
 const config = require("./config/config.json");
 var aws = require("aws-sdk");
-aws.config.update({ region: config.region });
+aws.config.update({
+  region: config.region, httpOptions: {
+    timeout: config.reqTimeOut
+  }
+});
 const s3 = new aws.S3({ apiVersion: "2006-03-01" });
 const ddb = new aws.DynamoDB.DocumentClient();
 var sns = new aws.SNS();
-
+const log4js = require("log4js");
+const logger = log4js.getLogger('index');
+logger.level = config.logLevel;
 function getParams(event) {
   // Get the object from the event and show its content type
-  // console.log("event: ");
-  // console.log(event['Records'])
   const bucket = event.Records[0].s3.bucket.name;
   const key = decodeURIComponent(
     event.Records[0].s3.object.key.replace(/\+/g, " ").split(".")[0]
@@ -33,19 +36,13 @@ async function setUp(eventParams) {
     TableName: config.Dynamo.etlControlTable,
     Key: { SubmissionFileName: eventParams.Key },
   };
-  // console.log("params2");
-  // console.log(params2);
-  // console.log("get item");
   let item = await ddb.get(params2).promise();
-  // console.log("item next");
-  // console.log(item.Item);
   if (item.Item) {
     if (item.Item.SubmissionFileName === eventParams.Key) {
-      console.log("file exists in control");
-
+      logger.info("file exists in control");
       if (item.Item.IDMLoaderStatus === "success") {
         run = false;
-        console.log("file found status: success");
+        logger.debug("file found status: success");
         //sns file has already been loaded
         var snsFailureParams = {
           Message: eventParams.Key + " has already been loaded to IDM",
@@ -57,7 +54,7 @@ async function setUp(eventParams) {
 
       if (item.Item.IDMLoaderStatus === "submitted") {
         run = false;
-        console.log("file found status: submitted");
+        logger.debug("file found status: submitted");
         //sns file is already processing
 
         var snsFailureParams = {
@@ -70,23 +67,23 @@ async function setUp(eventParams) {
 
       if (item.Item.IDMLoaderStatus === "error") {
         run = true;
-        console.log("file found status: error");
+        logger.error("file found status: error");
       }
 
       if (item.Item.IDMLoaderStatus === "") {
         run = true;
-        console.log("file found status: blank");
+        logger.error("file found status: blank");
       }
 
       if (!item.Item.IDMLoaderStatus) {
         run = true;
-        console.log("No Loader Record found");
+        logger.error("No Loader Record found");
       }
     }
 
     if (!item.Item.IntakeStatus === "success") {
       run = false;
-      console.log("Loader error: File Has already been loaded");
+      logger.error("Loader error: File Has already been loaded");
     }
 
     //add submitted record
@@ -118,45 +115,29 @@ async function setUp(eventParams) {
 }
 
 async function getRecords(eventParams) {
-  // console.log('get records, params: ')
-  // console.log(eventParams)
   const params = { "Bucket": eventParams.Bucket, "Key": eventParams.FileName };
-  console.log('get records params :')
-  console.log(params)
+  logger.info('get records params :')
+  logger.debug(params)
   const raw = await s3.getObject(params).promise();
   const data = JSON.parse(raw.Body.toString("utf-8"));
-  // console.log('data: ')
-  // console.log(data)
   return data;
 }
 
 exports.handler = async function (event, context) {
-  // let recordsToLoad = []
-  // event.Records.forEach(recordToLoad => {
-  //     console.log("We have a new record");
-  //     const { body } = record;
-  //     recordsToLoad.push(JSON.parse(body))
-  //     console.log(`ETL ID: ${JSON.parse(body).EtlID}`)
-  //     console.log(body)
-  // });
-
   //get file name
-
   let eventParams = getParams(event);
-  console.log(
+  logger.info(
     "bucket: " + eventParams.Bucket + " key: " + eventParams.FileName
   );
 
   let run = await setUp(eventParams);
-  console.log("Send Payload: " + run);
-
+  logger.debug("Send Payload: " + run);
   if (run) {
     let recordsToLoad = await getRecords(eventParams);
-    console.log("records length: " + recordsToLoad.length);
-    console.log(recordsToLoad);
+    logger.debug("records length: " + recordsToLoad.length);
     let response = await processRecords(recordsToLoad);
     const status = response["status"];
-    console.log("response status: " + status);
+    logger.debug("response status: " + status);
 
     if (status == "200") {
       //success
@@ -169,12 +150,14 @@ exports.handler = async function (event, context) {
         },
       };
       await ddb.put(insertParams).promise();
+      logger.info('after inserting into DynamoDB when stauscode is 200');
       var snsSuccessParams = {
         Message: eventParams.Key + " is loaded to IDM",
         Subject: "ETL Loader Processing Has Succeeded",
         TopicArn: config.sns.successETLARN,
       };
       await sns.publish(snsSuccessParams).promise();
+      logger.info('Published to sns when status is 200');
     } else {
       let insertParams = {
         TableName: config.Dynamo.etlControlTable,
@@ -190,16 +173,12 @@ exports.handler = async function (event, context) {
         Subject: "ETL Loader Processing Has Failed",
         TopicArn: config.sns.failureETLARN,
       };
+      logger.info('after inserting into DynamoDB when stauscode is not 200');
       await sns.publish(snsFailureParams).promise();
+      logger.info('Published to sns when status is not 200');
     }
   } else {
-    console.log(" This file failed to load\n it has prior success/mid processing/no intake status");
+    logger.error(" This file failed to load\n it has prior success/mid processing/no intake status");
   }
-
-  //make payload
-  //submit payload
-  //add new record
-
-  //await processRecords(recordsToLoad)
   return {};
 };
