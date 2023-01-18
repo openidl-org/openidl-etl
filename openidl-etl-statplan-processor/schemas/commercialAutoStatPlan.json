@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "PersonalAutoPolicyMessage",
+    "id": "CommercialAutoPolicy&ClaimMessage",
     "type": "object",
-    "title": "Personal Auto Policy Stat Plan",
+    "title": "Commercial Auto Policy & Claim Stat Plan",
     "additionalProperties": false,
     "properties": {
         "lineOfInsurance": {
@@ -253,8 +253,8 @@
                 "0"
             ]
         },
-        "privatePassengerDriversTrainingGoodStudent": {
-            "name": "privatePassengerDriversTrainingGoodStudent",
+        "commercialAutomobileClassification": {
+            "name": "commercialAutomobileClassification",
             "type": "string",
             "start": 33,
             "length": 1,
@@ -263,16 +263,19 @@
                 "2",
                 "3",
                 "4",
-                "5"
+                "5",
+                "6",
+                "7",
+                "8",
+                "9"
             ]
         },
-        "privatePassengerPenaltyPoints": {
-            "name": "privatePassengerPenaltyPoints",
+        "commercialAutomobileUse": {
+            "name": "commercialAutomobileUse",
             "type": "string",
             "start": 34,
             "length": 1,
             "enum": [
-                "0",
                 "1",
                 "2",
                 "3",
@@ -280,7 +283,8 @@
                 "5",
                 "6",
                 "7",
-                "8"
+                "8",
+                "9"
             ]
         },
         "liabilityLimitsAmount": {
@@ -408,11 +412,36 @@
             "start": 43,
             "length": 5
         },
+        "claimCount": {
+            "name": "claimCount",
+            "type": "string",
+            "start": 43,
+            "length": 5
+        },
         "monthsCovered": {
             "name": "monthsCovered",
             "type": "string",
             "start": 48,
             "length": 2
+        },
+        "causeOfLoss": {
+            "name": "causeOfLoss",
+            "type": "string",
+            "start": 48,
+            "length": 1,
+            "enum": [
+                " ",
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9"
+            ]
         },
         "terrorismIndicator": {
             "name": "terrorismIndicator",
@@ -473,6 +502,18 @@
             "start": 65,
             "length": 14
         },
+        "occurrenceIdentification": {
+            "name": "occurrenceIdentification",
+            "type": "string",
+            "start": 65,
+            "length": 12
+        },
+        "claimIdentifier": {
+            "name": "claimIdentifier",
+            "type": "string",
+            "start": 77,
+            "length": 2
+        },
         "ncProgramEnhancementIndicator": {
             "name": "ncProgramEnhancementIndicator",
             "type": "string",
@@ -513,6 +554,7 @@
             "start": 90,
             "length": 2,
             "enum": [
+                "  ",
                 "01",
                 "02",
                 "03",
@@ -598,7 +640,7 @@
                 "9"
             ]
         },
-        "pipLimitsDedutibleCode": {
+        "pipLimitsDeductibleCode": {
             "name": "pipLimitsDeductibleCode",
             "type": "string",
             "start": 97,

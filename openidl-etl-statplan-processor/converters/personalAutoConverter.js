@@ -1,35 +1,35 @@
 const crypto = require("crypto");
-const stateCodes = require("./reference/stateCodes.json");
-const transactionCodes = require("./reference/transactionCodes.json");
-const programCodes = require("./reference/programCodes.json");
-const coverageCodes = require("./reference/coverageCodes.json");
-const sublineCodes = require("./reference/sublineCodes.json");
-const operatorAgeCodes = require("./reference/operatorAgeCodes.json");
-const sexAndMaritalStatusCodes = require("./reference/sexAndMaritalStatusCodes.json");
-const vehicleUseCodes = require("./reference/vechicleUseCodes.json");
-const vehiclePerformanceCodes = require("./reference/vehiclePerformanceCodes.json");
-const privatePassengerDriversTrainingGoodStudentCodes = require("./reference/privatePassengerDriversTrainingGoodStudentCodes.json");
-const penaltyPointsCodes = require("./reference/penaltyPointsCodes.json");
-const liabilityLimitCodes = require("./reference/liabilityLimitCodes.json");
-const deductibleCodes = require("./reference/deductibleCodes.json");
-const numberTypeCodes = require("./reference/numberTypeCodes.json");
-const vehicleClassCodes = require("./reference/vehicleClassCodes.json");
-const umUimCodes = require("./reference/umUimCodes.json");
-const terrorismIndicatorCodes = require("./reference/terrorismIndicatorCodes.json");
-const singleMultiCarCodes = require("./reference/singleMultiCarCodes.json");
-const packageCodes = require("./reference/packageCodes.json");
-const poolAffiliationCodes = require("./reference/poolAffiliationCodes.json");
-const ncProgramEnhancementCodes = require("./reference/ncProgramEnhancementCodes.json");
-const umuimStackingCodes = require("./reference/umuimStackingCodes.json");
-const passiveRestraintDiscountCodes = require("./reference/passiveRestraintDiscountCodes.json");
-const antiLockBrakesDiscountCodes = require("./reference/antiLockBrakesDiscountCodes.json");
-const antiTheftDeviceDiscountCodes = require("./reference/antiTheftDeviceDiscountCodes.json");
-const defensiveDriverDiscountCodes = require("./reference/defensiveDriverDiscountCodes.json");
-const pipLimitsDeductibleCodes = require("./reference/pipLimitsDeductibleCodes.json");
-const experienceRatingModificationFactorCodes = require("./reference/experiencedRatingModificationFactorCodes.json");
-const stateExceptionCodes = require("./reference/stateExceptionCodes.json");
-const causeOfLossCodes = require("./reference/causeOfLossCodes.json");
-const limitedCodingLossTransactionCodes = require("./reference/limitedCodingLossTransactionCodes.json");
+const stateCodes = require("./reference/personal-auto/stateCodes.json");
+const transactionCodes = require("./reference/personal-auto/transactionCodes.json");
+const programCodes = require("./reference/personal-auto/programCodes.json");
+const coverageCodes = require("./reference/personal-auto/coverageCodes.json");
+const sublineCodes = require("./reference/personal-auto/sublineCodes.json");
+const operatorAgeCodes = require("./reference/personal-auto/operatorAgeCodes.json");
+const sexAndMaritalStatusCodes = require("./reference/personal-auto/sexAndMaritalStatusCodes.json");
+const vehicleUseCodes = require("./reference/personal-auto/vehicleUseCodes.json");
+const vehiclePerformanceCodes = require("./reference/personal-auto/vehiclePerformanceCodes.json");
+const privatePassengerDriversTrainingGoodStudentCodes = require("./reference/personal-auto/privatePassengerDriversTrainingGoodStudentCodes.json");
+const penaltyPointsCodes = require("./reference/personal-auto/penaltyPointsCodes.json");
+const liabilityLimitCodes = require("./reference/personal-auto/liabilityLimitCodes.json");
+const deductibleCodes = require("./reference/personal-auto/deductibleCodes.json");
+const numberTypeCodes = require("./reference/personal-auto/numberTypeCodes.json");
+const vehicleClassCodes = require("./reference/personal-auto/vehicleClassCodes.json");
+const umUimCodes = require("./reference/personal-auto/umUimCodes.json");
+const terrorismIndicatorCodes = require("./reference/personal-auto/terrorismIndicatorCodes.json");
+const singleMultiCarCodes = require("./reference/personal-auto/singleMultiCarCodes.json");
+const packageCodes = require("./reference/personal-auto/packageCodes.json");
+const poolAffiliationCodes = require("./reference/personal-auto/poolAffiliationCodes.json");
+const ncProgramEnhancementCodes = require("./reference/personal-auto/ncProgramEnhancementCodes.json");
+const umuimStackingCodes = require("./reference/personal-auto/umuimStackingCodes.json");
+const passiveRestraintDiscountCodes = require("./reference/personal-auto/passiveRestraintDiscountCodes.json");
+const antiLockBrakesDiscountCodes = require("./reference/personal-auto/antiLockBrakesDiscountCodes.json");
+const antiTheftDeviceDiscountCodes = require("./reference/personal-auto/antiTheftDeviceDiscountCodes.json");
+const defensiveDriverDiscountCodes = require("./reference/personal-auto/defensiveDriverDiscountCodes.json");
+const pipLimitsDeductibleCodes = require("./reference/personal-auto/pipLimitsDeductibleCodes.json");
+const experienceRatingModificationFactorCodes = require("./reference/personal-auto/experiencedRatingModificationFactorCodes.json");
+const stateExceptionCodes = require("./reference/personal-auto/stateExceptionCodes.json");
+const causeOfLossCodes = require("./reference/personal-auto/causeOfLossCodes.json");
+const limitedCodingLossTransactionCodes = require("./reference/personal-auto/limitedCodingLossTransactionCodes.json");
 const { syncBuiltinESMExports } = require("module");
 
 const NOT_PROVIDED = "Not Provided";
@@ -196,12 +196,15 @@ module.exports.converter = function (jsonRecord) {
     : NOT_PROVIDED;
   driver.MaritalStatusCode = jsonRecord.sexAndMaritalStatus;
   driver.PrincipalSecondary = jsonRecord.sexAndMaritalStatus.trim()
-    ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus]
-        .principalSecondary
+    ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].principalSecondary
     : NOT_PROVIDED;
+    //console.log('JSON RECORD 1')
+    //console.log(jsonRecord)
   vehicle.VehicleUse = jsonRecord.vehicleUse.trim()
     ? vehicleUseCodes[jsonRecord.vehicleUse].use
     : NOT_PROVIDED;
+    //console.log('JSON RECORD 2')
+    //console.log(jsonRecord)
   vehicle.VehicleUseOperator = jsonRecord.vehicleUse.trim()
     ? vehicleUseCodes[jsonRecord.vehicleUse].operator
     : NOT_PROVIDED;
@@ -214,9 +217,10 @@ module.exports.converter = function (jsonRecord) {
   vehicle.VehiclePerformance = jsonRecord.vehiclePerformance.trim()
     ? vehiclePerformanceCodes[jsonRecord.vehiclePerformance]
     : NOT_PROVIDED;
+    
 
   try {
-    let tmpCode = jsonRecord.privatePassengerDriversTrainingGoodStudent.trim();
+    let tempCode = jsonRecord.privatePassengerDriversTrainingGoodStudent.trim();
     driver.DriversTraining =
       privatePassengerDriversTrainingGoodStudentCodes[tempCode].driversTraining;
   } catch {
@@ -301,10 +305,21 @@ module.exports.converter = function (jsonRecord) {
       coverage.MonthsCovered
     );
   }
+  // if (jsonRecord.occurrenceIdentification) {
+  //   claim.ClaimCount = parseInt(jsonRecord.claimCount);
+  //   claim.CauseOfLoss =
+  //     causeOfLossCodes.coverage[jsonRecord.coverage][jsonRecord.causeOfLoss];
+
   if (jsonRecord.occurrenceIdentification) {
     claim.ClaimCount = parseInt(jsonRecord.claimCount);
-    claim.CauseOfLoss =
-      causeOfLossCodes.coverage[jsonRecord.coverage][jsonRecord.causeOfLoss];
+    //console.log('cause of loss' +jsonRecord.causeOfLoss)
+    //console.log(jsonRecord)
+    if (!jsonRecord.coverage == "") {
+      if (!jsonRecord.causeOfLoss == "") {
+        claim.CauseOfLoss =
+        causeOfLossCodes.coverage[jsonRecord.coverage][jsonRecord.causeOfLoss];
+      }
+    }
     claim.AccidentDate = convertAccidentDate(jsonRecord.accidentDate);
 
     claim.OccurrenceIdentifier = jsonRecord.occurrenceIdentification.trim();
@@ -370,6 +385,6 @@ module.exports.converter = function (jsonRecord) {
     vehicle.VINHash = hashString(jsonRecord.vehicleIdentificationVIN);
   }
 
-  console.table(convertedRecord.Policy);
+  //console.table(convertedRecord.Policy);
   return convertedRecord;
 };

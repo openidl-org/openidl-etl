@@ -1,8 +1,8 @@
 const fs = require("fs");
 const convertToJson =
-  require("../openidl-etl-statplan-processor/processor").convertTextRecordsToJson;
+  require("../openidl-etl-statplan-processor/personal-auto-processor").convertTextRecordsToJson;
 const autoConverter =
-  require("../openidl-etl-statplan-processor/converters/autoConverter").converter;
+  require("../openidl-etl-statplan-processor/converters/personalAutoConverter").converter;
 const buildPayload =
   require("../openidl-etl-success-processor/load-insurance-data").buildPayload;
 
