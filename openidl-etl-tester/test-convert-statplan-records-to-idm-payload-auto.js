@@ -9,7 +9,7 @@ const buildPayload =
 const config = require("./config/config.json");
 
 // open text file, read data into record string
-let testPremiumRecordsText = fs.readFileSync(config.inbound, "utf-8");
+let testPremiumRecordsText = fs.readFileSync(config.personalAuto.inbound, "utf-8");
 
 // convert record string to JSON
 let jsonPremiumRecords = convertToJson(testPremiumRecordsText);
@@ -21,20 +21,26 @@ for (let jsonPremiumRecord of jsonPremiumRecords) {
   let id;
   if ("policyIdentification" in jsonPremiumRecord) {
     id = jsonPremiumRecord.policyIdentification;
-  }
-  if ("occurrenceIdentification" in jsonPremiumRecord) {
+  } else if ("occurrenceIdentification" in jsonPremiumRecord) {
     id = jsonPremiumRecord.occurrenceIdentification;
+  } else {
+    id = 'undefined'
+    console.log('Undefined Record Found')
   }
 
   console.log(
     "id: " + id + " transactionCode: " + jsonPremiumRecord.transactionCode
   );
 
+  // if (id == '8a896f5a8804e3') {
+  //   console.log(jsonPremiumRecord)
+  //   d()
+  // }
   hdsAutoRecords.push(autoConverter(jsonPremiumRecord));
 }
 console.log("hdsAuto length: " + hdsAutoRecords.length);
 if (hdsAutoRecords.length > 0) {
   let premiumPayload = buildPayload(hdsAutoRecords);
-  fs.writeFileSync(config.outbound, JSON.stringify(premiumPayload));
+  fs.writeFileSync(config.personalAuto.outbound, JSON.stringify(premiumPayload));
 }
-fs.writeFileSync(config.error, JSON.stringify(errorRecords));
+fs.writeFileSync(config.personalAuto.error, JSON.stringify(errorRecords));

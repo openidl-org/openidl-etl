@@ -1,5 +1,5 @@
 const premiumSchema = require("./schemas/personal_auto/personalAutoStatPlan-premium.json");
-const lossSchema = require("./schemas/personal_auto/personalStatPlan-loss.json");
+const lossSchema = require("./schemas/personal_auto/personalAutoStatPlan-loss.json");
 const converter = require("./converters/personalAutoConverter").converter;
 
 
@@ -101,6 +101,7 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema, lossSchema) {
         var value = record.substring(start, end).trim();
         if (type == "number") {
           positive = 1;
+          console.log(value)
           if (value.charAt(value.length - 1) == "}") {
             value = value.slice(0, -1);
             positive = positive * -1; 
