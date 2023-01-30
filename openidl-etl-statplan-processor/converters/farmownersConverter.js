@@ -4,7 +4,7 @@ const areaIndicator = require("./reference/home-owners/areaIndicator.json");
 const transactionCodes = require("./reference/home-owners/transactionCodes.json");
 const annualStatementLineOfBusiness = require("./reference/home-owners/annualStatementLineOfBusiness.json");
 const programCodes = require("./reference/home-owners/programCodes.json");
-const policyFormCode = require("./reference/home-owners/policyFormCode.json");
+const policyForm = require("./reference/home-owners/policyForm.json");
 const deductibleType = require("./reference/home-owners/deductibleType.json");
 const deductibleAmount = require("./reference/home-owners/deductibleAmount.json");
 const windstormOrHailCoverageDeductibleAmount = require("./reference/home-owners/windstormOrHailDeductible.json");
@@ -175,23 +175,23 @@ module.exports.converter = function (jsonRecord) {
   : NOT_PROVIDED;
 
   // program
-  policy.Program = jsonRecord.programCode.trim()
-    ? programCodes[jsonRecord.programCode]
+  policy.Program = jsonRecord.program.trim()
+    ? programCodes[jsonRecord.program]
     : NOT_PROVIDED;
 
   // policy
-  policy.PolicyFormCode = jsonRecord.policyForm;
-  policy.PolicyCategory = jsonRecord.policyForm.trim()
-    ? policyFormCode[jsonRecord.policyForm].category
+  policy.PolicyFormCode = jsonRecord.policy;
+  policy.PolicyCategory = jsonRecord.policy.trim()
+    ? policyForm[jsonRecord.policy].category
     : NOT_PROVIDED;
-  policy.PolicyType = jsonRecord.policyForm.trim()
-    ? policyFormCode[jsonRecord.policyForm].type
+  policy.PolicyType = jsonRecord.policy.trim()
+    ? policyForm[jsonRecord.policy].type
     : NOT_PROVIDED;
-  policy.ReportingForm = jsonRecord.policyForm.trim()
-    ? policyFormCode[jsonRecord.policyForm].reportingForm
+  policy.ReportingForm = jsonRecord.policy.trim()
+    ? policyForm[jsonRecord.policy].reportingForm
     : NOT_PROVIDED
-    policy.ReportingCategory = jsonRecord.policyForm.trim()
-    ? policyFormCode[jsonRecord.policyForm].reportingCategory
+    policy.ReportingCategory = jsonRecord.policy.trim()
+    ? policyForm[jsonRecord.policy].reportingCategory
     : NOT_PROVIDED
 
   // lossSettlementIndicator 

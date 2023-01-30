@@ -1,5 +1,5 @@
-const premiumSchema = require("./schemas/homeownersStatPlan-premium.json");
-const lossSchema = require("./schemas/homeownersStatPlan-loss.json");
+const premiumSchema = require("./schemas/homeowners/homeownersStatPlan-policy.json");
+const lossSchema = require("./schemas/homeowners/homeownersStatPlan-claim.json");
 const converter = require("./converters/homeownerConverter").converter;
 
 

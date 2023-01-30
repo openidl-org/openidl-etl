@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "HomeownersPolicyMessage",
+    "id": "MobileHomeownersPolicyMessage",
     "type": "object",
-    "title": "Homeowners Policy Stat Plan",
+    "title": "Mobile-Homeowners Stat Plan",
     "additionalProperties": false,
     "properties": {
         "lineOfInsurance": {
@@ -11,7 +11,7 @@
             "start": 0,
             "length": 2,
             "enum": [
-                "32"
+                "34"
             ]
         },
         "accountingDate": {
@@ -130,8 +130,20 @@
             "start": 20,
             "length": 10
         },
+        "lossAmount": {
+            "name": "lossAmount",
+            "type": "string",
+            "start": 20,
+            "length": 10
+        },
         "exposure": {
             "name": "exposure",
+            "type": "string",
+            "start": 30,
+            "length": 5
+        },
+        "claimCount": {
+            "name": "claimCount",
             "type": "string",
             "start": 30,
             "length": 5
@@ -153,7 +165,12 @@
                 "090",
                 "120",
                 "170",
+                "171",
+                "172",
+                "173",
                 "180",
+                "181",
+                "182",
                 "191",
                 "192",
                 "193",
@@ -164,8 +181,8 @@
                 "270"
             ]
         },
-        "program": {
-            "name": "program",
+        "programCode": {
+            "name": "programCode",
             "type": "string",
             "start": 38,
             "length": 1,
@@ -179,7 +196,7 @@
             ]
         },
         "policyForm": {
-            "name": "policy",
+            "name": "policyForm",
             "type": "string",
             "start": 39,
             "length": 2,
@@ -189,9 +206,6 @@
                 "03",
                 "04",
                 "84",
-                "05",
-                "06",
-                "86",
                 "08",
                 "41",
                 "42",
@@ -206,11 +220,10 @@
                 "61",
                 "62",
                 "63",
-                "64",
-                "75",
                 "60",
                 "80",
                 "81",
+                "64",
                 "19",
                 "51",
                 "52",
@@ -228,25 +241,11 @@
             "length": 1,
             "enum": [
                 "0",
-                "3",
-                "A",
                 "6",
-                "F",
-                "4",
-                "B",
-                "C",
-                "D",
-                "E",
+                "8",
                 "7",
-                "G",
-                "J",
-                "P",
-                "R",
-                "H",
-                "K",
-                "L",
-                "M",
-                "N"
+                "A",
+                "B"
             ]
         },
         "primaryPropertyAmountOfInsurance": {
@@ -359,19 +358,12 @@
             "start": 54,
             "length": 5,
             "enum": [
-                "00000",
-                "00780",
-                "00781",
-                "00782",
-                "00783",
-                "00784",
-                "00785",
-                "00786",
-                "00787",
-                "00788",
-                "00763",
-                "00764",
-                "00999",
+                "75001",
+                "75101",
+                "75201",
+                "75011",
+                "75111",
+                "75211",
                 "40001",
                 "40002",
                 "40003",
@@ -382,22 +374,31 @@
                 "54001",
                 "54002",
                 "54003",
+                "74201",
+                "74202",
+                "74299",
                 "73501",
                 "73502",
+                "73503",
                 "73601",
                 "73602",
                 "73603",
                 "73701",
                 "73702",
-                "74201",
-                "74202",
-                "74299",
-                "75001",
-                "75101",
-                "75201",
-                "75011",
-                "75111",
-                "75211",
+                "74101",
+                "00780",
+                "00781",
+                "00782",
+                "00783",
+                "00784",
+                "00785",
+                "00786",
+                "00787",
+                "00788",
+                "00789",
+                "00763",
+                "00764",
+                "00999",
                 "40851",
                 "40852",
                 "61721",
@@ -411,7 +412,6 @@
                 "10060",
                 "10070",
                 "10080",
-                "10085",
                 "10090",
                 "10100",
                 "10110",
@@ -442,7 +442,6 @@
                 "30070",
                 "30080",
                 "30090",
-                "30095",
                 "30100",
                 "30110",
                 "30120",
@@ -458,10 +457,7 @@
                 "40010",
                 "40020",
                 "40030",
-                "40034",
-                "40037",
                 "40040",
-                "40045",
                 "40050",
                 "40060",
                 "40070",
@@ -479,7 +475,6 @@
                 "40190",
                 "40999",
                 "50010",
-                "50015",
                 "50020",
                 "50030",
                 "50040",
@@ -487,30 +482,22 @@
                 "50060",
                 "50070",
                 "50080",
-                "50085",
                 "50090",
                 "50100",
                 "50110",
                 "50120",
-                "50125",
                 "50130",
                 "50140",
                 "50150",
                 "50160",
                 "50170",
                 "50180",
-                "50182",
-                "50185",
-                "50188",
                 "50190",
                 "50200",
-                "50205",
                 "50210",
-                "50215",
                 "50220",
                 "50230",
                 "50240",
-                "50245",
                 "50250",
                 "50260",
                 "50270",
@@ -523,29 +510,6 @@
                 "60005",
                 "60006",
                 "60999"
-            ]
-        },
-        "constructionCode": {
-            "name": "constructionCode",
-            "type": "string",
-            "start": 59,
-            "length": 2,
-            "enum": [
-                "00",
-                "01",
-                "05",
-                "06",
-                "02",
-                "03",
-                "04",
-                "14",
-                "08",
-                "09",
-                "11",
-                "12",
-                "07",
-                "10",
-                "99"
             ]
         },
         "fireProtectionCode": {
@@ -582,8 +546,8 @@
                 "19"
             ]
         },
-        "yearOfConstruction": {
-            "name": "yearOfConstruction",
+        "yearOfManufacture": {
+            "name": "yearOfManufacture",
             "type": "string",
             "start": 65,
             "length": 2
@@ -679,6 +643,19 @@
                 "9"
             ]
         },
+        "tieDown": {
+            "name": "tieDown",
+            "type": "string",
+            "start": 80,
+            "length": 1,
+            "enum": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4"
+            ]
+        },
         "ordinanceOrLawCoverage": {
             "name": "ordinanceOrLawCoverage",
             "type": "string",
@@ -766,6 +743,65 @@
             "start": 92,
             "length": 2
         },
+        "causeOfLoss": {
+            "name": "causeOfLoss",
+            "type": "string",
+            "start": 92,
+            "length": 2,
+            "enum": [
+                "01",
+                "02",
+                "32",
+                "03",
+                "04",
+                "05",
+                "45",
+                "39",
+                "06",
+                "33",
+                "07",
+                "08",
+                "09",
+                "10",
+                "11",
+                "77",
+                "12",
+                "44",
+                "40",
+                "16",
+                "23",
+                "37",
+                "34",
+                "17",
+                "76",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "38",
+                "41",
+                "24",
+                "25",
+                "26",
+                "28",
+                "53",
+                "57",
+                "58",
+                "54",
+                "55",
+                "56",
+                "30",
+                "27",
+                "29"
+            ]
+        },
+        "accidentDate": {
+            "name": "accidentDate",
+            "type": "string",
+            "start": 95,
+            "length": 6
+        },
         "zipCode": {
             "name": "zipCode",
             "type": "string",
@@ -777,38 +813,6 @@
             "type": "string",
             "start": 106,
             "length": 4
-        },
-        "buildingCodeEffectivenessGrade": {
-            "name": "buildingCodeEffectivenessGrade",
-            "type": "string",
-            "start": 110,
-            "length": 1,
-            "enum": [
-                "0",
-                "1",
-                "A",
-                "B",
-                "C",
-                "D",
-                "E",
-                "F",
-                "G",
-                "H",
-                "J",
-                "K",
-                "L",
-                "M",
-                "N",
-                "P",
-                "Q",
-                "R",
-                "S",
-                "T",
-                "U",
-                "W",
-                "X",
-                "Y"
-            ]
         },
         "stateExceptionA": {
             "name": "stateExceptionA",
@@ -822,16 +826,10 @@
             "start": 112,
             "length": 1
         },
-        "stateExceptionC": {
-            "name": "stateExceptionC",
+        "limitedCodingLossTransaction": {
+            "name": "limitedCodingLossTransaction",
             "type": "string",
-            "start": 113,
-            "length": 1
-        },
-        "smallPremiumIndicator": {
-            "name": "smallPremiumIndicator",
-            "type": "string",
-            "start": 123,
+            "start": 124,
             "length": 1,
             "enum": [
                 " ",
@@ -857,11 +855,23 @@
             "start": 126,
             "length": 14
         },
+        "claimNumber": {
+            "name": "claimNumber",
+            "type": "string",
+            "start": 126,
+            "length": 12
+        },
+        "claimIdentifier": {
+            "name": "claimIdentifier",
+            "type": "string",
+            "start": 138,
+            "length": 2
+        },
         "companyUse": {
             "name": "companyUse",
             "type": "string",
             "start": 140,
-            "length": 12
+            "length": 10
         }
     }
 }

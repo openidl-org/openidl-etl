@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "PersonalAutoPolicyMessage",
+    "id": "CommercialAutoClaimMessage",
     "type": "object",
-    "title": "Personal Auto Policy Stat Plan",
+    "title": "Commercial Auto Claim Stat Plan",
     "additionalProperties": false,
     "properties": {
         "lineOfInsurance": {
@@ -253,8 +253,8 @@
                 "0"
             ]
         },
-        "privatePassengerDriversTrainingGoodStudent": {
-            "name": "privatePassengerDriversTrainingGoodStudent",
+        "commercialAutomobileClassification": {
+            "name": "commercialAutomobileClassification",
             "type": "string",
             "start": 33,
             "length": 1,
@@ -263,16 +263,20 @@
                 "2",
                 "3",
                 "4",
-                "5"
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "C"
             ]
         },
-        "privatePassengerPenaltyPoints": {
-            "name": "privatePassengerPenaltyPoints",
+        "commercialAutomobileUse": {
+            "name": "commercialAutomobileUse",
             "type": "string",
             "start": 34,
             "length": 1,
             "enum": [
-                "0",
                 "1",
                 "2",
                 "3",
@@ -280,7 +284,8 @@
                 "5",
                 "6",
                 "7",
-                "8"
+                "8",
+                "9"
             ]
         },
         "liabilityLimitsAmount": {

@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "CommercialAutoPolicyMessage",
+    "id": "CommercialAutoPolicy&ClaimMessage",
     "type": "object",
-    "title": "Commercial Auto Policy Stat Plan",
+    "title": "Commercial Auto Policy & Claim Stat Plan",
     "additionalProperties": false,
     "properties": {
         "lineOfInsurance": {
@@ -267,7 +267,8 @@
                 "6",
                 "7",
                 "8",
-                "9"
+                "9",
+                "C"
             ]
         },
         "commercialAutomobileUse": {
@@ -412,11 +413,36 @@
             "start": 43,
             "length": 5
         },
+        "claimCount": {
+            "name": "claimCount",
+            "type": "string",
+            "start": 43,
+            "length": 5
+        },
         "monthsCovered": {
             "name": "monthsCovered",
             "type": "string",
             "start": 48,
             "length": 2
+        },
+        "causeOfLoss": {
+            "name": "causeOfLoss",
+            "type": "string",
+            "start": 48,
+            "length": 1,
+            "enum": [
+                " ",
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9"
+            ]
         },
         "terrorismIndicator": {
             "name": "terrorismIndicator",
@@ -476,6 +502,18 @@
             "type": "string",
             "start": 65,
             "length": 14
+        },
+        "occurrenceIdentification": {
+            "name": "occurrenceIdentification",
+            "type": "string",
+            "start": 65,
+            "length": 12
+        },
+        "claimIdentifier": {
+            "name": "claimIdentifier",
+            "type": "string",
+            "start": 77,
+            "length": 2
         },
         "ncProgramEnhancementIndicator": {
             "name": "ncProgramEnhancementIndicator",

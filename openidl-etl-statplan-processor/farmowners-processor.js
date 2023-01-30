@@ -1,6 +1,6 @@
-const premiumSchema = require("./schemas/personal_auto/personalAutoStatPlan-policy.json");
-const lossSchema = require("./schemas/personal_auto/personalAutoStatPlan-claim.json");
-const converter = require("./converters/personalAutoConverter").converter;
+const premiumSchema = require("./schemas/farmownersStatPlan-policy.json");
+const lossSchema = require("./schemas/farmownersStatPlan-claim.json");
+const converter = require("./converters/farmownersConverter").converter;
 
 
 
@@ -28,14 +28,13 @@ function convertTextRecordsToJsonUsingSchema(recordsText, premiumSchema, lossSch
   for (let record of records) {
     //transform record
     lcl_result = convertTextRecordToJsonUsingSchema(record, premiumSchema,lossSchema);
-    if (lcl_result) {
     uniqueExposures.add(lcl_result.exposure)
     console.log(lcl_result);
     results.push(lcl_result);
-  }}
+  }
   return results;
 }
-
+// This uses the same codes as auto
 function getTransactionCode(record, schema) {
   var start = schema.properties["transactionCode"].start;
   var end = start + 1;
@@ -43,49 +42,25 @@ function getTransactionCode(record, schema) {
   return transactionCode;
 }
 
-function getLineOfInsurance(record, schema) {
-  var start = schema.properties["lineOfInsurance"].start;
-  var end = start + 2;
-  var lineOfInsurance = record.substring(start, end).trim();
-  return lineOfInsurance;
-}
-function getSublineCode(record, schema) {
-  var start = schema.properties["subline"].start;
-  var end = start + 1;
-  var subline = record.substring(start, end).trim();
-  return subline;
-}
-
+// *** converts record to json, even a single record
 function convertTextRecordToJsonUsingSchema(record, premiumSchema, lossSchema) {
   let result = {};
   var transactionCode = getTransactionCode(record, premiumSchema)
-  var lineOfInsurance = getLineOfInsurance(record, premiumSchema)
-  var subline = getSublineCode(record, premiumSchema)
   let schema = null
   
   console.log('transaction code: '+transactionCode)
-  console.log('lineOfInsurance code: '+lineOfInsurance)
-  console.log('subline code: '+subline)
-
-  // IF LOI = 56 && subline = 1, use personal auto
-  // IF LOI = 56 && subline = 2, use commercial auto
-  //let count = 0
-  if (lineOfInsurance == '56') {
-        if (subline == '1') {
-          //count++
-          console.log('PERSONAL AUTO RECORD FOUND!!!')
-        
-      
 
   if (transactionCode == '1' || transactionCode == '8'){
     schema = premiumSchema
     console.log('premium record found')
+    console.log(record)
   }
 
-  if (transactionCode == "2" || transactionCode == "3" || transactionCode == "6" || transactionCode == "7") {
+  if (transactionCode =="2" || transactionCode =="3" || transactionCode =="6" || transactionCode =="7") {
     schema = lossSchema
     console.log('loss record found')
-    //console.log(record)
+    console.log(record)
+
   }
 
     for (let fieldName in schema.properties) {
@@ -101,7 +76,6 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema, lossSchema) {
         var value = record.substring(start, end).trim();
         if (type == "number") {
           positive = 1;
-          console.log(value)
           if (value.charAt(value.length - 1) == "}") {
             value = value.slice(0, -1);
             positive = positive * -1; 
@@ -128,9 +102,10 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema, lossSchema) {
         }
       }
     }
-  
+
+    
     return result
-  }}}
+  }
 
 
 exports.process = async function (records) {

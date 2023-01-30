@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/schema",
     "id": "PersonalAutoPolicyMessage",
     "type": "object",
-    "title": "Personal Auto Policy Stat Plan",
+    "title": "Personal Auto Stat Plan - Premium Transactions",
     "additionalProperties": false,
     "properties": {
         "lineOfInsurance": {
