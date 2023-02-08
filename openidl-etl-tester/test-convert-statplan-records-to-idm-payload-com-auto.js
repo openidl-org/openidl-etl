@@ -37,4 +37,4 @@ if (hdsCommercialAutoRecords.length > 0) {
   let premiumPayload = buildPayload(hdsCommercialAutoRecords);
   fs.writeFileSync(config.commercialAuto.outbound, JSON.stringify(premiumPayload));
 }
-fs.writeFileSync(config.error, JSON.stringify(errorRecords));
+fs.writeFileSync(config.commercialAuto.error, JSON.stringify(errorRecords));

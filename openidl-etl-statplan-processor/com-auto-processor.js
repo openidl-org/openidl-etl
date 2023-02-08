@@ -1,5 +1,5 @@
-const premiumSchema = require("./schemas/commercialAutoStatPlan-policy.json");
-const lossSchema = require("./schemas/commercialAutoStatPlan-claim.json");
+const premiumSchema = require("./schemas/commercial_auto/commercialAutoStatPlan-policy.json");
+const lossSchema = require("./schemas/commercial_auto/commercialAutoStatPlan-claim.json");
 const converter = require("./converters/commercialAutoConverter").converter;
 
 

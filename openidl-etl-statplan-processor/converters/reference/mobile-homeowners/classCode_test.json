@@ -1,0 +1,69 @@
+{
+    "classCode": {
+        "classField": {
+            "A": {
+                "fieldName": "Farm Personal Liability Exposure",
+                "description": "Farm Personal Liability (AAIS Endorsement ML-29, ML 0029, HO 0029, or equivalent OR ISO HO 24 73 or equivalent) with or without Products Aggregate Limit (AAIS Endorsement ML-427, ML 0427, HO 0427, or equivalent)",
+                "type": "code",
+                "codes": {
+                    "75001": "1 - 160 acres",
+                    "75101": "161 - 500 acres",
+                    "75201": "over 500 acres",
+                    "75011": "1 - 1,000 acres",
+                    "75111": "1,001 - 2,000 acres",
+                    "75211": "over 2,000 acres"
+                }
+            },
+            "B": {
+                "fieldName": "Owners Form Records Held In Trust",
+                "description": "Owners Form Records Held In Trust",
+                "type": "code",
+                "codes": {
+                    "40001": "Trust/Trustee only (beneficiary and grantor not named in the endorsement)",
+                    "40002": "Beneficiary OR grantor named in the endorsement; and Trustee resides on the residence premises",
+                    "40003": "Beneficiary OR grantor named in the endorsement; and Trustee does not reside on the residence premises",
+                    "40004": "Beneficiary AND grantor named in the endorsement; and Trustee resides on the residence premises",
+                    "40005": "Beneficiary AND grantor named in the endorsement; and Trustee does not reside on the residence premises"
+                }
+            },
+            "C": {
+                "fieldName": "Type of Motorized Golf Cart - Physical Damage Coverage",
+                "description": "Type of Motorized Golf Cart - Physical Damage Coverage",
+                "type": "code",
+                "codes": {
+                    "63401": "With collision",
+                    "63402": "Without collision"
+                }
+            },
+            "D": {
+                "fieldName": "Tank Classification",
+                "description": "Tank Classification",
+                "type": "code",
+                "codes": {
+                    "54001": "Below ground tank",
+                    "54002": "Above ground tank, inside the insured premises",
+                    "54003": "Below ground tank, outside the insured premises"
+                }
+            },
+            "E": {
+                "fieldName": "Type of Watercraft",
+                "description": "AAIS Program Users",
+                "type": "code",
+                "codes":{
+                    "74201": "Each outboard motor ─ 25-50HP",
+                    "74202": "Each outboard motor ─ over 50HP",
+                    "74299": "Each outboard motor ─ all watercraft powered by outboard engines or motors,regardless of HP (New Hampshire only)",
+                    "73501": "Inboard / Inboard-outboard / sailboats with auxiliary power",
+                    "73502": "Inboard / Inboard-outboard / sailboats with auxiliary power",
+                    "73503": "Inboard / Inboard-outboard / sailboats with auxiliary power",
+                    "73601": "Inboard / Inboard-outboard / sailboats with auxiliary power",
+                    "73602": "Inboard / Inboard-outboard / sailboats with auxiliary power",
+                    "73603": "Inboard / Inboard-outboard / sailboats with auxiliary power",
+                    "73701": "Inboard / Inboard-outboard / sailboats with auxiliary power",
+                    "73702": "Inboard / Inboard-outboard / sailboats with auxiliary power",
+                    "74101": "Sailboats with no auxiliary power"
+                }
+            }
+        }
+    }
+}

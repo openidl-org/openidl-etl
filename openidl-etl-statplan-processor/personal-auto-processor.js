@@ -1,5 +1,5 @@
-const premiumSchema = require("./schemas/personal_auto/personalAutoStatPlan-premium.json");
-const lossSchema = require("./schemas/personal_auto/personalAutoStatPlan-loss.json");
+const premiumSchema = require("./schemas/personal_auto/personalAutoStatPlan-policy.json");
+const lossSchema = require("./schemas/personal_auto/personalAutoStatPlan-claim.json");
 const converter = require("./converters/personalAutoConverter").converter;
 
 

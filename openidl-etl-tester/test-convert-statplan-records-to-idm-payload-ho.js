@@ -38,4 +38,4 @@ if (hdsHomeownerRecords.length > 0) {
   let premiumPayload = buildPayload(hdsHomeownerRecords);
   fs.writeFileSync(config.homeowners.outbound, JSON.stringify(premiumPayload));
 }
-fs.writeFileSync(config.error, JSON.stringify(errorRecords));
+fs.writeFileSync(config.homeowners.error, JSON.stringify(errorRecords));
