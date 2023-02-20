@@ -62,7 +62,18 @@ async function convertToJson(recordsText) {
     }
 
     if (outputRecord['Transaction Date']) {
-      resultRecord.transactionDate = outputRecord['Transaction Date'];
+      let dateRecord;
+      try {
+        dateRecord = new Date(outputRecord['Transaction Date']).toISOString().split('T')[0];
+      } catch (err) {
+        errors.push({
+          type: 'data',
+          message: 'Invalid Date Format',
+          record: outputRecord,
+        });
+
+      }
+      resultRecord.transactionDate = dateRecord;
     }
 
     if (!resultRecord.organizationID) {
