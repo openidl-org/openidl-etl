@@ -1,28 +1,26 @@
 const crypto = require("crypto");
-const stateCodes = require("./reference/home-owners/stateCodes.json");
-const areaIndicator = require("./reference/home-owners/areaIndicator.json");
-const transactionCodes = require("./reference/home-owners/transactionCodes.json");
-const annualStatementLineOfBusiness = require("./reference/home-owners/annualStatementLineOfBusiness.json");
-const programCodes = require("./reference/home-owners/programCodes.json");
-const policyForm = require("./reference/home-owners/policyForm.json");
-const deductibleType = require("./reference/home-owners/deductibleType.json");
-const deductibleAmount = require("./reference/home-owners/deductibleAmount.json");
-const windstormOrHailCoverageDeductibleAmount = require("./reference/home-owners/windstormOrHailDeductible.json");
-const classCodes = require("./reference/home-owners/classCodes.json");
-const constructionCodes = require("./reference/home-owners/constructionCodes.json");
-const fireCodes = require("./reference/home-owners/fireProtectionCodes.json");
-const escapedLiquidFuelCoverageProperty = require("./reference/home-owners/escapedLiquidFuelCoverageProperty.json");
-const escapedLiquidFuelAndLeadCoverageLiability = require("./reference/home-owners/escapedLiquidFuelAndLeadCoverageLiability.json");
-const occupancyCodes = require("./reference/home-owners/occupancyCodes.json");
-const hbbIndicator = require("./reference/home-owners/homeBasedBusinessIndicator.json");
-const numberOfFamilies = require("./reference/home-owners/numberOfFamilies.json");
-const ordinanceOrLawCoverage = require("./reference/home-owners/ordinanceOrLawCoverage.json");
-const theftDeductibleAmount = require("./reference/home-owners/theftDeductibleAmount.json");
-const ncProgramEnhancementIndicator = require("./reference/home-owners/ncProgramEnhancementIndicator.json");
-const moldDamageCoverageCode = require("./reference/home-owners/moldDamageCoverage.json");
-const poolCode = require("./reference/home-owners/poolCode.json");
-const causeOfLoss = require("./reference/home-owners/causeOfLoss.json");
-const buildingCodeEffectivenessGrade = require("./reference/home-owners/buildingCodeEffectivenessGrade.json");
+const stateCodes = require("./reference/dwelling-properties/stateCodes.json");
+const areaIndicator = require("./reference/dwelling-properties/areaIndicator.json");
+const transactionCodes = require("./reference/dwelling-properties/transactionCodes.json");
+const annualStatementLineOfBusiness = require("./reference/dwelling-properties/annualStatementLineOfBusiness.json");
+const programCodes = require("./reference/dwelling-properties/programCodes.json");
+const deductibleType = require("./reference/dwelling-properties/deductibleType.json");
+const deductibleAmount = require("./reference/dwelling-properties/deductibleAmount.json");
+const windstormOrHailCoverageDeductibleAmount = require("./reference/dwelling-properties/windstormOrHailDeductible.json");
+const classCodes = require("./reference/dwelling-properties/classCodes.json");
+const constructionCodes = require("./reference/dwelling-properties/constructionCodes.json");
+const coverageCodes = require("./reference/dwelling-properties/coverageCode.json")
+const fireCodes = require("./reference/dwelling-properties/fireProtectionCodes.json");
+const occupancyCodes = require("./reference/dwelling-properties/occupancyCodes.json");
+const numberOfFamilies = require("./reference/dwelling-properties/numberOfFamilies.json");
+const poolCode = require("./reference/dwelling-properties/poolCode.json");
+const causeOfLoss = require("./reference/dwelling-properties/causeOfLoss.json");
+const majorPerilCode = require("./reference/dwelling-properties/majorPeril.json")
+const packageIdentification = require("./reference/dwelling-properties/packageIdentification.json")
+const riskType = require("./reference/dwelling-properties/riskType.json")
+
+// ***revisit this
+//const exposure = require("./reference/dwelling-properties/exposure.json")
 
 
 
@@ -128,8 +126,8 @@ module.exports.converter = function (jsonRecord) {
   let dwelling = convertedRecord.Dwelling;
 
   convertedRecord.createdTime = new Date().toISOString();
-  policy.LineOfBusiness = "Homeowners";
-  policy.LineOfBusinessCode = jsonRecord.lineOfInsurance;
+  policy.LineOfInsurance = "Dwelling Properties";
+  policy.LineOfInsuranceCode = jsonRecord.lineOfInsurance;
   policy.AccountingDate = convertAccountingDate(jsonRecord.accountingDate);
   policy.CompanyCode = jsonRecord.companyCode;
   policy.CompanyID = jsonRecord.companyCode;
@@ -175,30 +173,35 @@ module.exports.converter = function (jsonRecord) {
   : NOT_PROVIDED;
 
   // program
-  policy.Program = jsonRecord.program.trim()
-    ? programCodes[jsonRecord.program]
+  policy.Program = jsonRecord.programCode.trim()
+    ? programCodes[jsonRecord.programCode]
     : NOT_PROVIDED;
 
-  // policy
-  policy.PolicyFormCode = jsonRecord.policy;
-  policy.PolicyCategory = jsonRecord.policy.trim()
-    ? policyForm[jsonRecord.policy].category
+  // Major Peril
+  policy.MajorPerilCode = jsonRecord.majorPeril;
+  policy.MajorPerilCategory = jsonRecord.majorPeril.trim()
+    ? majorPerilCode[jsonRecord.majorPeril].category
     : NOT_PROVIDED;
-  policy.PolicyType = jsonRecord.policy.trim()
-    ? policyForm[jsonRecord.policy].type
+  policy.MajorPerilType = jsonRecord.majorPeril.trim()
+    ? majorPerilCode[jsonRecord.majorPeril].type
     : NOT_PROVIDED;
-  policy.ReportingForm = jsonRecord.policy.trim()
-    ? policyForm[jsonRecord.policy].reportingForm
+  policy.MajorPerilForm = jsonRecord.majorPeril.trim()
+    ? majorPerilCode[jsonRecord.majorPeril].majorPeril
     : NOT_PROVIDED
-    policy.ReportingCategory = jsonRecord.policy.trim()
-    ? policyForm[jsonRecord.policy].reportingCategory
+    policy.MajorPerilCategory = jsonRecord.majorPeril.trim()
+    ? majorPerilCode[jsonRecord.majorPeril].majorPerilCategory
     : NOT_PROVIDED
 
-  // lossSettlementIndicator 
-  // *** get with peter on how to write the json for this
+
+
+  // Coverage Code
+  coverage.CoverageCode = jsonRecord.coverageCode
+  // coverage.CoverageCodeCategory = jsonRecord.coverageCode.trim()
+  //   ? coverageCodes[jsonRecord.coverageCode]
+  //   : NOT_PROVIDED
 
   // primaryPropertyAmountOfInsurance
-  convertedRecord.PrimaryPropertyAmountOfInsurance = jsonRecord.primaryPropertyAmountOfInsurance.trim();
+  // convertedRecord.PrimaryPropertyAmountOfInsurance = jsonRecord.primaryPropertyAmountOfInsurance.trim();
   
   // deductibleType
   policy.DeductibleType = jsonRecord.deductibleType.trim()
@@ -232,14 +235,10 @@ module.exports.converter = function (jsonRecord) {
   }
 
 
-
-
-
   //windHailDeductible
   policy.WindHailDeductible = jsonRecord.windstormOrHailCoverageDeductibleAmount.trim()
     ? windstormOrHailCoverageDeductibleAmount[jsonRecord.windstormOrHailCoverageDeductibleAmount]
     : NOT_PROVIDED;
-
 
 
   // Class Code
@@ -265,8 +264,6 @@ module.exports.converter = function (jsonRecord) {
   dwelling.EngineSize = jsonRecord.classCode.trim()
     ? classCodes[jsonRecord.classCode].engine
     : NOT_PROVIDED
-
-
 
   // Construction Code
   policy.ConstructionCode = jsonRecord.constructionCode
@@ -298,25 +295,7 @@ module.exports.converter = function (jsonRecord) {
   // Medical Payments Limit
   coverage.MedicalPayments = jsonRecord.medicalPayments;
 
-  // Escaped Liquid Fuel Coverage - Property
-  convertedRecord.EsLiqFuelProperty = jsonRecord.escapedLiquidFuelCoverageProperty
-  convertedRecord.EsLiqFuelPropertyName = jsonRecord.escapedLiquidFuelCoverageProperty.trim()
-    ? escapedLiquidFuelCoverageProperty[jsonRecord.escapedLiquidFuelCoverageProperty].name
-    : NOT_PROVIDED;
-  convertedRecord.EsLiqFuelPropertyType = jsonRecord.escapedLiquidFuelCoverageProperty.trim()
-    ? escapedLiquidFuelCoverageProperty[jsonRecord.escapedLiquidFuelCoverageProperty].type
-    : NOT_PROVIDED;
-
-  // Escaped Liquid Fuel and Lead Coverage Liability
-  convertedRecord.EsLiqFuelLiability = jsonRecord.escapedLiquidFuelAndLeadCoverageLiability
-  convertedRecord.EsLiqFuelLiabilityName = jsonRecord.escapedLiquidFuelAndLeadCoverageLiability.trim()
-    ? escapedLiquidFuelAndLeadCoverageLiability[jsonRecord.escapedLiquidFuelAndLeadCoverageLiability].name
-    : NOT_PROVIDED;
-  convertedRecord.EsLiqFuelLiabilityType = jsonRecord.escapedLiquidFuelAndLeadCoverageLiability.trim()
-    ? escapedLiquidFuelAndLeadCoverageLiability[jsonRecord.escapedLiquidFuelAndLeadCoverageLiability].type
-    : NOT_PROVIDED;
-
-
+  
   // Occupancy Code
   convertedRecord.OccupancyCode = jsonRecord.occupancyCode
   convertedRecord.OccupancyCodeName = jsonRecord.occupancyCode.trim()
@@ -327,48 +306,41 @@ module.exports.converter = function (jsonRecord) {
     : NOT_PROVIDED;
 
   // Home Based Business Indicator
-  dwelling.HomeBasedBusinessIndicator = jsonRecord.homeBasedBusinessIndicator
-  dwelling.HBBIndicatorDescription = jsonRecord.homeBasedBusinessIndicator.trim()
-    ? hbbIndicator[jsonRecord.homeBasedBusinessIndicator]
-    : NOT_PROVIDED
+  // dwelling.HomeBasedBusinessIndicator = jsonRecord.homeBasedBusinessIndicator
+  // dwelling.HBBIndicatorDescription = jsonRecord.homeBasedBusinessIndicator.trim()
+  //   ? hbbIndicator[jsonRecord.homeBasedBusinessIndicator]
+  //   : NOT_PROVIDED
 
   // Number of Families
-  let numberOfFamiliesCode = numberOfFamilies[policy.NumberOfFamilies];
-  if (!numberOfFamiliesCode) numberOfFamiliesCode = numberOfFamilies["setA"];
-  if (jsonRecord.numberOfFamilies) {
-    dwelling.NumberOfFamiliesCode = jsonRecord.numberOfFamilies
-    dwelling.NumberOfFamilies = numberOfFamiliesCode[jsonRecord.numberOfFamilies].name;
-    dwelling.DwellingType = numberOfFamiliesCode[jsonRecord.numberOfFamilies].type
-  }
+  dwelling.NumberOfFamiliesCode = jsonRecord.numberOfFamilies
+  dwelling.NumberOfFamilies = jsonRecord.numberOfFamilies
+    ? numberOfFamilies[jsonRecord.numberOfFamilies]
+    : NOT_PROVIDED
+  
 
   // Ordinance or Law Coverage
-  coverage.OrdinanceOrLawCoverage = jsonRecord.ordinanceOrLawCoverage.trim()
-    ? ordinanceOrLawCoverage[jsonRecord.ordinanceOrLawCoverage]
-    : NOT_PROVIDED
+  // coverage.OrdinanceOrLawCoverage = jsonRecord.ordinanceOrLawCoverage.trim()
+  //   ? ordinanceOrLawCoverage[jsonRecord.ordinanceOrLawCoverage]
+  //   : NOT_PROVIDED
 
   // Theft Deductible Amount
-  coverage.TheftDeductibleAmount = jsonRecord.theftDeductibleAmount.trim()
-    ? theftDeductibleAmount[jsonRecord.theftDeductibleAmount]
-    : NOT_PROVIDED
+  // coverage.TheftDeductibleAmount = jsonRecord.theftDeductibleAmount.trim()
+  //   ? theftDeductibleAmount[jsonRecord.theftDeductibleAmount]
+  //   : NOT_PROVIDED
 
   // Secondary Property Amount of Insurance
   coverage.SecondaryPropertyAmountOfInsurance = jsonRecord.secondaryPropertyAmountOfInsurance
 
-  // NC Program Enhancement Indicator (Reserved - have Peter review what to do with this. Do we keep it in or make a function for it only to show up when state === NC)
-  policy.NCProgramEnhancementIndicator = jsonRecord.ncProgramEnhancementIndicator.trim()
-    ? ncProgramEnhancementIndicator[jsonRecord.ncProgramEnhancementIndicator]
+  // Risk Type
+  policy.RiskTypeCode = jsonRecord.riskType.trim();
+  policy.RiskType = jsonRecord.riskType.trim()
+    ? riskType[jsonRecord.riskType]
     : NOT_PROVIDED
 
-  // Mold Damage Coverage Liability
-  coverage.MoldDamageCoverageCode = jsonRecord.moldDamageCoverageCode
-  coverage.MoldDamageCoverageProperty = jsonRecord.moldDamageCoverageCode.trim()
-    ? moldDamageCoverageCode[jsonRecord.moldDamageCoverageCode].property
-    : NOT_PROVIDED
-  coverage.MoldDamageCoverageLiability = jsonRecord.moldDamageCoverageCode.trim()
-    ? moldDamageCoverageCode[jsonRecord.moldDamageCoverageCode].liability
-    : NOT_PROVIDED
-  coverage.MoldDamageCoverageNotes = jsonRecord.moldDamageCoverageCode.trim()
-    ? moldDamageCoverageCode[jsonRecord.moldDamageCoverageCode].notes
+  // Package Identification
+  policy.PackageIdentificationCode = jsonRecord.packageIdentification.trim();
+  policy.PackageIdentification = jsonRecord.packageIdentification.trim()
+    ? packageIdentification[jsonRecord.packageIdentification]
     : NOT_PROVIDED
 
   // Pool Code
