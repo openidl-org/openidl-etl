@@ -109,11 +109,28 @@ async function convertToJson(recordsText) {
     if (!recordError) resultRecords.push(resultRecord);
   }
   if (errors.length > 0) {
-    logger.error('An error occured while updating the outputRecords keys', errors)
-    return { valid: false, errors: errors };
+
+    logger.error('An error occurred while updating the outputRecords keys', errors)
+    return { valid: false, errors: errors, summaryErrorMessage };
   }
   logger.debug('Successfully updated the outputRecords keys')
   return { valid: true, records: resultRecords };
 }
 
+async function createErrorSummary(errors) {
+  let uniqueErrors = []  
+  for (let i = 0; i < errors.length; i = i + 1) {
+    if (!uniqueErrors.includes(errors[i].message)) {
+      uniqueErrors.push(errors[i].message);
+    }
+  }
+  let errorSummary = "Error(s) occurred: ";
+  for (let j = 0; j < uniqueErrors.length; j = j + 1) {
+    errorSummary = errorSummary + uniqueErrors[j] + ", "
+  }
+    
+
+
+
+}
 module.exports.convertToJson = convertToJson;
