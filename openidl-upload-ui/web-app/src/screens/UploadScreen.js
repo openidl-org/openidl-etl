@@ -30,6 +30,11 @@ const columns = [
     id: "IntakeStatus",
     label: "Intake Status",
   },
+  {
+    id: "UploadStatusDetail",
+    label: "Detail",
+    minWidth: 100,
+  },
 ];
 
 export default function UploadScreen(props) {
