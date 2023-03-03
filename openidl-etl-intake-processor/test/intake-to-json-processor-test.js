@@ -14,6 +14,10 @@ const test = async () => {
 	result = await convertToJson(inputRecords)
 	console.log("Third test: Should have invalid date format error")
 	console.log(result); // should have errors
+	inputRecords = fs.readFileSync('InvalidInput.csv', 'utf-8')
+	result = await convertToJson(inputRecords)
+	console.log("Third test: Should have several errors")
+	console.log(result); // should have errors
 }
 
 

@@ -68,12 +68,12 @@ async function convertToJson(recordsText) {
       } catch (err) {
         errors.push({
           type: 'data',
-          message: 'Invalid Date Format',
+          message: 'invalid Date Format',
           record: outputRecord,
         });
-
       }
-      resultRecord.transactionDate = dateRecord;
+      resultRecord.transactionDate = dateRecord ? dateRecord : outputRecord['Transaction Date'];
+
     }
 
     if (!resultRecord.organizationID) {
@@ -109,8 +109,8 @@ async function convertToJson(recordsText) {
     if (!recordError) resultRecords.push(resultRecord);
   }
   if (errors.length > 0) {
-
     logger.error('An error occurred while updating the outputRecords keys', errors)
+    const summaryErrorMessage = await createErrorSummary(errors)
     return { valid: false, errors: errors, summaryErrorMessage };
   }
   logger.debug('Successfully updated the outputRecords keys')
@@ -118,18 +118,20 @@ async function convertToJson(recordsText) {
 }
 
 async function createErrorSummary(errors) {
+  logger.debug("inside createErrorSummary")
   let uniqueErrors = []  
   for (let i = 0; i < errors.length; i = i + 1) {
     if (!uniqueErrors.includes(errors[i].message)) {
       uniqueErrors.push(errors[i].message);
     }
   }
-  let errorSummary = "Error(s) occurred: ";
+  let errorSummary = "Error(s): ";
   for (let j = 0; j < uniqueErrors.length; j = j + 1) {
     errorSummary = errorSummary + uniqueErrors[j] + ", "
   }
-    
-
+  errorSummary = errorSummary.slice(0, - 2) + "."
+  logger.info("Error Summary: ", errorSummary)
+  return errorSummary
 
 
 }
