@@ -94,9 +94,10 @@ exports.handler = async (event, context) => {
             dbParams = {
                 TableName: config.dynamoDB.tableName,
                 Key: { 'SubmissionFileName': { S: key } },
-                UpdateExpression: 'set IntakeStatus = :st',
+                UpdateExpression: 'set IntakeStatus = :st, UploadStatusDetail = :usd',
                 ExpressionAttributeValues: {
-                    ':st': { S: 'failure' }
+                    ':st': { S: 'failure' },
+                    ':usd': {S: result.summaryErrorMessage}
                 },
                 ReturnValues: 'ALL_NEW'
             }
