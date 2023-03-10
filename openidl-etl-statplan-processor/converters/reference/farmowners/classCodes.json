@@ -4,6 +4,16 @@
     "category": "Does not apply",
     "class": "Does not apply"
   },
+  "02": {
+    "name": "Erroneous Data",
+    "category": "Erroneous Data",
+    "class": "Erroneous Data"
+  },
+  "52": {
+    "name": "Erroneous Data",
+    "category": "Erroneous Data",
+    "class": "Erroneous Data"
+  },
   "01": {
     "name": "Livestock",
     "category": "Scheduled Farm Personal Property",

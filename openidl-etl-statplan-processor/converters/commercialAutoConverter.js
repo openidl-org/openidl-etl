@@ -137,7 +137,7 @@ module.exports.converter = function (jsonRecord) {
   let driver = convertedRecord.Driver;
   let vehicle = convertedRecord.Vehicle;
   convertedRecord.createdTime = new Date().toISOString();
-  policy.LineOfBusiness = "Auto";
+  policy.LineOfBusiness = "Commercial Auto";
   policy.LineOfBusinessCode = jsonRecord.lineOfInsurance;
   policy.Subline = jsonRecord.subline.trim()
     ? sublineCodes[jsonRecord.subline].name
