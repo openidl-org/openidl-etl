@@ -16,7 +16,7 @@
         "type": "All Tanks Are Above Ground"
     }, 
     "A": {
-        "name": "Up to Policy's Liability Limit",
+        "name": "Up to Policy Liability Limit",
         "type": "All Tanks Are Above Ground"
     },
     "4": {
@@ -28,7 +28,7 @@
         "type": "One or More Tanks are Below Ground (partially or full)"
     }, 
     "B": {
-        "name": "Up to Policy's Liability Limit",
+        "name": "Up to Policy Liability Limit",
         "type": "One or More Tanks are Below Ground (partially or full)"
     },
     "6": {
@@ -40,7 +40,7 @@
         "type": "No Tanks At All"
     }, 
     "C": {
-        "name": "Up to Policy's Liability Limit",
+        "name": "Up to Policy Liability Limit",
         "type": "No Tanks At All"
     }
 }

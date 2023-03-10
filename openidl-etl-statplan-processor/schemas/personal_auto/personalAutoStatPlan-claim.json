@@ -672,6 +672,18 @@
             "start": 115,
             "length": 2
         },
+        "stateExceptionC": {
+            "name": "stateExceptionC",
+            "type": "string",
+            "start": 117,
+            "length": 2
+        },
+        "stateExceptionD": {
+            "name": "stateExceptionD",
+            "type": "string",
+            "start": 119,
+            "length": 2
+        },
         "companyUse": {
             "name": "companyUse",
             "type": "string",

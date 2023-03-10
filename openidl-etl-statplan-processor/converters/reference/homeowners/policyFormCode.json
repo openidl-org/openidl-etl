@@ -108,10 +108,10 @@
     "reportingCategory": "Liability Endorsements"
   },
   "40": {
-    "type": "All Other Liability Endorsements",
-    "category": "Liability Endorsements",
-    "reportingForm": "All Other Liability Endorsements",
-    "reportingCategory": "Liability Endorsements"
+    "type": "All Other Liability Endorsements / All Other HBB Liability Coverages",
+    "category": "Liability Endorsements / HBB Liability Coverages",
+    "reportingForm": "All Other Liability Endorsements / All Other HBB Liability Coverages",
+    "reportingCategory": "Liability Endorsements / HBB Liability Coverages"
   },
   "61": {
     "type": "Earthquake",
@@ -174,15 +174,9 @@
     "reportingCategory": "HBB Liability Coverages"
   },
   "52": {
-    "type": "Cosmetologists' Liability",
+    "type": "Cosmetologists Liability",
     "category": "HBB Liability Coverages",
-    "reportingForm": "Cosmetologists' Liability",
-    "reportingCategory": "HBB Liability Coverages"
-  },
-  "40": {
-    "type": "All Other HBB Liability Coverages",
-    "category": "HBB Liability Coverages",
-    "reportingForm": "All Other HBB Liability Coverages",
+    "reportingForm": "Cosmetologists Liability",
     "reportingCategory": "HBB Liability Coverages"
   },
   "72": {
