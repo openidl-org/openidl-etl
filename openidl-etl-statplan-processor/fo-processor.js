@@ -1,6 +1,6 @@
-const premiumSchema = require("./schemas/farmownersStatPlan-policy.json");
-const lossSchema = require("./schemas/farmownersStatPlan-claim.json");
-const converter = require("./converters/farmownersConverter").converter;
+const premiumSchema = require("./schemas/farmowners/farmownersStatPlan-policy.json");
+const lossSchema = require("./schemas/farmowners/farmownersStatPlan-claim.json");
+const converter = require("./converters/farmownerConverter").converter;
 
 
 

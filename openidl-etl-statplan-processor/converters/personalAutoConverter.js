@@ -44,25 +44,28 @@ function convertAccountingDate(dateString) {
   //return `202${dateString.substring(2, 3)}-${dateString.substring(0, 2)}-15`; //correct
   return `200${dateString.substring(2, 3)}-${dateString.substring(0, 2)}-15`; //for old export
 }
+function convertAccountingMonth(dateString) {
+  return `${dateString.substring(0, 2)}`;
+}
+function convertAccountingYear(dateString) {
+  return `${dateString.substring(2, 3)}`;
+}
+
 
 function convertAccidentDate(dateString) {
   let year = parseInt(dateString.substring(2, 4)) + 2000;
 
   let thisYear = new Date().getFullYear();
   let century = thisYear < year ? "19" : "20";
-  return `${century}${dateString.substring(2, 4)}-${dateString.substring(
-    0,
-    2
-  )}-01`;
+  return `${century}${dateString.substring(2, 4)}-${dateString.substring(0, 2)}-01`;
 }
 
 function convertDate(dateString) {
   if (!dateString) return "";
-  return `${dateString.substring(0, 4)}-${dateString.substring(
-    4,
-    6
-  )}-${dateString.substring(6)}`;
+  return `${dateString.substring(0, 4)}-${dateString.substring(4, 6)}-${dateString.substring(6)}`;
 }
+
+
 
 convertStringToFloat = (numberString) => {
   let num = numberString.toString().trim();
@@ -135,15 +138,18 @@ module.exports.converter = function (jsonRecord) {
   let driver = convertedRecord.Driver;
   let vehicle = convertedRecord.Vehicle;
   convertedRecord.createdTime = new Date().toISOString();
-  policy.LineOfBusiness = "Auto";
+  policy.LineOfBusiness = "Personal Auto";
   policy.LineOfBusinessCode = jsonRecord.lineOfInsurance;
-  policy.Subline = jsonRecord.subline.trim()
+  policy.SublineCode = jsonRecord.subline;
+  policy.SublineName = jsonRecord.subline.trim()
     ? sublineCodes[jsonRecord.subline].name
     : NOT_PROVIDED;
   policy.SublineCategory = jsonRecord.subline.trim()
     ? sublineCodes[jsonRecord.subline].category
     : NOT_PROVIDED;
   policy.AccountingDate = convertAccountingDate(jsonRecord.accountingDate);
+  policy.AccountingMonth = convertAccountingMonth(jsonRecord.accountingDate);
+  policy.AccountingYear = convertAccountingYear(jsonRecord.accountingDate);
 
   policy.CompanyCode = jsonRecord.companyCode;
   policy.CompanyID = jsonRecord.companyCode;
@@ -172,7 +178,7 @@ module.exports.converter = function (jsonRecord) {
     }
   }
 
-
+  policy.ProgramCode = jsonRecord.program;
   policy.Program = jsonRecord.program.trim()
     ? programCodes[jsonRecord.program]
     : NOT_PROVIDED;
@@ -198,13 +204,12 @@ module.exports.converter = function (jsonRecord) {
   driver.PrincipalSecondary = jsonRecord.sexAndMaritalStatus.trim()
     ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].principalSecondary
     : NOT_PROVIDED;
-    //console.log('JSON RECORD 1')
-    //console.log(jsonRecord)
+
+  vehicle.VehicleUseCode = jsonRecord.vehicleUse;
   vehicle.VehicleUse = jsonRecord.vehicleUse.trim()
     ? vehicleUseCodes[jsonRecord.vehicleUse].use
     : NOT_PROVIDED;
-    //console.log('JSON RECORD 2')
-    //console.log(jsonRecord)
+
   vehicle.VehicleUseOperator = jsonRecord.vehicleUse.trim()
     ? vehicleUseCodes[jsonRecord.vehicleUse].operator
     : NOT_PROVIDED;
@@ -214,11 +219,12 @@ module.exports.converter = function (jsonRecord) {
   vehicle.AnnualDistance = jsonRecord.vehicleUse.trim()
     ? vehicleUseCodes[jsonRecord.vehicleUse].annualDistance
     : NOT_PROVIDED;
+  vehicle.VehiclePerformanceCode = jsonRecord.vehiclePerformance;
   vehicle.VehiclePerformance = jsonRecord.vehiclePerformance.trim()
     ? vehiclePerformanceCodes[jsonRecord.vehiclePerformance]
     : NOT_PROVIDED;
     
-
+  driver.DriversTrainingGoodStudentCode = jsonRecord.privatePassengerDriversTrainingGoodStudent;
   try {
     let tempCode = jsonRecord.privatePassengerDriversTrainingGoodStudent.trim();
     driver.DriversTraining =
@@ -241,6 +247,9 @@ module.exports.converter = function (jsonRecord) {
   driver.PenaltyPoints = jsonRecord.privatePassengerPenaltyPoints.trim()
     ? penaltyPointsCodes[jsonRecord.privatePassengerPenaltyPoints]
     : NOT_PROVIDED;
+
+
+  // coverage.LiabilityLimitCode = jsonRecord.liabilityLimitCodes;
   let liabilityLimitState = liabilityLimitCodes.state[policy.State];
   if (!liabilityLimitState) {
     liabilityLimitState = liabilityLimitCodes.state["MU"];
@@ -263,6 +272,9 @@ module.exports.converter = function (jsonRecord) {
   policy.EffectiveDate = convertDate(jsonRecord.effectiveDate);
   policy.ExpirationDate = convertDate(jsonRecord.expirationDate);
   vehicle.BodyStyle = vehicleClassCodes.bodyStyle[jsonRecord.bodyStyle];
+  vehicle.BodyStyleCode = vehicleClassCodes[jsonRecord.bodyStyle]
+    ? vehicleClassCodes[jsonRecord.bodyStyle]
+    : NOT_PROVIDED
   vehicle.BodySize = vehicleClassCodes.bodySize[jsonRecord.bodySize];
   vehicle.ModelYear = jsonRecord.modelYear;
 
@@ -305,10 +317,6 @@ module.exports.converter = function (jsonRecord) {
       coverage.MonthsCovered
     );
   }
-  // if (jsonRecord.occurrenceIdentification) {
-  //   claim.ClaimCount = parseInt(jsonRecord.claimCount);
-  //   claim.CauseOfLoss =
-  //     causeOfLossCodes.coverage[jsonRecord.coverage][jsonRecord.causeOfLoss];
 
   if (jsonRecord.occurrenceIdentification) {
     claim.ClaimCount = parseInt(jsonRecord.claimCount);
@@ -346,6 +354,7 @@ module.exports.converter = function (jsonRecord) {
     : "N/A";
   policy.ZipCode = jsonRecord.zipCode.trim();
   policy.ZipCodeSuffix = jsonRecord.zipCodeSuffix.trim();
+  // coverage.UmUimCode = umUimCodes.state[jsonRecord.uninsuredUnderinsuredMotorist];
   coverage.UMUIMStacking = jsonRecord.umUimStackingIndicator
     ? umuimStackingCodes[jsonRecord.umUimStackingIndicator]
     : "N/A";

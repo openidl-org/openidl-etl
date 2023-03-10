@@ -40,9 +40,6 @@ function convertAccountingDate(dateString) {
   return `200${dateString.substring(2, 3)}-${dateString.substring(0, 2)}-15`; //for old export
 }
 
-console.log('Hello World')
-// console.log('!!!!*L*O*O*K H*E*R*E*!!!! \n')
-
 function convertAccidentDate(dateString) {
   let year = parseInt(dateString.substring(4, 6)) + 2000;
   
@@ -143,7 +140,7 @@ module.exports.converter = function (jsonRecord) {
     ? areaIndicator[jsonRecord.areaIndicator]
     : NOT_PROVIDED
 
-  // RecordType
+  // Record Type
   convertedRecord.RecordType = jsonRecord.transactionCode.trim()
     ? transactionCodes[jsonRecord.transactionCode].type
     : NOT_PROVIDED;
@@ -169,17 +166,17 @@ module.exports.converter = function (jsonRecord) {
   coverage.Exposure = jsonRecord.exposure;
   claim.ClaimCount = parseInt(jsonRecord.claimCount);
   
-  // annualStatementLineOfBusiness
+  // Annual Statement Line Of Business
   policy.AnnualStatementLineOfBusiness = jsonRecord.annualStatementLineOfBusiness.trim()
   ? annualStatementLineOfBusiness[jsonRecord.annualStatementLineOfBusiness]
   : NOT_PROVIDED;
 
-  // program
+  // Program Code
   policy.Program = jsonRecord.programCode.trim()
     ? programCodes[jsonRecord.programCode]
     : NOT_PROVIDED;
 
-  // policy
+  // Policy Form Code
   policy.PolicyFormCode = jsonRecord.policyForm;
   policy.PolicyCategory = jsonRecord.policyForm.trim()
     ? policyFormCode[jsonRecord.policyForm].category
@@ -194,18 +191,18 @@ module.exports.converter = function (jsonRecord) {
     ? policyFormCode[jsonRecord.policyForm].reportingCategory
     : NOT_PROVIDED
 
-  // lossSettlementIndicator 
+  // Loss Settlement Indicator 
   // *** get with peter on how to write the json for this
 
-  // primaryPropertyAmountOfInsurance
+  // Primary Property Amount of Insurance
   convertedRecord.PrimaryPropertyAmountOfInsurance = jsonRecord.primaryPropertyAmountOfInsurance.trim();
   
-  // deductibleType
+  // Deductible Type
   policy.DeductibleType = jsonRecord.deductibleType.trim()
     ? deductibleType[jsonRecord.deductibleType]
     : NOT_PROVIDED;
 
-  // deductibleAmount
+  // Deductible Amount
   let dedAmt = deductibleAmount.deductibleAmount[policy.deductibleAmount];
   if (!dedAmt) {
     dedAmt = deductibleAmount.deductibleAmount["flat"];
@@ -235,7 +232,7 @@ module.exports.converter = function (jsonRecord) {
 
 
 
-  //windHailDeductible
+  //Wind Hail Deductible
   policy.WindHailDeductible = jsonRecord.windstormOrHailCoverageDeductibleAmount.trim()
     ? windstormOrHailCoverageDeductibleAmount[jsonRecord.windstormOrHailCoverageDeductibleAmount]
     : NOT_PROVIDED;
@@ -396,7 +393,6 @@ module.exports.converter = function (jsonRecord) {
     claim.AccidentDate = convertAccidentDate(jsonRecord.accidentDate)
   }
   
-
   // Zip Code
   policy.ZipCode = jsonRecord.zipCode.trim()
 
