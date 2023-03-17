@@ -26,12 +26,12 @@
     },
     "6": {
         "maritalStatus": "Single",
-        "gender": "Fenale",
+        "gender": "Female",
         "principalSecondary": "Secondary"
     },
     "7": {
         "maritalStatus": "Married",
-        "category": "N/A",
+        "gender": "N/A",
         "principalSecondary": "N/A"
     },
     "8": {
