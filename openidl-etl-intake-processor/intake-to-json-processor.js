@@ -5,21 +5,21 @@ const log4js = require('log4js');
 const logger = log4js.getLogger();
 logger.level = config.logLevel;
 const acceptedHeaders = ['Organization ID', 'State', 'Transaction Date', 'VIN Hash', 'VIN', ]// Do NOT change order
-let inputHeaders;
+const independentHeaderCount = 3
+
 async function convertToJson(recordsText) {
   logger.info('Entering convertToJson()');
   let errors = [];
   await csv()
     .on('header',(headers)=>{
       logger.info("Headers: ", headers)
-      inputHeaders = headers;
       for (let i = 0; i < headers.length; i = i + 1) {
         if (!acceptedHeaders.includes(headers[i])) {
           errors.push({ type: 'csv parsing', message: "Unknown Header found (" + headers[i] + ")" });
         }
       }
 
-      for (let j = 0; j < 3; j = j + 1) {
+      for (let j = 0; j < independentHeaderCount; j = j + 1) {
         if (!headers.includes(acceptedHeaders[j])) {
           errors.push({ type: 'csv parsing', message: "Header missing (" + acceptedHeaders[j] + ")" });
         }
@@ -73,14 +73,20 @@ async function convertToJson(recordsText) {
           record: outputRecord,
         });
       } else {
+        let vin = outputRecord.VIN
+        vin = vin.trim();
+        vin = vin.replace(/^0+/, '');
         resultRecord.VINHash = crypto
           .createHash('sha256')
-          .update(outputRecord.VIN)
+          .update(vin)
           .digest('hex');
       }
 
     if (outputRecord['VIN']) {
-      resultRecord.VIN = outputRecord.VIN
+      let vin = outputRecord.VIN
+      vin = vin.trim();
+      vin = vin.replace(/^0+/, '');
+      resultRecord.VIN = vin
     }
 
     if (outputRecord['Transaction Date']) {

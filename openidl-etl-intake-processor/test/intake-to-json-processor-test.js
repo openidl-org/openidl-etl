@@ -18,6 +18,10 @@ const test = async () => {
 	result = await convertToJson(inputRecords)
 	console.log("Third test: Should have several errors")
 	console.log(result); // should have errors
+	inputRecords = fs.readFileSync('vinTrim.csv', 'utf-8')
+	result = await convertToJson(inputRecords)
+	console.log("vin trim test: Should have no error")
+	console.log(result); // should have errors
 	inputRecords = fs.readFileSync('csvTest1.csv', 'utf-8')
 	result = await convertToJson(inputRecords)
 	console.log("fourth test: Should have csv errors")
