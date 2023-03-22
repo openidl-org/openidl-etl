@@ -4,11 +4,31 @@ const crypto = require('crypto');
 const log4js = require('log4js');
 const logger = log4js.getLogger();
 logger.level = config.logLevel;
-
+const acceptedHeaders = ['Organization ID', 'State', 'Transaction Date', 'VIN Hash', 'VIN', ]// Do NOT change order
+let inputHeaders;
 async function convertToJson(recordsText) {
   logger.info('Entering convertToJson()');
   let errors = [];
   await csv()
+    .on('header',(headers)=>{
+      logger.info("Headers: ", headers)
+      inputHeaders = headers;
+      for (let i = 0; i < headers.length; i = i + 1) {
+        if (!acceptedHeaders.includes(headers[i])) {
+          errors.push({ type: 'csv parsing', message: "Unknown Header found (" + headers[i] + ")" });
+        }
+      }
+
+      for (let j = 0; j < 3; j = j + 1) {
+        if (!headers.includes(acceptedHeaders[j])) {
+          errors.push({ type: 'csv parsing', message: "Header missing (" + acceptedHeaders[j] + ")" });
+        }
+      }
+      if ( !headers.includes(acceptedHeaders[3]) && !headers.includes(acceptedHeaders[4])) {
+        errors.push({ type: 'csv parsing', 
+          message: "Header missing (" + acceptedHeaders[3] + "/" +acceptedHeaders[4] + ")" });
+      }
+    }) 
     .on('error', (err) => {
       errors.push({ type: 'csv parsing', message: err });
     })
@@ -18,7 +38,9 @@ async function convertToJson(recordsText) {
     });
   logger.debug('Successfully converted csv to json data');
   if (errors.length > 0) {
-    return { valid: false, errors: errors };
+    logger.error('An error occurred while updating the outputRecords keys', errors)
+    const summaryErrorMessage = await createErrorSummary(errors)
+    return { valid: false, errors: errors, summaryErrorMessage };
   }
   if (outputRecords.length === 0) {
     return { valid: false, errors: [{ type: 'data', message: 'empty data' }] };
