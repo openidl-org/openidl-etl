@@ -25,7 +25,7 @@ for (let jsonPremiumRecord of jsonPremiumRecords) {
     id = jsonPremiumRecord.occurrenceIdentification;
   } else {
     id = 'undefined'
-    console.log('Undefined Record Found')
+    // console.log('Undefined Record Found')
   }
 
   console.log(
