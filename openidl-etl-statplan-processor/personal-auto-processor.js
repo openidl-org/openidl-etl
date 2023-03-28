@@ -15,7 +15,8 @@ function last(anArray) {
 function convertTextRecordsToJsonUsingSchema(recordsText, premiumSchema, lossSchema) {
   let results = [];
   let uniqueExposures = new Set();
-  let records = recordsText.split('\n');
+  let records = recordsText.split('\n').slice(0,3); //restrict for testing
+  //let records = recordsText.split('\n')  //oem
   let lastElement = last(records)
 
   // removes last line if blank
@@ -63,9 +64,9 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema, lossSchema) {
   var subline = getSublineCode(record, premiumSchema)
   let schema = null
   
-  console.log('transaction code: '+transactionCode)
-  console.log('lineOfInsurance code: '+lineOfInsurance)
-  console.log('subline code: '+subline)
+  // console.log('transaction code: '+transactionCode)
+  // console.log('lineOfInsurance code: '+lineOfInsurance)
+  // console.log('subline code: '+subline)
 
   // IF LOI = 56 && subline = 1, use personal auto
   // IF LOI = 56 && subline = 2, use commercial auto
@@ -73,21 +74,21 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema, lossSchema) {
   if (lineOfInsurance == '56') {
         if (subline == '1') {
           //count++
-          console.log('PERSONAL AUTO RECORD FOUND!!!')
+          // console.log('PERSONAL AUTO RECORD FOUND!!!')
         
       
 
   if (transactionCode == '1' || transactionCode == '8'){
     schema = premiumSchema
-    console.log('premium record found')
+    // console.log('premium record found')
   }
 
   if (transactionCode == "2" || transactionCode == "3" || transactionCode == "6" || transactionCode == "7") {
     schema = lossSchema
-    console.log('loss record found')
-    //console.log(record)
+    // console.log('loss record found')
+    
   }
-
+    console.log(record)
     for (let fieldName in schema.properties) {
       let field = schema.properties[fieldName];
       var start = field.start;
@@ -97,8 +98,9 @@ function convertTextRecordToJsonUsingSchema(record, premiumSchema, lossSchema) {
 
       // checks to make sure the field key exists, prevents out of bounds
       // error on parsing
-      if (record.length > start) {
+     
         var value = record.substring(start, end).trim();
+        if (value.length > 0){
         if (type == "number") {
           positive = 1;
           console.log(value)
@@ -142,9 +144,10 @@ exports.process = async function (records) {
     //console.log("We have a new submission");
     //console.log(record)
     let jsonRecords = convertTextRecordsToJsonUsingSchema(record, premiumSchema, lossSchema);
-    for (jsonRecord of jsonRecords) {
+    for (let jsonRecord of jsonRecords) {
       //console.log(jsonRecord);
       resultRecords.push(converter(jsonRecord));
+      
     }
   });
   return resultRecords;

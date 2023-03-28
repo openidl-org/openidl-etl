@@ -349,9 +349,15 @@ module.exports.converter = function (jsonRecord) {
       claim.LimitedCodingLossTransaction = "";
     }
   }
-  coverage.Terrorism = !jsonRecord.terrorismIndicator.trim()
-    ? "N/A"
-    : terrorismIndicatorCodes[jsonRecord.terrorismIndicator];
+
+  if ('terrorismIndicator' in jsonRecord ) {
+    coverage.Terrorism = terrorismIndicatorCodes[jsonRecord.terrorismIndicator];
+  }
+
+  // coverage.Terrorism = jsonRecord.terrorismIndicator.trim()
+  //   ? "N/A"
+  //   : terrorismIndicatorCodes[jsonRecord.terrorismIndicator];
+
   coverage.Packaging = packageCodes[jsonRecord.packageCode];
   coverage.CoverageCode = jsonRecord.coverage;
   coverage.PoolAffiliation = poolAffiliationCodes[jsonRecord.poolAffiliation];
