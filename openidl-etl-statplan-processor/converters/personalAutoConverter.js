@@ -143,6 +143,7 @@ module.exports.converter = function (jsonRecord) {
   policy.SublineCategory = jsonRecord.subline.trim()
     ? sublineCodes[jsonRecord.subline].category
     : NOT_PROVIDED;
+  policy.SublineCode = jsonRecord.subline.trim();
   policy.AccountingDate = convertAccountingDate(jsonRecord.accountingDate);
 
   policy.CompanyCode = jsonRecord.companyCode;
@@ -266,15 +267,20 @@ module.exports.converter = function (jsonRecord) {
   vehicle.BodySize = vehicleClassCodes.bodySize[jsonRecord.bodySize];
   vehicle.ModelYear = jsonRecord.modelYear;
 
-  let lclExposurePresent = true;
+  let lclExposurePresent = false;
   if (typeof jsonRecord.exposure == "undefined") {
     lclExposurePresent = false;
+  } else if (jsonRecord.exposure.length > 0) {
+    lclExposurePresent = true
   }
 
   if (lclExposurePresent) {
     let digit = parseInt(numberTypeCodes[jsonRecord.exposure.slice(-1)].digit);
+    // console.log('digit: '+digit);
     let multiplier = numberTypeCodes[jsonRecord.exposure.slice(-1)].multiplier;
+    // console.log('multiplier: '+multiplier);
     let recordLead = parseInt(jsonRecord.exposure.slice(0, -1));
+    // console.log('recordLead: '+recordLead);
     if (!recordLead == 0) {
       coverage.Exposure = parseInt(
         recordLead.toString() + (digit * multiplier).toString()
