@@ -15,7 +15,7 @@ function last(anArray) {
 function convertTextRecordsToJsonUsingSchema(recordsText, premiumSchema, lossSchema) {
   let results = [];
   let uniqueExposures = new Set();
-  let records = recordsText.split('\n').slice(0,3); //restrict for testing
+  let records = recordsText.split('\n').slice(0,2); //restrict for testing
   //let records = recordsText.split('\n')  //oem
   let lastElement = last(records)
 

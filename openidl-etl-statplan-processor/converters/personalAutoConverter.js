@@ -179,10 +179,15 @@ module.exports.converter = function (jsonRecord) {
     }
   }
 
-  policy.ProgramCode = jsonRecord.program;
-  policy.Program = jsonRecord.program.trim()
-    ? programCodes[jsonRecord.program]
-    : NOT_PROVIDED;
+
+  if ('programCodes' in jsonRecord) {
+    policy.ProgramCode = jsonRecord;
+    policy.Program = programCodes[jsonRecord.program];
+  }
+  // policy.ProgramCode = jsonRecord.program;
+  // policy.Program = jsonRecord.program.trim()
+  //   ? programCodes[jsonRecord.program]
+  //   : NOT_PROVIDED;
   let coverageCodesState = coverageCodes[policy.State];
 
   if (!coverageCodesState) coverageCodesState = coverageCodes["MU"];
@@ -206,24 +211,36 @@ module.exports.converter = function (jsonRecord) {
     ? sexAndMaritalStatusCodes[jsonRecord.sexAndMaritalStatus].principalSecondary
     : NOT_PROVIDED;
 
-  vehicle.VehicleUseCode = jsonRecord.vehicleUse;
-  vehicle.VehicleUse = jsonRecord.vehicleUse.trim()
-    ? vehicleUseCodes[jsonRecord.vehicleUse].use
-    : NOT_PROVIDED;
+  if ('vehicleUseCodes' in jsonRecord) {
+    vehicle.VehicleUseCode = jsonRecord.vehicleUse;
+    vehicle.VehicleUse = vehicleUseCodes[jsonRecord.vehicleUse].use;
+    vehicle.VehicleUseOperator = vehicleUseCodes[jsonRecord.vehicleUse].operator;
+    vehicle.VehicleCommuteDistance = vehicleUseCodes[jsonRecord.vehicleUse].commuteDistance;
+    vehicle.VehicleAnnualDistance = vehicleUseCodes[jsonRecord.vehicleUse].annualDistance;
+  }  
+  // vehicle.VehicleUseCode = jsonRecord.vehicleUse;
+  // vehicle.VehicleUse = jsonRecord.vehicleUse.trim()
+  //   ? vehicleUseCodes[jsonRecord.vehicleUse].use
+  //   : NOT_PROVIDED;
 
-  vehicle.VehicleUseOperator = jsonRecord.vehicleUse.trim()
-    ? vehicleUseCodes[jsonRecord.vehicleUse].operator
-    : NOT_PROVIDED;
-  vehicle.CommuteDistance = jsonRecord.vehicleUse.trim()
-    ? vehicleUseCodes[jsonRecord.vehicleUse].commuteDistance
-    : NOT_PROVIDED;
-  vehicle.AnnualDistance = jsonRecord.vehicleUse.trim()
-    ? vehicleUseCodes[jsonRecord.vehicleUse].annualDistance
-    : NOT_PROVIDED;
-  vehicle.VehiclePerformanceCode = jsonRecord.vehiclePerformance;
-  vehicle.VehiclePerformance = jsonRecord.vehiclePerformance.trim()
-    ? vehiclePerformanceCodes[jsonRecord.vehiclePerformance]
-    : NOT_PROVIDED;
+  // vehicle.VehicleUseOperator = jsonRecord.vehicleUse.trim()
+  //   ? vehicleUseCodes[jsonRecord.vehicleUse].operator
+  //   : NOT_PROVIDED;
+  // vehicle.CommuteDistance = jsonRecord.vehicleUse.trim()
+  //   ? vehicleUseCodes[jsonRecord.vehicleUse].commuteDistance
+  //   : NOT_PROVIDED;
+  // vehicle.AnnualDistance = jsonRecord.vehicleUse.trim()
+  //   ? vehicleUseCodes[jsonRecord.vehicleUse].annualDistance
+  //   : NOT_PROVIDED;
+
+  if ('vehiclePerformanceCodes' in jsonRecord) {
+    vehicle.VehiclePerformanceCode = jsonRecord.vehiclePerformance;
+    vehicle.VehiclePerformance = vehiclePerformanceCodes[jsonRecord.vehiclePerformance];
+  }
+  // vehicle.VehiclePerformanceCode = jsonRecord.vehiclePerformance;
+  // vehicle.VehiclePerformance = jsonRecord.vehiclePerformance.trim()
+  //   ? vehiclePerformanceCodes[jsonRecord.vehiclePerformance]
+  //   : NOT_PROVIDED;
     
   driver.DriversTrainingGoodStudentCode = jsonRecord.privatePassengerDriversTrainingGoodStudent;
   try {
@@ -244,10 +261,14 @@ module.exports.converter = function (jsonRecord) {
     driver.GoodStudentDiscount = "No";
   }
 
-  driver.PenaltyPointsCode = jsonRecord.privatePassengerPenaltyPoints;
-  driver.PenaltyPoints = jsonRecord.privatePassengerPenaltyPoints.trim()
-    ? penaltyPointsCodes[jsonRecord.privatePassengerPenaltyPoints]
-    : NOT_PROVIDED;
+  if ('penaltyPointsCodes' in jsonRecord) {
+    driver.PenaltyPointsCode = jsonRecord.privatePassengerPenaltyPoints;
+    driver.PenaltyPoints = penaltyPointsCodes[jsonRecord.privatePassengerPenaltyPoints];
+  }
+  // driver.PenaltyPointsCode = jsonRecord.privatePassengerPenaltyPoints;
+  // driver.PenaltyPoints = jsonRecord.privatePassengerPenaltyPoints.trim()
+  //   ? penaltyPointsCodes[jsonRecord.privatePassengerPenaltyPoints]
+  //   : NOT_PROVIDED;
 
 
   // coverage.LiabilityLimitCode = jsonRecord.liabilityLimitCodes;
@@ -361,10 +382,19 @@ module.exports.converter = function (jsonRecord) {
   coverage.Packaging = packageCodes[jsonRecord.packageCode];
   coverage.CoverageCode = jsonRecord.coverage;
   coverage.PoolAffiliation = poolAffiliationCodes[jsonRecord.poolAffiliation];
-  policy.NCProgramEnhancement = jsonRecord.ncProgramEnhancementIndicator.trim()
-    ? ncProgramEnhancementCodes[jsonRecord.ncProgramEnhancementIndicator]
-    : "N/A";
-  policy.ZipCode = jsonRecord.zipCode.trim();
+  
+  if ('ncProgramEnhancementIndicator' in jsonRecord) {
+    policy.NCProgramEnhancement = ncProgramEnhancementCodes[jsonRecord.ncProgramEnhancementIndicator];
+  }
+
+  // policy.NCProgramEnhancement = jsonRecord.ncProgramEnhancementIndicator.trim()
+  //   ? ncProgramEnhancementCodes[jsonRecord.ncProgramEnhancementIndicator]
+  //   : "N/A";
+
+  if ('zipCode' in jsonRecord) {
+    policy.ZipCode = jsonRecord.zipCode;
+  }
+  // policy.ZipCode = jsonRecord.zipCode.trim();
   policy.ZipCodeSuffix = jsonRecord.zipCodeSuffix.trim();
   // coverage.UmUimCode = umUimCodes.state[jsonRecord.uninsuredUnderinsuredMotorist];
   coverage.UMUIMStacking = jsonRecord.umUimStackingIndicator
