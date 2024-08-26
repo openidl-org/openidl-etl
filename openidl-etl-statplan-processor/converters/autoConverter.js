@@ -108,27 +108,18 @@ function makeDate(datestr){
 	return date
 }
 
-function addTerm(datestr, term){
-	let date = makeDate(datestr)
-	let rv_date = addMonths(date, term)
-	let rv_year = rv_date.getFullYear()
-	let rv_month = rv_date.getMonth()+1
-	if (rv_month < 10){
-		rv_month= '0'+rv_month.toString()
-	}
-  if (rv_month ==13){
-    rv_month = -1
+function addTerm(accountingDate, term){
+  let accountingArray=accountingDate.split('-')
+  let month = parseInt(accountingArray[1])
+  let newMonth = month+term
+  let newYear = parseInt(accountingArray[0])
+  if (newMonth > 12){
+    newMonth-=12
+    newYear+=1
   }
-	if (rv_month =='00'){
-		rv_month = '01'
-	}
-  
+  let newDate = `${newYear}-${newMonth}-15`
 
-
-
-	let rv_string = rv_year+'-'+rv_month+'-15'
-	console.log(datestr+' term: '+term+' new date:'+rv_string)
-	return rv_string
+	return newDate
 	
 }
 
